@@ -3,7 +3,7 @@ const exercisesData = {
     "pecho": [
         { 
             name: "Press de Banca", 
-            <img src="Pictures/1. Inclined DB bench press 3 sets x5-8 form failure.gif" alt="1. Inclined DB bench press 3 sets x5-8 form failure.gif">,
+            <img src="Pictures/DBbenchpress.gif" alt="DBbenchpress.gif">,
             description: "Acostado en un banco, baja la barra al pecho y luego empuja hacia arriba. Mantén la espalda apoyada y los pies firmes en el suelo."
         },
         { 
