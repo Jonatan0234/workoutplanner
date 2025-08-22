@@ -3,948 +3,298 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Mi Plan de Ejercicios Semanal</title>
-    <style>
-        :root {
-            --primary-color: #2c3e50;
-            --secondary-color: #3498db;
-            --accent-color: #e74c3c;
-            --light-color: #ecf0f1;
-            --dark-color: #2c3e50;
-        }
-        
-        * {
-            margin: 0;
-            padding: 0;
-            box-sizing: border-box;
-            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
-        }
-        
-        body {
-            background-color: #f5f5f5;
-            color: #333;
-            line-height: 1.6;
-        }
-        
-        header {
-            background-color: var(--primary-color);
-            color: white;
-            padding: 1rem;
-            text-align: center;
-        }
-        
-        .tabs {
-            display: flex;
-            justify-content: center;
-            background-color: var(--dark-color);
-            padding: 0.5rem;
-        }
-        
-        .tab-button {
-            background-color: var(--dark-color);
-            color: white;
-            border: none;
-            padding: 0.8rem 1.5rem;
-            margin: 0 0.2rem;
-            cursor: pointer;
-            border-radius: 5px 5px 0 0;
-            transition: background-color 0.3s;
-        }
-        
-        .tab-button:hover {
-            background-color: #3a516e;
-        }
-        
-        .tab-button.active {
-            background-color: var(--secondary-color);
-        }
-        
-        .submenu {
-            background-color: var(--secondary-color);
-            padding: 0.5rem;
-            display: flex;
-            justify-content: center;
-        }
-        
-        .submenu-button {
-            background-color: var(--secondary-color);
-            color: white;
-            border: none;
-            padding: 0.5rem 1rem;
-            margin: 0 0.2rem;
-            cursor: pointer;
-            border-radius: 3px;
-            transition: background-color 0.3s;
-        }
-        
-        .submenu-button:hover {
-            background-color: #2980b9;
-        }
-        
-        .content-area {
-            max-width: 1200px;
-            margin: 0 auto;
-            padding: 1rem;
-        }
-        
-        .exercise-container {
-            display: grid;
-            grid-template-columns: repeat(auto-fill, minmax(300px, 1fr));
-            gap: 1.5rem;
-            margin-top: 1rem;
-        }
-        
-        .exercise-card {
-            background-color: white;
-            border-radius: 8px;
-            box-shadow: 0 2px 10px rgba(0, 0, 0, 0.1);
-            overflow: hidden;
-        }
-        
-        .exercise-gif {
-            width: 100%;
-            height: 200px;
-            object-fit: cover;
-        }
-        
-        .exercise-info {
-            padding: 1rem;
-        }
-        
-        .exercise-info h3 {
-            margin-bottom: 0.5rem;
-            color: var(--primary-color);
-        }
-        
-        .tracking-table {
-            width: 100%;
-            border-collapse: collapse;
-            margin-top: 1rem;
-        }
-        
-        .tracking-table th, .tracking-table td {
-            border: 1px solid #ddd;
-            padding: 0.5rem;
-            text-align: center;
-        }
-        
-        .tracking-table th {
-            background-color: #f2f2f2;
-        }
-        
-        .tracking-table input {
-            width: 100%;
-            padding: 0.3rem;
-            border: 1px solid #ddd;
-            border-radius: 3px;
-        }
-        
-        .save-btn {
-            background-color: var(--accent-color);
-            color: white;
-            border: none;
-            padding: 0.5rem 1rem;
-            margin-top: 0.5rem;
-            cursor: pointer;
-            border-radius: 3px;
-            transition: background-color 0.3s;
-        }
-        
-        .save-btn:hover {
-            background-color: #c0392b;
-        }
-        
-        .progress-btn {
-            position: fixed;
-            bottom: 20px;
-            right: 20px;
-            background-color: var(--primary-color);
-            color: white;
-            border: none;
-            padding: 0.8rem 1.5rem;
-            cursor: pointer;
-            border-radius: 30px;
-            box-shadow: 0 2px 10px rgba(0, 0, 0, 0.2);
-            z-index: 100;
-        }
-        
-        .modal {
-            display: none;
-            position: fixed;
-            top: 0;
-            left: 0;
-            width: 100%;
-            height: 100%;
-            background-color: rgba(0, 0, 0, 0.7);
-            z-index: 1000;
-            overflow: auto;
-        }
-        
-        .modal-content {
-            background-color: white;
-            margin: 5% auto;
-            padding: 2rem;
-            width: 90%;
-            max-width: 1000px;
-            border-radius: 8px;
-            position: relative;
-        }
-        
-        .close-btn {
-            position: absolute;
-            top: 15px;
-            right: 15px;
-            font-size: 1.5rem;
-            cursor: pointer;
-            color: #777;
-        }
-        
-        .filter-section {
-            margin-bottom: 1.5rem;
-        }
-        
-        .filter-section select, .filter-section input {
-            padding: 0.5rem;
-            margin-right: 0.5rem;
-            border: 1px solid #ddd;
-            border-radius: 3px;
-        }
-        
-        .progress-table {
-            width: 100%;
-            border-collapse: collapse;
-            margin-bottom: 1.5rem;
-        }
-        
-        .progress-table th, .progress-table td {
-            border: 1px solid #ddd;
-            padding: 0.8rem;
-            text-align: center;
-        }
-        
-        .progress-table th {
-            background-color: #f2f2f2;
-        }
-        
-        .chart-container {
-            height: 400px;
-            margin-top: 2rem;
-        }
-        
-        .hidden {
-            display: none;
-        }
-    </style>
+    <title>Planificador de Ejercicios Semanal</title>
+    <link rel="stylesheet" href="styles.css">
+    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+    <link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@400;600;700&family=Open+Sans:wght@300;400;600&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
 </head>
 <body>
-    <header>
-        <h1>Mi Plan de Ejercicios Semanal</h1>
-    </header>
-    
-    <div class="tabs">
-        <button class="tab-button active" data-routine="pecho-triceps">Pecho y Triceps</button>
-        <button class="tab-button" data-routine="espalda-biceps">Espalda y Biceps</button>
-        <button class="tab-button" data-routine="piernas-hombros">Piernas y Hombros</button>
-    </div>
-    
-    <div class="submenu" id="day-submenu">
-        <!-- Los botones de días se generarán dinámicamente -->
-    </div>
-    
-    <div class="submenu hidden" id="muscle-submenu">
-        <!-- Los botones de grupos musculares se generarán dinámicamente -->
-    </div>
-    
-    <div class="content-area">
-        <div class="exercise-container" id="exercise-container">
-            <!-- Los ejercicios se cargarán aquí dinámicamente -->
-        </div>
-    </div>
-    
-    <button class="progress-btn" id="progress-btn">Ver Progreso</button>
-    
-    <div class="modal" id="progress-modal">
-        <div class="modal-content">
-            <span class="close-btn" id="close-modal">&times;</span>
-            <h2>Progreso de Entrenamiento</h2>
-            
-            <div class="filter-section">
-                <select id="exercise-filter">
-                    <option value="all">Todos los ejercicios</option>
-                    <!-- Las opciones de filtro se generarán dinámicamente -->
-                </select>
-                <input type="date" id="date-filter">
-                <button class="save-btn" id="apply-filters">Aplicar Filtros</button>
+    <div class="container">
+        <header>
+            <div class="header-content">
+                <h1><i class="fas fa-dumbbell"></i> Planificador de Ejercicios</h1>
+                <p class="subtitle">Organiza tus rutinas, registra tu progreso y alcanza tus metas de fitness</p>
             </div>
-            
-            <table class="progress-table" id="progress-table">
-                <thead>
-                    <tr>
-                        <th>Fecha</th>
-                        <th>Ejercicio</th>
-                        <th>Set 1</th>
-                        <th>Set 2</th>
-                        <th>Set 3</th>
-                        <th>Set 4</th>
-                    </tr>
-                </thead>
-                <tbody>
-                    <!-- Los datos de progreso se cargarán aquí dinámicamente -->
-                </tbody>
-            </table>
-            
-            <div class="chart-container">
-                <canvas id="progress-chart"></canvas>
-            </div>
-        </div>
-    </div>
-
-    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
-    <script>
-        // Estructura de datos de ejercicios
-        const exerciseData = {
-            'pecho-triceps': {
-                'Day 1': {
-                    'Pecho': [
-                        { 
-                            name: 'Press de Bianca', 
-                            gif: 'https://www.thingys.com.ar/gymapps/tutorial/decli_barra.gif',
-                            tracking: {}
-                        },
-                        { 
-                            name: 'Press Inclinado con Mancuernas', 
-                            gif: 'https://www.inspireusafoundation.org/wp-content/uploads/2022/05/dumbbell-incline-bench-press.gif',
-                            tracking: {}
-                        },
-                        { 
-                            name: 'Aperturas con Mancuernas', 
-                            gif: 'https://www.inspireusafoundation.org/wp-content/uploads/2022/04/dumbbell-chest-fly.gif',
-                            tracking: {}
-                        }
-                    ],
-                    'Triceps': [
-                        { 
-                            name: 'Fondos en Paralelas', 
-                            gif: 'https://www.inspireusafoundation.org/wp-content/uploads/2022/06/parallel-bar-dip.gif',
-                            tracking: {}
-                        },
-                        { 
-                            name: 'Extensiones de Triceps', 
-                            gif: 'https://www.inspireusafoundation.org/wp-content/uploads/2022/05/tricep-extension.gif',
-                            tracking: {}
-                        },
-                        { 
-                            name: 'Press Francés', 
-                            gif: 'https://www.inspireusafoundation.org/wp-content/uploads/2022/05/skull-crusher.gif',
-                            tracking: {}
-                        }
-                    ]
-                },
-                'Day 2': {
-                    'Pecho': [
-                        { 
-                            name: 'Press Declinado', 
-                            gif: 'https://www.inspireusafoundation.org/wp-content/uploads/2022/08/decline-bench-press.gif',
-                            tracking: {}
-                        },
-                        { 
-                            name: 'Cruce de Poleas', 
-                            gif: 'https://www.inspireusafoundation.org/wp-content/uploads/2022/04/cable-crossover.gif',
-                            tracking: {}
-                        }
-                    ],
-                    'Triceps': [
-                        { 
-                            name: 'Press Cerrado', 
-                            gif: 'https://www.inspireusafoundation.org/wp-content/uploads/2022/05/close-grip-bench-press.gif',
-                            tracking: {}
-                        },
-                        { 
-                            name: 'Patada de Triceps', 
-                            gif: 'https://www.inspireusafoundation.org/wp-content/uploads/2022/05/tricep-kickback.gif',
-                            tracking: {}
-                        }
-                    ]
-                }
-            },
-            'espalda-biceps': {
-                'Day 1': {
-                    'Espalda': [
-                        { 
-                            name: 'Dominadas', 
-                            gif: 'https://www.inspireusafoundation.org/wp-content/uploads/2022/03/pull-up.gif',
-                            tracking: {}
-                        },
-                        { 
-                            name: 'Jalón al Pecho', 
-                            gif: 'https://www.inspireusafoundation.org/wp-content/uploads/2022/05/lat-pulldown.gif',
-                            tracking: {}
-                        }
-                    ],
-                    'Biceps': [
-                        { 
-                            name: 'Curl de Bíceps', 
-                            gif: 'https://www.inspireusafoundation.org/wp-content/uploads/2022/05/dumbbell-bicep-curl.gif',
-                            tracking: {}
-                        },
-                        { 
-                            name: 'Curl Martillo', 
-                            gif: 'https://www.inspireusafoundation.org/wp-content/uploads/2022/05/hammer-curl.gif',
-                            tracking: {}
-                        }
-                    ]
-                },
-                'Day 2': {
-                    'Espalda': [
-                        { 
-                            name: 'Remo con Barra', 
-                            gif: 'https://www.inspireusafoundation.org/wp-content/uploads/2022/05/barbell-row.gif',
-                            tracking: {}
-                        },
-                        { 
-                            name: 'Remo con Mancuerna', 
-                            gif: 'https://www.inspireusafoundation.org/wp-content/uploads/2022/05/one-arm-dumbbell-row.gif',
-                            tracking: {}
-                        }
-                    ],
-                    'Biceps': [
-                        { 
-                            name: 'Curl Concentrado', 
-                            gif: 'https://www.inspireusafoundation.org/wp-content/uploads/2022/05/concentration-curl.gif',
-                            tracking: {}
-                        },
-                        { 
-                            name: 'Curl con Barra', 
-                            gif: 'https://www.inspireusafoundation.org/wp-content/uploads/2022/05/barbell-curl.gif',
-                            tracking: {}
-                        }
-                    ]
-                }
-            },
-            'piernas-hombros': {
-                'Day 1': {
-                    'Piernas': [
-                        { 
-                            name: 'Sentadillas', 
-                            gif: 'https://www.inspireusafoundation.org/wp-content/uploads/2022/05/barbell-squat.gif',
-                            tracking: {}
-                        },
-                        { 
-                            name: 'Prensa de Piernas', 
-                            gif: 'https://www.inspireusafoundation.org/wp-content/uploads/2022/05/leg-press.gif',
-                            tracking: {}
-                        }
-                    ],
-                    'Hombros': [
-                        { 
-                            name: 'Press Militar', 
-                            gif: 'https://www.inspireusafoundation.org/wp-content/uploads/2022/05/overhead-press.gif',
-                            tracking: {}
-                        },
-                        { 
-                            name: 'Elevaciones Laterales', 
-                            gif: 'https://www.inspireusafoundation.org/wp-content/uploads/2022/05/lateral-raise.gif',
-                            tracking: {}
-                        }
-                    ]
-                },
-                'Day 2': {
-                    'Piernas': [
-                        { 
-                            name: 'Peso Muerto', 
-                            gif: 'https://www.inspireusafoundation.org/wp-content/uploads/2022/05/conventional-deadlift.gif',
-                            tracking: {}
-                        },
-                        { 
-                            name: 'Extensiones de Cuádriceps', 
-                            gif: 'https://www.inspireusafoundation.org/wp-content/uploads/2022/05/leg-extension.gif',
-                            tracking: {}
-                        }
-                    ],
-                    'Hombros': [
-                        { 
-                            name: 'Elevaciones Frontales', 
-                            gif: 'https://www.inspireusafoundation.org/wp-content/uploads/2022/05/front-raise.gif',
-                            tracking: {}
-                        },
-                        { 
-                            name: 'Face Pull', 
-                            gif: 'https://www.inspireusafoundation.org/wp-content/uploads/2022/05/face-pull.gif',
-                            tracking: {}
-                        }
-                    ]
-                }
-            }
-        };
-
-        // Variables globales
-        let currentRoutine = 'pecho-triceps';
-        let currentDay = 'Day 1';
-        let currentMuscleGroup = 'Pecho';
-        let progressChart = null;
-
-        // Elementos del DOM
-        const tabButtons = document.querySelectorAll('.tab-button');
-        const daySubmenu = document.getElementById('day-submenu');
-        const muscleSubmenu = document.getElementById('muscle-submenu');
-        const exerciseContainer = document.getElementById('exercise-container');
-        const progressBtn = document.getElementById('progress-btn');
-        const progressModal = document.getElementById('progress-modal');
-        const closeModal = document.getElementById('close-modal');
-        const exerciseFilter = document.getElementById('exercise-filter');
-        const dateFilter = document.getElementById('date-filter');
-        const applyFilters = document.getElementById('apply-filters');
-        const progressTable = document.getElementById('progress-table');
-        const progressChartCanvas = document.getElementById('progress-chart');
-
-        // Inicialización
-        document.addEventListener('DOMContentLoaded', () => {
-            initializeApp();
-            loadProgressData();
-            setupEventListeners();
-        });
-
-        function initializeApp() {
-            // Cargar rutina inicial
-            loadRoutine('pecho-triceps');
-        }
-
-        function setupEventListeners() {
-            // Event listeners para pestañas
-            tabButtons.forEach(button => {
-                button.addEventListener('click', () => {
-                    const routine = button.getAttribute('data-routine');
-                    loadRoutine(routine);
-                });
-            });
-
-            // Event listeners para botones de progreso y modal
-            progressBtn.addEventListener('click', showProgressModal);
-            closeModal.addEventListener('click', () => {
-                progressModal.style.display = 'none';
-            });
-
-            // Cerrar modal al hacer clic fuera del contenido
-            window.addEventListener('click', (event) => {
-                if (event.target === progressModal) {
-                    progressModal.style.display = 'none';
-                }
-            });
-
-            // Filtros
-            applyFilters.addEventListener('click', applyProgressFilters);
-        }
-
-        function loadRoutine(routine) {
-            currentRoutine = routine;
-            
-            // Actualizar pestaña activa
-            tabButtons.forEach(button => {
-                if (button.getAttribute('data-routine') === routine) {
-                    button.classList.add('active');
-                } else {
-                    button.classList.remove('active');
-                }
-            });
-            
-            // Limpiar y generar botones de días
-            daySubmenu.innerHTML = '';
-            Object.keys(exerciseData[routine]).forEach(day => {
-                const button = document.createElement('button');
-                button.className = 'submenu-button';
-                button.textContent = day;
-                button.addEventListener('click', () => {
-                    loadDay(day);
-                });
-                daySubmenu.appendChild(button);
-            });
-            
-            // Mostrar submenú de días y ocultar el de grupos musculares
-            daySubmenu.classList.remove('hidden');
-            muscleSubmenu.classList.add('hidden');
-            
-            // Cargar el primer día por defecto
-            loadDay('Day 1');
-        }
-
-        function loadDay(day) {
-            currentDay = day;
-            
-            // Limpiar y generar botones de grupos musculares
-            muscleSubmenu.innerHTML = '';
-            Object.keys(exerciseData[currentRoutine][day]).forEach(muscle => {
-                const button = document.createElement('button');
-                button.className = 'submenu-button';
-                button.textContent = muscle;
-                button.addEventListener('click', () => {
-                    loadMuscleGroup(muscle);
-                });
-                muscleSubmenu.appendChild(button);
-            });
-            
-            // Mostrar submenú de grupos musculares
-            muscleSubmenu.classList.remove('hidden');
-            
-            // Cargar el primer grupo muscular por defecto
-            loadMuscleGroup(Object.keys(exerciseData[currentRoutine][day])[0]);
-        }
-
-        function loadMuscleGroup(muscleGroup) {
-            currentMuscleGroup = muscleGroup;
-            
-            // Limpiar contenedor de ejercicios
-            exerciseContainer.innerHTML = '';
-            
-            // Obtener ejercicios para el grupo muscular actual
-            const exercises = exerciseData[currentRoutine][currentDay][muscleGroup];
-            
-            // Generar tarjetas de ejercicios
-            exercises.forEach((exercise, index) => {
-                const exerciseCard = document.createElement('div');
-                exerciseCard.className = 'exercise-card';
+        </header>
+        
+        <div class="main-content">
+            <div class="menu-section">
+                <div class="section-header">
+                    <i class="fas fa-list"></i>
+                    <h2>Mis Rutinas</h2>
+                </div>
                 
-                exerciseCard.innerHTML = `
-                    <img src="${exercise.gif}" alt="${exercise.name}" class="exercise-gif">
-                    <div class="exercise-info">
-                        <h3>${exercise.name}</h3>
+                <div class="routine-container">
+                    <div class="routine-card">
+                        <div class="routine-header" data-routine="pecho-triceps">
+                            <div class="routine-icon">
+                                <i class="fas fa-fire"></i>
+                            </div>
+                            <h3>Pecho y Tríceps</h3>
+                            <span class="toggle-arrow"><i class="fas fa-chevron-down"></i></span>
+                        </div>
+                        <div class="submenu">
+                            <div class="day">
+                                <div class="day-item" data-day="1">
+                                    <i class="fas fa-calendar-day"></i>
+                                    <span>Day 1</span>
+                                    <span class="toggle-arrow"><i class="fas fa-chevron-down"></i></span>
+                                </div>
+                                <div class="muscle-submenu">
+                                    <div class="muscle-item" data-muscle="pecho">
+                                        <i class="fas fa-circle"></i>
+                                        <span>Pecho</span>
+                                    </div>
+                                    <div class="muscle-item" data-muscle="triceps">
+                                        <i class="fas fa-circle"></i>
+                                        <span>Tríceps</span>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="day">
+                                <div class="day-item" data-day="2">
+                                    <i class="fas fa-calendar-day"></i>
+                                    <span>Day 2</span>
+                                    <span class="toggle-arrow"><i class="fas fa-chevron-down"></i></span>
+                                </div>
+                                <div class="muscle-submenu">
+                                    <div class="muscle-item" data-muscle="pecho">
+                                        <i class="fas fa-circle"></i>
+                                        <span>Pecho</span>
+                                    </div>
+                                    <div class="muscle-item" data-muscle="triceps">
+                                        <i class="fas fa-circle"></i>
+                                        <span>Tríceps</span>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="routine-card">
+                        <div class="routine-header" data-routine="espalda-biceps">
+                            <div class="routine-icon">
+                                <i class="fas fa-mountain"></i>
+                            </div>
+                            <h3>Espalda y Bíceps</h3>
+                            <span class="toggle-arrow"><i class="fas fa-chevron-down"></i></span>
+                        </div>
+                        <div class="submenu">
+                            <div class="day">
+                                <div class="day-item" data-day="1">
+                                    <i class="fas fa-calendar-day"></i>
+                                    <span>Day 1</span>
+                                    <span class="toggle-arrow"><i class="fas fa-chevron-down"></i></span>
+                                </div>
+                                <div class="muscle-submenu">
+                                    <div class="muscle-item" data-muscle="espalda">
+                                        <i class="fas fa-circle"></i>
+                                        <span>Espalda</span>
+                                    </div>
+                                    <div class="muscle-item" data-muscle="biceps">
+                                        <i class="fas fa-circle"></i>
+                                        <span>Bíceps</span>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="day">
+                                <div class="day-item" data-day="2">
+                                    <i class="fas fa-calendar-day"></i>
+                                    <span>Day 2</span>
+                                    <span class="toggle-arrow"><i class="fas fa-chevron-down"></i></span>
+                                </div>
+                                <div class="muscle-submenu">
+                                    <div class="muscle-item" data-muscle="espalda">
+                                        <i class="fas fa-circle"></i>
+                                        <span>Espalda</span>
+                                    </div>
+                                    <div class="muscle-item" data-muscle="biceps">
+                                        <i class="fas fa-circle"></i>
+                                        <span>Bíceps</span>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="routine-card">
+                        <div class="routine-header" data-routine="piernas-hombros">
+                            <div class="routine-icon">
+                                <i class="fas fa-walking"></i>
+                            </div>
+                            <h3>Piernas y Hombros</h3>
+                            <span class="toggle-arrow"><i class="fas fa-chevron-down"></i></span>
+                        </div>
+                        <div class="submenu">
+                            <div class="day">
+                                <div class="day-item" data-day="1">
+                                    <i class="fas fa-calendar-day"></i>
+                                    <span>Day 1</span>
+                                    <span class="toggle-arrow"><i class="fas fa-chevron-down"></i></span>
+                                </div>
+                                <div class="muscle-submenu">
+                                    <div class="muscle-item" data-muscle="piernas">
+                                        <i class="fas fa-circle"></i>
+                                        <span>Piernas</span>
+                                    </div>
+                                    <div class="muscle-item" data-muscle="hombros">
+                                        <i class="fas fa-circle"></i>
+                                        <span>Hombros</span>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="day">
+                                <div class="day-item" data-day="2">
+                                    <i class="fas fa-calendar-day"></i>
+                                    <span>Day 2</span>
+                                    <span class="toggle-arrow"><i class="fas fa-chevron-down"></i></span>
+                                </div>
+                                <div class="muscle-submenu">
+                                    <div class="muscle-item" data-muscle="piernas">
+                                        <i class="fas fa-circle"></i>
+                                        <span>Piernas</span>
+                                    </div>
+                                    <div class="muscle-item" data-muscle="hombros">
+                                        <i class="fas fa-circle"></i>
+                                        <span>Hombros</span>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                
+                <div class="btn-container">
+                    <button class="btn btn-accent" id="show-progress">
+                        <i class="fas fa-chart-line"></i> Ver Progreso
+                    </button>
+                </div>
+            </div>
+            
+            <div class="display-section">
+                <div class="welcome-message" id="welcome-message">
+                    <div class="welcome-content">
+                        <i class="fas fa-dumbbell"></i>
+                        <h2>¡Bienvenido a tu Planificador de Ejercicios!</h2>
+                        <p>Selecciona una rutina, día y grupo muscular para comenzar a visualizar tus ejercicios y registrar tu progreso.</p>
+                        <div class="instructions">
+                            <div class="instruction">
+                                <div class="number">1</div>
+                                <p>Selecciona una rutina de entrenamiento</p>
+                            </div>
+                            <div class="instruction">
+                                <div class="number">2</div>
+                                <p>Elige el día de tu rutina</p>
+                            </div>
+                            <div class="instruction">
+                                <div class="number">3</div>
+                                <p>Selecciona el grupo muscular</p>
+                            </div>
+                            <div class="instruction">
+                                <div class="number">4</div>
+                                <p>¡Visualiza y registra tus ejercicios!</p>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                
+                <div class="exercise-display" id="exercise-display">
+                    <h2 class="exercise-title" id="exercise-title"></h2>
+                    
+                    <div id="exercises-container" class="exercises-container">
+                        <!-- Los ejercicios se insertarán aquí dinámicamente -->
+                    </div>
+                    
+                    <div class="tracking-section">
+                        <h3 class="tracking-title">Registra tu entrenamiento</h3>
+                        <div class="selected-exercise" id="selected-exercise">
+                            <p>Selecciona un ejercicio para registrar tu entrenamiento</p>
+                        </div>
                         <table class="tracking-table">
                             <thead>
                                 <tr>
-                                    <th>Sets</th>
+                                    <th>Set</th>
                                     <th>Peso (kg)</th>
                                     <th>Repeticiones</th>
                                 </tr>
                             </thead>
-                            <tbody>
-                                ${generateTableRows(exercise, index)}
+                            <tbody id="sets-container">
+                                <!-- Sets se generan dinámicamente -->
                             </tbody>
                         </table>
-                        <button class="save-btn" data-exercise="${currentRoutine}-${currentDay}-${muscleGroup}-${index}">Guardar</button>
+                        <div class="btn-container">
+                            <button class="btn" id="save-btn">
+                                <i class="fas fa-save"></i> Guardar Entrenamiento
+                            </button>
+                        </div>
                     </div>
-                `;
+                </div>
                 
-                exerciseContainer.appendChild(exerciseCard);
-            });
-            
-            // Agregar event listeners a los botones de guardar
-            document.querySelectorAll('.save-btn').forEach(button => {
-                button.addEventListener('click', (e) => {
-                    const exerciseId = e.target.getAttribute('data-exercise');
-                    saveExerciseData(exerciseId);
-                });
-            });
-        }
+                <div class="progress-section" id="progress-section">
+                    <h2 class="exercise-title">Tu Progreso</h2>
+                    
+                    <div class="filter-section">
+                        <div class="filter-group">
+                            <label for="exercise-filter">Filtrar por ejercicio:</label>
+                            <select id="exercise-filter">
+                                <option value="all">Todos los ejercicios</option>
+                                <!-- Las opciones se llenan dinámicamente -->
+                            </select>
+                        </div>
+                        
+                        <div class="filter-group">
+                            <label for="date-filter">Filtrar por fecha:</label>
+                            <input type="date" id="date-filter">
+                        </div>
+                        
+                        <div class="filter-group">
+                            <label for="muscle-filter">Filtrar por grupo muscular:</label>
+                            <select id="muscle-filter">
+                                <option value="all">Todos los grupos</option>
+                                <option value="pecho">Pecho</option>
+                                <option value="triceps">Tríceps</option>
+                                <option value="espalda">Espalda</option>
+                                <option value="biceps">Bíceps</option>
+                                <option value="piernas">Piernas</option>
+                                <option value="hombros">Hombros</option>
+                            </select>
+                        </div>
+                    </div>
+                    
+                    <div class="chart-container">
+                        <canvas id="progress-chart"></canvas>
+                    </div>
+                    
+                    <table class="progress-table">
+                        <thead>
+                            <tr>
+                                <th>Fecha</th>
+                                <th>Ejercicio</th>
+                                <th>Set 1</th>
+                                <th>Set 2</th>
+                                <th>Set 3</th>
+                                <th>Set 4</th>
+                            </tr>
+                        </thead>
+                        <tbody id="progress-data">
+                            <!-- Datos de progreso se llenan dinámicamente -->
+                        </tbody>
+                    </table>
+                    <div class="btn-container">
+                        <button class="btn btn-secondary" id="back-btn">
+                            <i class="fas fa-arrow-left"></i> Volver a ejercicios
+                        </button>
+                    </div>
+                </div>
+            </div>
+        </div>
+        
+        <footer>
+            <p>Plan de Ejercicios Semanal &copy; 2023 - Desarrollado para ayudarte a alcanzar tus metas fitness</p>
+        </footer>
+    </div>
 
-        function generateTableRows(exercise, exerciseIndex) {
-            let rows = '';
-            for (let i = 0; i < 4; i++) {
-                const setData = exercise.tracking[i] || { weight: '', reps: '' };
-                rows += `
-                    <tr>
-                        <td>${i + 1}</td>
-                        <td><input type="number" class="weight-input" data-set="${i}" data-exercise="${exerciseIndex}" value="${setData.weight}"></td>
-                        <td><input type="number" class="reps-input" data-set="${i}" data-exercise="${exerciseIndex}" value="${setData.reps}"></td>
-                    </tr>
-                `;
-            }
-            return rows;
-        }
-
-        function saveExerciseData(exerciseId) {
-            // Obtener partes del ID del ejercicio
-            const [routine, day, muscleGroup, index] = exerciseId.split('-');
-            
-            // Obtener todos los inputs para este ejercicio
-            const weightInputs = document.querySelectorAll(`.weight-input[data-exercise="${index}"]`);
-            const repsInputs = document.querySelectorAll(`.reps-input[data-exercise="${index}"]`);
-            
-            // Recopilar datos
-            const trackingData = {};
-            weightInputs.forEach((input, i) => {
-                const weight = input.value;
-                const reps = repsInputs[i].value;
-                
-                if (weight || reps) {
-                    trackingData[i] = {
-                        weight: weight,
-                        reps: reps
-                    };
-                }
-            });
-            
-            // Actualizar datos en memoria
-            exerciseData[routine][day][muscleGroup][index].tracking = trackingData;
-            
-            // Guardar en localStorage
-            saveProgressData();
-            
-            // Limpiar inputs después de guardar
-            weightInputs.forEach(input => input.value = '');
-            repsInputs.forEach(input => input.value = '');
-            
-            alert('Datos guardados correctamente!');
-        }
-
-        function saveProgressData() {
-            // Preparar datos para guardar
-            const saveData = {
-                exercises: exerciseData,
-                history: getHistoryData() || []
-            };
-            
-            // Agregar entrada actual al historial
-            const today = new Date().toISOString().split('T')[0];
-            Object.keys(exerciseData).forEach(routine => {
-                Object.keys(exerciseData[routine]).forEach(day => {
-                    Object.keys(exerciseData[routine][day]).forEach(muscleGroup => {
-                        exerciseData[routine][day][muscleGroup].forEach((exercise, index) => {
-                            if (Object.keys(exercise.tracking).length > 0) {
-                                // Buscar si ya existe una entrada para este ejercicio hoy
-                                const existingIndex = saveData.history.findIndex(entry => 
-                                    entry.date === today && 
-                                    entry.exercise === exercise.name
-                                );
-                                
-                                if (existingIndex !== -1) {
-                                    // Actualizar entrada existente
-                                    saveData.history[existingIndex].data = exercise.tracking;
-                                } else {
-                                    // Crear nueva entrada
-                                    saveData.history.push({
-                                        date: today,
-                                        routine: routine,
-                                        day: day,
-                                        muscleGroup: muscleGroup,
-                                        exercise: exercise.name,
-                                        data: exercise.tracking
-                                    });
-                                }
-                                
-                                // Limpiar datos de tracking después de guardar en historial
-                                exerciseData[routine][day][muscleGroup][index].tracking = {};
-                            }
-                        });
-                    });
-                });
-            });
-            
-            // Guardar en localStorage
-            localStorage.setItem('workoutProgress', JSON.stringify(saveData));
-        }
-
-        function getHistoryData() {
-            const savedData = localStorage.getItem('workoutProgress');
-            return savedData ? JSON.parse(savedData).history : [];
-        }
-
-        function showProgressModal() {
-            progressModal.style.display = 'block';
-            updateProgressFilters();
-            applyProgressFilters();
-        }
-
-        function updateProgressFilters() {
-            // Obtener datos del historial
-            const history = getHistoryData();
-            
-            // Obtener lista única de ejercicios
-            const exercises = [...new Set(history.map(entry => entry.exercise))];
-            
-            // Limpiar y actualizar filtro de ejercicios
-            exerciseFilter.innerHTML = '<option value="all">Todos los ejercicios</option>';
-            exercises.forEach(exercise => {
-                const option = document.createElement('option');
-                option.value = exercise;
-                option.textContent = exercise;
-                exerciseFilter.appendChild(option);
-            });
-            
-            // Establecer fecha actual por defecto
-            dateFilter.value = new Date().toISOString().split('T')[0];
-        }
-
-        function applyProgressFilters() {
-            const selectedExercise = exerciseFilter.value;
-            const selectedDate = dateFilter.value;
-            
-            const history = getHistoryData();
-            
-            // Filtrar datos según los filtros seleccionados
-            let filteredData = history;
-            if (selectedExercise !== 'all') {
-                filteredData = filteredData.filter(entry => entry.exercise === selectedExercise);
-            }
-            if (selectedDate) {
-                filteredData = filteredData.filter(entry => entry.date === selectedDate);
-            }
-            
-            // Actualizar tabla de progreso
-            updateProgressTable(filteredData);
-            
-            // Actualizar gráfico
-            updateProgressChart(filteredData);
-        }
-
-        function updateProgressTable(data) {
-            const tbody = progressTable.querySelector('tbody');
-            tbody.innerHTML = '';
-            
-            if (data.length === 0) {
-                const row = document.createElement('tr');
-                row.innerHTML = `<td colspan="6" style="text-align: center;">No hay datos disponibles</td>`;
-                tbody.appendChild(row);
-                return;
-            }
-            
-            data.forEach(entry => {
-                const row = document.createElement('tr');
-                
-                // Celda de fecha
-                const dateCell = document.createElement('td');
-                dateCell.textContent = entry.date;
-                row.appendChild(dateCell);
-                
-                // Celda de ejercicio
-                const exerciseCell = document.createElement('td');
-                exerciseCell.textContent = entry.exercise;
-                row.appendChild(exerciseCell);
-                
-                // Celdas de sets
-                for (let i = 0; i < 4; i++) {
-                    const setCell = document.createElement('td');
-                    if (entry.data[i]) {
-                        setCell.textContent = `${entry.data[i].weight} kg x ${entry.data[i].reps} reps`;
-                    } else {
-                        setCell.textContent = '-';
-                    }
-                    row.appendChild(setCell);
-                }
-                
-                tbody.appendChild(row);
-            });
-        }
-
-        function updateProgressChart(data) {
-            // Destruir gráfico existente si hay uno
-            if (progressChart) {
-                progressChart.destroy();
-            }
-            
-            // Agrupar datos por ejercicio y fecha
-            const exerciseData = {};
-            data.forEach(entry => {
-                if (!exerciseData[entry.exercise]) {
-                    exerciseData[entry.exercise] = {};
-                }
-                
-                if (!exerciseData[entry.exercise][entry.date]) {
-                    exerciseData[entry.exercise][entry.date] = [];
-                }
-                
-                // Calcular el peso promedio para este ejercicio en esta fecha
-                let totalWeight = 0;
-                let count = 0;
-                
-                Object.values(entry.data).forEach(set => {
-                    if (set.weight) {
-                        totalWeight += parseFloat(set.weight);
-                        count++;
-                    }
-                });
-                
-                const avgWeight = count > 0 ? totalWeight / count : 0;
-                exerciseData[entry.exercise][entry.date].push(avgWeight);
-            });
-            
-            // Preparar datos para el gráfico
-            const labels = [...new Set(data.map(entry => entry.date))].sort();
-            const datasets = [];
-            
-            // Colores para diferentes ejercicios
-            const colors = [
-                'rgba(54, 162, 235, 0.8)',
-                'rgba(255, 99, 132, 0.8)',
-                'rgba(75, 192, 192, 0.8)',
-                'rgba(255, 159, 64, 0.8)',
-                'rgba(153, 102, 255, 0.8)'
-            ];
-            
-            let colorIndex = 0;
-            
-            for (const [exercise, dates] of Object.entries(exerciseData)) {
-                const values = labels.map(date => {
-                    if (dates[date] && dates[date].length > 0) {
-                        // Calcular promedio para este día
-                        return dates[date].reduce((sum, val) => sum + val, 0) / dates[date].length;
-                    }
-                    return null;
-                });
-                
-                datasets.push({
-                    label: exercise,
-                    data: values,
-                    borderColor: colors[colorIndex % colors.length],
-                    backgroundColor: colors[colorIndex % colors.length].replace('0.8', '0.2'),
-                    fill: false,
-                    tension: 0.1
-                });
-                
-                colorIndex++;
-            }
-            
-            // Crear nuevo gráfico
-            progressChart = new Chart(progressChartCanvas, {
-                type: 'line',
-                data: {
-                    labels: labels,
-                    datasets: datasets
-                },
-                options: {
-                    responsive: true,
-                    maintainAspectRatio: false,
-                    scales: {
-                        y: {
-                            beginAtZero: true,
-                            title: {
-                                display: true,
-                                text: 'Peso Promedio (kg)'
-                            }
-                        },
-                        x: {
-                            title: {
-                                display: true,
-                                text: 'Fecha'
-                            }
-                        }
-                    }
-                }
-            });
-        }
-
-        function loadProgressData() {
-            const savedData = localStorage.getItem('workoutProgress');
-            if (savedData) {
-                const parsedData = JSON.parse(savedData);
-                
-                // Actualizar exerciseData con los datos guardados
-                if (parsedData.exercises) {
-                    Object.keys(parsedData.exercises).forEach(routine => {
-                        Object.keys(parsedData.exercises[routine]).forEach(day => {
-                            Object.keys(parsedData.exercises[routine][day]).forEach(muscleGroup => {
-                                parsedData.exercises[routine][day][muscleGroup].forEach((exercise, index) => {
-                                    if (exerciseData[routine] && 
-                                        exerciseData[routine][day] && 
-                                        exerciseData[routine][day][muscleGroup] &&
-                                        exerciseData[routine][day][muscleGroup][index]) {
-                                        exerciseData[routine][day][muscleGroup][index].tracking = exercise.tracking || {};
-                                    }
-                                });
-                            });
-                        });
-                    });
-                }
-            }
-        }
-    </script>
+    <script src="script.js"></script>
 </body>
 </html>
