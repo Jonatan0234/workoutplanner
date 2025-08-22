@@ -3,7 +3,7 @@ const exercisesData = {
     "pecho": [
         { 
             name: "Press de Banca", 
-            <img src="Pictures/DBbenchpress.gif" alt="DBbenchpress.gif">,
+            gif: "https://i.pinimg.com/originals/1f/ff/1c/1fff1c0f9d6b5f3d9f2e8a8e5a5a5a5a.gif",
             description: "Acostado en un banco, baja la barra al pecho y luego empuja hacia arriba. Mantén la espalda apoyada y los pies firmes en el suelo."
         },
         { 
@@ -105,7 +105,6 @@ const exercisesData = {
 };
 
 // Variables globales
-let currentExercise = null;
 let currentMuscleGroup = null;
 let progressChart = null;
 let currentRoutine = null;
@@ -117,7 +116,6 @@ const dayItems = document.querySelectorAll('.day-item');
 const muscleItems = document.querySelectorAll('.muscle-item');
 const exerciseTitle = document.getElementById('exercise-title');
 const exercisesContainer = document.getElementById('exercises-container');
-const setsContainer = document.getElementById('sets-container');
 const saveBtn = document.getElementById('save-btn');
 const showProgressBtn = document.getElementById('show-progress');
 const progressSection = document.getElementById('progress-section');
@@ -126,7 +124,6 @@ const muscleFilter = document.getElementById('muscle-filter');
 const dateFilter = document.getElementById('date-filter');
 const progressData = document.getElementById('progress-data');
 const backBtn = document.getElementById('back-btn');
-const selectedExerciseEl = document.getElementById('selected-exercise');
 const welcomeMessage = document.getElementById('welcome-message');
 const exerciseDisplay = document.getElementById('exercise-display');
 
@@ -199,7 +196,6 @@ document.addEventListener('DOMContentLoaded', () => {
     });
 
     // Botones
-    saveBtn.addEventListener('click', saveTraining);
     showProgressBtn.addEventListener('click', showProgress);
     backBtn.addEventListener('click', () => {
         progressSection.classList.remove('active');
@@ -209,9 +205,6 @@ document.addEventListener('DOMContentLoaded', () => {
     exerciseFilter.addEventListener('change', loadProgressData);
     muscleFilter.addEventListener('change', loadProgressData);
     dateFilter.addEventListener('change', loadProgressData);
-    
-    // Inicializar tabla de sets
-    generateSetsTable();
     
     // Cargar datos guardados
     initializeStorage();
@@ -234,67 +227,73 @@ function loadMuscleExercises(muscle) {
     
     if (exercises && exercises.length > 0) {
         // Mostrar todos los ejercicios
-        exercises.forEach(exercise => {
-            const exerciseCard = document.createElement('div');
-            exerciseCard.className = 'exercise-card';
-            exerciseCard.innerHTML = `
-                <img src="${exercise.gif}" alt="${exercise.name}">
-                <h3>${exercise.name}</h3>
-                <p>${exercise.description}</p>
+        exercises.forEach((exercise, index) => {
+            const exerciseItem = document.createElement('div');
+            exerciseItem.className = 'exercise-item';
+            exerciseItem.innerHTML = `
+                <div class="exercise-content">
+                    <div class="exercise-info">
+                        <img src="${exercise.gif}" alt="${exercise.name}" class="exercise-gif">
+                        <h3 class="exercise-name">${exercise.name}</h3>
+                        <p class="exercise-description">${exercise.description}</p>
+                    </div>
+                    <div class="exercise-tracking">
+                        <h3 class="tracking-title">Registra tu entrenamiento</h3>
+                        <table class="tracking-table">
+                            <thead>
+                                <tr>
+                                    <th>Set</th>
+                                    <th>Peso (kg)</th>
+                                    <th>Repeticiones</th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                ${generateSetsTable(index)}
+                            </tbody>
+                        </table>
+                        <button class="save-btn" data-exercise="${exercise.name}" data-index="${index}">
+                            <i class="fas fa-save"></i> Guardar
+                        </button>
+                    </div>
+                </div>
             `;
             
-            // Evento para seleccionar ejercicio
-            exerciseCard.addEventListener('click', () => {
-                // Quitar selección de otras tarjetas
-                document.querySelectorAll('.exercise-card').forEach(card => {
-                    card.classList.remove('selected');
-                });
-                
-                // Seleccionar esta tarjeta
-                exerciseCard.classList.add('selected');
-                currentExercise = exercise;
-                
-                // Actualizar ejercicio seleccionado
-                selectedExerciseEl.innerHTML = `<p>Ejercicio seleccionado: <strong>${exercise.name}</strong></p>`;
-            });
-            
-            exercisesContainer.appendChild(exerciseCard);
+            exercisesContainer.appendChild(exerciseItem);
         });
         
-        // Seleccionar el primer ejercicio por defecto
-        if (exercises.length > 0) {
-            exercisesContainer.querySelector('.exercise-card').click();
-        }
+        // Agregar event listeners a los botones de guardar
+        document.querySelectorAll('.save-btn').forEach(btn => {
+            btn.addEventListener('click', (e) => {
+                const exerciseName = e.target.getAttribute('data-exercise');
+                const exerciseIndex = e.target.getAttribute('data-index');
+                saveTraining(exerciseName, exerciseIndex);
+            });
+        });
     } else {
         exercisesContainer.innerHTML = '<p class="empty-message">No hay ejercicios disponibles para este grupo muscular</p>';
     }
 }
 
-// Generar tabla de sets
-function generateSetsTable() {
-    setsContainer.innerHTML = '';
-    
+// Generar tabla de sets para un ejercicio específico
+function generateSetsTable(exerciseIndex) {
+    let setsHTML = '';
     for (let i = 1; i <= 4; i++) {
-        const row = document.createElement('tr');
-        row.innerHTML = `
-            <td>Set ${i}</td>
-            <td><input type="number" min="0" step="0.5" class="weight-input" id="weight-set${i}" placeholder="0"></td>
-            <td><input type="number" min="0" class="reps-input" id="reps-set${i}" placeholder="0"></td>
+        setsHTML += `
+            <tr>
+                <td>Set ${i}</td>
+                <td><input type="number" min="0" step="0.5" class="weight-input" id="weight-${exerciseIndex}-set${i}" placeholder="0"></td>
+                <td><input type="number" min="0" class="reps-input" id="reps-${exerciseIndex}-set${i}" placeholder="0"></td>
+            </tr>
         `;
-        setsContainer.appendChild(row);
     }
+    return setsHTML;
 }
 
-// Guardar entrenamiento
-function saveTraining() {
-    if (!currentExercise) {
-        alert('Por favor selecciona un ejercicio primero.');
-        return;
-    }
-    
+// Guardar entrenamiento para un ejercicio específico
+function saveTraining(exerciseName, exerciseIndex) {
     const trainingData = {
         date: new Date().toISOString().split('T')[0],
-        exercise: currentExercise.name,
+        exercise: exerciseName,
         muscleGroup: currentMuscleGroup,
         routine: currentRoutine,
         day: currentDay,
@@ -303,8 +302,8 @@ function saveTraining() {
     
     // Recopilar datos de los sets
     for (let i = 1; i <= 4; i++) {
-        const weight = document.getElementById(`weight-set${i}`).value;
-        const reps = document.getElementById(`reps-set${i}`).value;
+        const weight = document.getElementById(`weight-${exerciseIndex}-set${i}`).value;
+        const reps = document.getElementById(`reps-${exerciseIndex}-set${i}`).value;
         
         if (weight || reps) {
             trainingData.sets.push({
@@ -327,8 +326,8 @@ function saveTraining() {
     
     // Limpiar formulario
     for (let i = 1; i <= 4; i++) {
-        document.getElementById(`weight-set${i}`).value = '';
-        document.getElementById(`reps-set${i}`).value = '';
+        document.getElementById(`weight-${exerciseIndex}-set${i}`).value = '';
+        document.getElementById(`reps-${exerciseIndex}-set${i}`).value = '';
     }
     
     alert('¡Entrenamiento guardado correctamente!');
