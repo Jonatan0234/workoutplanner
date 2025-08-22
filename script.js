@@ -3,7 +3,7 @@ const exercisesData = {
     "pecho": [
         { 
             name: "Press de Banca", 
-            img src="Pictures/1InclinedDBbenchpress.gif" alt="press de banca",
+            gif: "https://www.fitnessrxformen.com/wp-content/uploads/2016/09/Dumbbell-Incline-Press.gif",
             description: "Acostado en un banco, baja la barra al pecho y luego empuja hacia arriba. Mantén la espalda apoyada y los pies firmes en el suelo."
         },
         { 
