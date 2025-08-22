@@ -3,7 +3,7 @@ const exercisesData = {
     "pecho": [
         { 
             name: "Press de Banca", 
-            gif: "https://github.com/Jonatan0234/workoutplanner/blob/main/Pictures/1.%20Inclined%20DB%20bench%20press%203%20sets%20x5-8%20form%20failure.gif?raw=true",
+            <img src="Pictures/1. Inclined DB bench press 3 sets x5-8 form failure.gif" alt="Un gif animado">,
             description: "Acostado en un banco, baja la barra al pecho y luego empuja hacia arriba. Mantén la espalda apoyada y los pies firmes en el suelo."
         },
         { 
