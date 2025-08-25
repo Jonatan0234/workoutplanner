@@ -3,12 +3,12 @@ const exercisesData = {
     "pecho": [
         { 
             name: "Press de Banca", 
-            gif: "https://gymvisual.com/img/p/5/0/6/2/5062.gif",
+            gif: "Pictures/1.gif",
             description: "Acostado en un banco, baja la barra al pecho y luego empuja hacia arriba. Mantén la espalda apoyada y los pies firmes en el suelo."
         },
         { 
             name: "Press Inclinado con Mancuernas", 
-            gif: "https://www.fitnessrxformen.com/wp-content/uploads/2016/09/Dumbbell-Incline-Press.gif",
+            gif: "https://gymvisual.com/img/p/5/0/6/2/5062.gif",
             description: "Acostado en banco inclinado (30-45°), empuja las mancuernas hacia arriba hasta extender completamente los brazos."
         },
         { 
