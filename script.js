@@ -1,114 +1,9 @@
-// Datos de ejercicios con URLs de GIFs de ejemplo
-const exercisesData = {
-    "pecho": [
-        { 
-            name: "Primer", 
-            gif: "Pictures/Primer. -Banded external rotation 1-2sets x 12-15 sub Max.gif",
-            description: "Acostado en un banco, baja la barra al pecho y luego empuja hacia arriba. Mantén la espalda apoyada y los pies firmes en el suelo."
-        },
-        { 
-            name: "Press Inclinado con Mancuernas", 
-            gif: "Pictures/1.gif",
-            description: "Acostado en banco inclinado (30-45°), empuja las mancuernas hacia arriba hasta extender completamente los brazos."
-        },
-        { 
-            name: "Aperturas en Banco Plano", 
-            gif: "https://gymvisual.com/img/p/2/0/8/2/3/20823.gif",
-            description: "Acostado en banco plano, abre los brazos con mancuernas manteniendo una ligera flexión de codos, luego vuelve a la posición inicial."
-        }
-    ],
-    "triceps": [
-        { 
-            name: "Fondos en Paralelas", 
-            gif: "https://www.inspireusafoundation.org/wp-content/uploads/2022/04/triceps-dips.gif",
-            description: "Sujetado en barras paralelas, baja el cuerpo doblando los codos hasta formar 90°, luego empuja hacia arriba."
-        },
-        { 
-            name: "Extensiones de Tríceps con Polea", 
-            gif: "https://www.fitnessrxformen.com/wp-content/uploads/2016/09/Triceps-Pushdown.gif",
-            description: "De pie frente a polea alta, empuja la barra hacia abajo extendiendo los codos manteniendo los brazos pegados al cuerpo."
-        },
-        { 
-            name: "Press Francés", 
-            gif: "https://www.inspireusafoundation.org/wp-content/uploads/2023/06/lying-tricep-extension.gif",
-            description: "Acostado en banco, baja la barra hacia la frente manteniendo los codos apuntando al techo, luego extiende los brazos."
-        }
-    ],
-    "espalda": [
-        { 
-            name: "Dominadas", 
-            gif: "https://www.inspireusafoundation.org/wp-content/uploads/2022/05/pull-up.gif",
-            description: "Colgado de una barra con agarre prono, tira del cuerpo hacia arriba hasta que la barbilla supere la barra."
-        },
-        { 
-            name: "Remo con Barra", 
-            gif: "https://www.fitnessrxformen.com/wp-content/uploads/2016/09/Barbell-Row.gif",
-            description: "Inclinado hacia adelante con espalda recta, tira de la barra hacia el abdomen manteniendo los codos cerca del cuerpo."
-        },
-        { 
-            name: "Jalón al Pecho", 
-            gif: "https://www.inspireusafoundation.org/wp-content/uploads/2022/05/lat-pulldown.gif",
-            description: "Sentado en máquina con agarre ancho, tira de la barra hacia el pecho manteniendo el torso erguido."
-        }
-    ],
-    "biceps": [
-        { 
-            name: "Curl de Bíceps con Barra", 
-            gif: "https://www.fitnessrxformen.com/wp-content/uploads/2016/09/Barbell-Curl.gif",
-            description: "De pie con pies al ancho de hombros, levanta la barra flexionando los codos manteniéndolos pegados al cuerpo."
-        },
-        { 
-            name: "Curl Martillo", 
-            gif: "https://www.inspireusafoundation.org/wp-content/uploads/2022/05/hammer-curl.gif",
-            description: "De pie con mancuernas, levanta alternadamente con palmas mirándose, manteniendo los codos fijos."
-        },
-        { 
-            name: "Curl Concentrado", 
-            gif: "https://www.inspireusafoundation.org/wp-content/uploads/2022/05/concentration-curl.gif",
-            description: "Sentado, apoya el codo en el muslo interno y levanta la mancuerna concentrando el esfuerzo en el bíceps."
-        }
-    ],
-    "piernas": [
-        { 
-            name: "Sentadillas", 
-            gif: "https://www.fitnessrxformen.com/wp-content/uploads/2016/09/Barbell-Squat.gif",
-            description: "Con barra sobre hombros, baja el cuerpo doblando rodillas y cadera manteniendo la espalda recta, hasta que los muslos estén paralelos al suelo."
-        },
-        { 
-            name: "Prensa de Piernas", 
-            gif: "https://www.inspireusafoundation.org/wp-content/uploads/2022/05/leg-press.gif",
-            description: "Sentado en máquina, apoya los pies en la plataforma y empuja manteniendo la espalda apoyada y las rodillas alineadas con los pies."
-        },
-        { 
-            name: "Extensiones de Cuádriceps", 
-            gif: "https://www.inspireusafoundation.org/wp-content/uploads/2022/05/leg-extension.gif",
-            description: "Sentado en máquina, apoya los tobillos en los rodillos y extiende las piernas contra la resistencia, luego baja controladamente."
-        }
-    ],
-    "hombros": [
-        { 
-            name: "Press Militar", 
-            gif: "https://www.fitnessrxformen.com/wp-content/uploads/2016/09/Shoulder-Press.gif",
-            description: "De pie o sentado, levanta la barra por encima de la cabeza manteniendo el core activo y los pies firmes."
-        },
-        { 
-            name: "Elevaciones Laterales", 
-            gif: "https://www.inspireusafoundation.org/wp-content/uploads/2022/05/lateral-raise.gif",
-            description: "De pie con ligera flexión de rodillas, levanta mancuernas a los lados hasta altura de hombros con codos ligeramente flexionados."
-        },
-        { 
-            name: "Face Pull", 
-            gif: "https://www.inspireusafoundation.org/wp-content/uploads/2022/05/face-pull.gif",
-            description: "Con polea a altura de cara, tira de la cuerda hacia la frente separando las manos al final del movimiento."
-        }
-    ]
-};
-
 // Variables globales
 let currentMuscleGroup = null;
 let progressChart = null;
 let currentRoutine = null;
 let currentDay = null;
+
 
 // Elementos DOM
 const routineHeaders = document.querySelectorAll('.routine-header');
@@ -116,7 +11,6 @@ const dayItems = document.querySelectorAll('.day-item');
 const muscleItems = document.querySelectorAll('.muscle-item');
 const exerciseTitle = document.getElementById('exercise-title');
 const exercisesContainer = document.getElementById('exercises-container');
-const saveBtn = document.getElementById('save-btn');
 const showProgressBtn = document.getElementById('show-progress');
 const progressSection = document.getElementById('progress-section');
 const exerciseFilter = document.getElementById('exercise-filter');
@@ -126,6 +20,10 @@ const progressData = document.getElementById('progress-data');
 const backBtn = document.getElementById('back-btn');
 const welcomeMessage = document.getElementById('welcome-message');
 const exerciseDisplay = document.getElementById('exercise-display');
+const progressModal = document.getElementById('progress-modal');
+const closeModalBtn = document.getElementById('close-modal');
+const clearHistoryBtn = document.getElementById('clear-history');
+
 
 // Inicializar la aplicación
 document.addEventListener('DOMContentLoaded', () => {
@@ -135,12 +33,12 @@ document.addEventListener('DOMContentLoaded', () => {
             e.stopPropagation();
             const routine = item.getAttribute('data-routine');
             currentRoutine = routine;
-            
+
             // Alternar la clase active en el submenu de la rutina
             const submenu = item.nextElementSibling;
             submenu.classList.toggle('active');
             item.classList.toggle('active');
-            
+
             // Cerrar otros submenús de rutinas
             document.querySelectorAll('.routine-header').forEach(r => {
                 if (r !== item) {
@@ -150,21 +48,52 @@ document.addEventListener('DOMContentLoaded', () => {
             });
         });
     });
+    
+    // Event listeners para el modal
+    closeModalBtn.addEventListener('click', () => {
+        progressModal.style.display = 'none';
+    });
 
+    document.querySelector('.close').addEventListener('click', () => {
+        progressModal.style.display = 'none';
+    });
+
+    window.addEventListener('click', (event) => {
+        if (event.target === progressModal) {
+            progressModal.style.display = 'none';
+        }
+    });
+
+
+        // Event listener para borrar historial
+        clearHistoryBtn.addEventListener('click', () => {
+            if (confirm('¿Estás seguro de que quieres borrar todo el historial? Esta acción no se puede deshacer.')) {
+                localStorage.setItem('workoutTrainings', JSON.stringify([]));
+                loadProgressData();
+                alert('Historial borrado correctamente.');
+            }
+        });
+    
+
+
+    
+
+    
+    
     // Event listeners para los días
     dayItems.forEach(item => {
         item.addEventListener('click', (e) => {
             e.stopPropagation();
             const day = item.getAttribute('data-day');
             currentDay = day;
-            
+
             // Encontrar el submenu de músculos (siguiente elemento hermano)
             const muscleSubmenu = item.nextElementSibling;
-            
+
             // Alternar la visibilidad del submenu de músculos
             muscleSubmenu.classList.toggle('active');
             item.classList.toggle('active');
-            
+
             // Cerrar otros submenús de músculos en el mismo día
             const parentDay = item.parentElement;
             parentDay.parentElement.querySelectorAll('.muscle-submenu').forEach(menu => {
@@ -172,7 +101,7 @@ document.addEventListener('DOMContentLoaded', () => {
                     menu.classList.remove('active');
                 }
             });
-            
+
             // También quitamos la clase active de otros días en la misma rutina
             parentDay.parentElement.querySelectorAll('.day-item').forEach(dayItem => {
                 if (dayItem !== item) {
@@ -186,11 +115,11 @@ document.addEventListener('DOMContentLoaded', () => {
         item.addEventListener('click', (e) => {
             e.stopPropagation();
             const muscle = item.getAttribute('data-muscle');
-            
+
             // Resaltar selección actual
             muscleItems.forEach(m => m.classList.remove('current-selection'));
             item.classList.add('current-selection');
-            
+
             loadMuscleExercises(muscle);
         });
     });
@@ -200,12 +129,12 @@ document.addEventListener('DOMContentLoaded', () => {
     backBtn.addEventListener('click', () => {
         progressSection.classList.remove('active');
     });
-    
+
     // Filtros
     exerciseFilter.addEventListener('change', loadProgressData);
     muscleFilter.addEventListener('change', loadProgressData);
     dateFilter.addEventListener('change', loadProgressData);
-    
+
     // Cargar datos guardados
     initializeStorage();
 });
@@ -213,18 +142,20 @@ document.addEventListener('DOMContentLoaded', () => {
 // Cargar ejercicios de un grupo muscular
 function loadMuscleExercises(muscle) {
     currentMuscleGroup = muscle;
-    const exercises = exercisesData[muscle];
-    
+    // Obtener ejercicios para el día actual
+    const exercises = exercisesData[`day${currentDay}`][muscle];
+
+
     // Ocultar mensaje de bienvenida y mostrar ejercicios
     welcomeMessage.style.display = 'none';
     exerciseDisplay.style.display = 'block';
-    
+
     // Actualizar título
     exerciseTitle.textContent = `${currentRoutine} - Day ${currentDay} - ${muscle.charAt(0).toUpperCase() + muscle.slice(1)}`;
-    
+
     // Limpiar contenedor de ejercicios
     exercisesContainer.innerHTML = '';
-    
+
     if (exercises && exercises.length > 0) {
         // Mostrar todos los ejercicios
         exercises.forEach((exercise, index) => {
@@ -257,10 +188,10 @@ function loadMuscleExercises(muscle) {
                     </div>
                 </div>
             `;
-            
+
             exercisesContainer.appendChild(exerciseItem);
         });
-        
+
         // Agregar event listeners a los botones de guardar
         document.querySelectorAll('.save-btn').forEach(btn => {
             btn.addEventListener('click', (e) => {
@@ -299,12 +230,12 @@ function saveTraining(exerciseName, exerciseIndex) {
         day: currentDay,
         sets: []
     };
-    
+
     // Recopilar datos de los sets
     for (let i = 1; i <= 4; i++) {
         const weight = document.getElementById(`weight-${exerciseIndex}-set${i}`).value;
         const reps = document.getElementById(`reps-${exerciseIndex}-set${i}`).value;
-        
+
         if (weight || reps) {
             trainingData.sets.push({
                 set: i,
@@ -313,40 +244,79 @@ function saveTraining(exerciseName, exerciseIndex) {
             });
         }
     }
-    
+
     if (trainingData.sets.length === 0) {
-        alert('Por favor ingresa datos para al menos un set.');
-        return;
+        return; // No mostrar alerta, simplemente no guardar
     }
-    
+
     // Guardar en localStorage
     const savedTrainings = JSON.parse(localStorage.getItem('workoutTrainings')) || [];
     savedTrainings.push(trainingData);
     localStorage.setItem('workoutTrainings', JSON.stringify(savedTrainings));
-    
+
     // Limpiar formulario
     for (let i = 1; i <= 4; i++) {
         document.getElementById(`weight-${exerciseIndex}-set${i}`).value = '';
         document.getElementById(`reps-${exerciseIndex}-set${i}`).value = '';
     }
-    
-    alert('¡Entrenamiento guardado correctamente!');
+
+    // No mostrar mensaje de confirmación
 }
 
 // Mostrar sección de progreso
 function showProgress() {
-    progressSection.classList.add('active');
+    progressModal.style.display = 'block';
     loadProgressData();
     updateExerciseFilter();
 }
+
+
+// Reemplazar la función showProgress
+function showProgress() {
+    const modal = document.getElementById('progress-modal');
+    modal.style.display = 'block';
+    loadProgressData();
+    updateExerciseFilter();
+}
+
+// Agregar event listeners para cerrar el modal
+document.querySelector('.close').addEventListener('click', () => {
+    document.getElementById('progress-modal').style.display = 'none';
+});
+
+document.getElementById('close-modal').addEventListener('click', () => {
+    document.getElementById('progress-modal').style.display = 'none';
+});
+
+// Cerrar modal si se hace clic fuera del contenido
+window.addEventListener('click', (event) => {
+    const modal = document.getElementById('progress-modal');
+    if (event.target === modal) {
+        modal.style.display = 'none';
+    }
+});
+
+// Función para borrar historial
+document.getElementById('clear-history').addEventListener('click', () => {
+    if (confirm('¿Estás seguro de que quieres borrar todo el historial? Esta acción no se puede deshacer.')) {
+        localStorage.setItem('workoutTrainings', JSON.stringify([]));
+        loadProgressData(); // Recargar los datos (que estarán vacíos)
+    }
+});
+
+// Eliminar la sección de progreso del display-section ya que ahora está en el modal
+// En index.html, quité la sección progress-section que estaba en display-section
+
+
+
 
 // Actualizar filtro de ejercicios
 function updateExerciseFilter() {
     const savedTrainings = JSON.parse(localStorage.getItem('workoutTrainings')) || [];
     const exercises = [...new Set(savedTrainings.map(t => t.exercise))];
-    
+
     exerciseFilter.innerHTML = '<option value="all">Todos los ejercicios</option>';
-    
+
     exercises.forEach(exercise => {
         const option = document.createElement('option');
         option.value = exercise;
@@ -360,27 +330,27 @@ function loadProgressData() {
     const selectedExercise = exerciseFilter.value;
     const selectedMuscle = muscleFilter.value;
     const selectedDate = dateFilter.value;
-    
+
     const savedTrainings = JSON.parse(localStorage.getItem('workoutTrainings')) || [];
-    
+
     // Filtrar datos
     let filteredTrainings = savedTrainings;
-    
+
     if (selectedExercise !== 'all') {
         filteredTrainings = filteredTrainings.filter(t => t.exercise === selectedExercise);
     }
-    
+
     if (selectedMuscle !== 'all') {
         filteredTrainings = filteredTrainings.filter(t => t.muscleGroup === selectedMuscle);
     }
-    
+
     if (selectedDate) {
         filteredTrainings = filteredTrainings.filter(t => t.date === selectedDate);
     }
-    
+
     // Actualizar tabla
     updateProgressTable(filteredTrainings);
-    
+
     // Actualizar gráfica
     updateProgressChart(filteredTrainings);
 }
@@ -388,22 +358,22 @@ function loadProgressData() {
 // Actualizar tabla de progreso
 function updateProgressTable(trainings) {
     progressData.innerHTML = '';
-    
+
     if (trainings.length === 0) {
         progressData.innerHTML = '<tr><td colspan="6" class="empty-message">No hay datos de entrenamiento registrados</td></tr>';
         return;
     }
-    
+
     trainings.forEach(training => {
         const row = document.createElement('tr');
-        
+
         // Crear celdas para cada set
         let setsHtml = '';
         for (let i = 1; i <= 4; i++) {
             const setData = training.sets.find(s => s.set === i);
             setsHtml += `<td>${setData ? `${setData.weight || '0'} kg x ${setData.reps || '0'} reps` : '-'}</td>`;
         }
-        
+
         row.innerHTML = `
             <td>${training.date}</td>
             <td>${training.exercise}</td>
@@ -416,12 +386,12 @@ function updateProgressTable(trainings) {
 // Actualizar gráfica de progreso
 function updateProgressChart(trainings) {
     const ctx = document.getElementById('progress-chart').getContext('2d');
-    
+
     // Destruir gráfica anterior si existe
     if (progressChart) {
         progressChart.destroy();
     }
-    
+
     if (trainings.length === 0) {
         // Mostrar mensaje si no hay datos
         ctx.clearRect(0, 0, ctx.canvas.width, ctx.canvas.height);
@@ -431,11 +401,11 @@ function updateProgressChart(trainings) {
         ctx.fillText('No hay datos para mostrar', ctx.canvas.width / 2, ctx.canvas.height / 2);
         return;
     }
-    
+
     // Preparar datos para la gráfica
     const dates = [...new Set(trainings.map(t => t.date))].sort();
     const exercise = trainings[0].exercise;
-    
+
     // Calcular el peso máximo por fecha
     const maxWeightData = {};
     trainings.forEach(training => {
@@ -444,9 +414,9 @@ function updateProgressChart(trainings) {
             maxWeightData[training.date] = maxWeight;
         }
     });
-    
+
     const weightValues = dates.map(date => maxWeightData[date]);
-    
+
     // Crear gráfica
     progressChart = new Chart(ctx, {
         type: 'line',
