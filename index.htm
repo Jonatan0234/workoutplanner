@@ -10,6 +10,74 @@
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
 </head>
 <body>
+
+
+    
+    <!-- Modal para el progreso -->
+    <div id="progress-modal" class="modal">
+        <div class="modal-content">
+            <span class="close">&times;</span>
+            <h2 class="exercise-title">Tu Progreso</h2>
+
+            <div class="filter-section">
+                <div class="filter-group">
+                    <label for="exercise-filter">Filtrar por ejercicio:</label>
+                    <select id="exercise-filter">
+                        <option value="all">Todos los ejercicios</option>
+                    </select>
+                </div>
+
+                <div class="filter-group">
+                    <label for="date-filter">Filtrar por fecha:</label>
+                    <input type="date" id="date-filter">
+                </div>
+
+                <div class="filter-group">
+                    <label for="muscle-filter">Filtrar por grupo muscular:</label>
+                    <select id="muscle-filter">
+                        <option value="all">Todos los grupos</option>
+                        <option value="pecho">Pecho</option>
+                        <option value="triceps">Tríceps</option>
+                        <option value="espalda">Espalda</option>
+                        <option value="biceps">Bíceps</option>
+                        <option value="piernas">Piernas</option>
+                        <option value="hombros">Hombros</option>
+                    </select>
+                </div>
+            </div>
+
+            <div class="chart-container">
+                <canvas id="progress-chart"></canvas>
+            </div>
+
+            <table class="progress-table">
+                <thead>
+                    <tr>
+                        <th>Fecha</th>
+                        <th>Ejercicio</th>
+                        <th>Set 1</th>
+                        <th>Set 2</th>
+                        <th>Set 3</th>
+                        <th>Set 4</th>
+                    </tr>
+                </thead>
+                <tbody id="progress-data">
+                </tbody>
+            </table>
+            <div class="btn-container">
+                <button class="btn btn-danger" id="clear-history">
+                    <i class="fas fa-trash"></i> Borrar Historial Completo
+                </button>
+                <button class="btn btn-secondary" id="close-modal">
+                    <i class="fas fa-times"></i> Cerrar
+                </button>
+            </div>
+        </div>
+    </div>
+
+
+    
+    
     <div class="container">
         <header>
             <div class="header-content">
@@ -185,7 +253,7 @@
                             </div>
                             <div class="instruction">
                                 <div class="number">2</div>
-                                <p>Elige el día de tu rutina</p>
+                                <p>Elige el día de your rutina</p>
                             </div>
                             <div class="instruction">
                                 <div class="number">3</div>
@@ -271,6 +339,8 @@
         </footer>
     </div>
 
+    <!-- Incluir la base de datos primero -->
+    <script src="database.js"></script>
     <script src="script.js"></script>
 </body>
 </html>
