@@ -2,7 +2,7 @@
 const exercisesData = {
     "pecho": [
         { 
-            name: "Press de Banca", 
+            name: "Primer", 
             gif: "Pictures/Primer. -Banded external rotation 1-2sets x 12-15 sub Max.gif",
             description: "Acostado en un banco, baja la barra al pecho y luego empuja hacia arriba. Mantén la espalda apoyada y los pies firmes en el suelo."
         },
