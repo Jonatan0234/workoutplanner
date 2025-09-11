@@ -8,15 +8,46 @@ const exercisesData = {
                 description: "Keep your elbow at 90° by your side and rotate your forearm outward against the band to strengthen the rotator cuff."
             },
             { 
-                name: "Press Inclinado con Mancuernas", 
-                gif: "Pictures/1.gif",
-                description: "Acostado en banco inclinado (30-45°), empuja las mancuernas hacia arriba hasta extender completamente los brazos."
+                name: "1. Incline DB bench press 3 sets x5-8 form failure.gif", 
+                gif: "Pictures/1. Incline DB bench press 3 sets x5-8 form failure.gif",
+                description: "Press dumbbells upward on an incline bench to target upper chest and shoulders."
             },
             { 
-                name: "Aperturas en Banco Plano", 
-                gif: "https://gymvisual.com/img/p/2/0/8/2/3/20823.gif",
-                description: "Acostado en banco plano, abre los brazos con mancuernas manteniendo una ligera flexión de codos, luego vuelve a la posición inicial."
+                name: "2. crossovers 3 sets x10-12", 
+                gif: "Pictures/2. crossovers 3 sets x10-12.gif",
+                description: "Pull the cables together in front of your chest to build and define the pectorals."
+            },
+            { 
+                name: "2.1. crossovers 3 sets x10-12 (+partials)", 
+                gif: "Pictures/2.1. crossovers 3 sets x10-12 (+partials).gif",
+                description: "Pull the cables together in front of your chest to build and define the pectorals."
+            },
+            { 
+                name: "3. DB floor flys 2-3sets x8-10", 
+                gif: "Pictures/3. DB floor flys 2-3sets x8-10.gif",
+                description: "Lying on the floor, open and close your arms with dumbbells to work the chest safely."
+            },
+            { 
+                name: "3.1. DB floor flys 2-3sets x8-10 (+ eccentric only)", 
+                gif: "Pictures/3.1. DB floor flys 2-3sets x8-10 (+ eccentric only).gif",
+                description: "Lying on the floor, open and close your arms with dumbbells to work the chest safely."
+            },
+            { 
+                name: "4. Deficit 1.5 Rep pushup ladder 1set xfailure", 
+                gif: "Pictures/4. Deficit 1.5 Rep pushup ladder 1set xfailure.gif",
+                description: "Do push-ups on raised platforms with a half rep added each time to increase chest and triceps strength."
+            },
+            { 
+                name: "5. Bodyweight dips 1set xfailure", 
+                gif: "Pictures/5. Bodyweight dips 1set xfailure.gif",
+                description: "Lower and press your body between parallel bars to target chest, shoulders, and triceps."
+            },
+            { 
+                name: "5.1 Bodyweight dips 1set xfailure (+Partials)", 
+                gif: "Pictures/5.1 Bodyweight dips 1set xfailure (+Partials).gif",
+                description: "Lower and press your body between parallel bars to target chest, shoulders, and triceps."
             }
+            
         ],
         "triceps": [
             { 
