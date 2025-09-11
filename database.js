@@ -8,7 +8,7 @@ const exercisesData = {
                 description: "Keep your elbow at 90° by your side and rotate your forearm outward against the band to strengthen the rotator cuff."
             },
             { 
-                name: "1. Incline DB bench press 3 sets x5-8 form failure.gif", 
+                name: "1. Incline DB bench press 3 sets x5-8 form failure.", 
                 gif: "Pictures/1. Incline DB bench press 3 sets x5-8 form failure.gif",
                 description: "Press dumbbells upward on an incline bench to target upper chest and shoulders."
             },
