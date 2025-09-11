@@ -1,11 +1,11 @@
 // Base de datos de ejercicios - Ahora con días separados
 const exercisesData = {
     "day1": {
-        "pecho": [
+        "chest": [
             { 
                 name: "Primer", 
                 gif: "Pictures/Primer. -Banded external rotation 1-2sets x 12-15 sub Max.gif",
-                description: "Acostado en un banco, baja la barra al pecho y luego empuja hacia arriba. Mantén la espalda apoyada y los pies firmes en el suelo."
+                description: "Keep your elbow at 90° by your side and rotate your forearm outward against the band to strengthen the rotator cuff."
             },
             { 
                 name: "Press Inclinado con Mancuernas", 
