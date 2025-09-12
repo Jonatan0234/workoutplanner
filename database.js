@@ -19,7 +19,7 @@ const exercisesData = {
             },
             { 
                 name: "2.1. crossovers 3 sets x10-12 +partials", 
-                gif: "Pictures/Chest/Day1/2.1. crossovers 3 sets x10-12 (+partials).gif",
+                gif: "Pictures/Chest/Day1/2.1. crossovers 3 sets x10-12 +partials.gif",
                 description: "Pull the cables together in front of your chest to build and define the pectorals."
             },
             { 
@@ -29,7 +29,7 @@ const exercisesData = {
             },
             { 
                 name: "3.1. DB floor flys 2-3sets x8-10 + eccentric only", 
-                gif: "Pictures/Chest/Day1/3.1. DB floor flys 2-3sets x8-10 (+ eccentric only).gif",
+                gif: "Pictures/Chest/Day1/3.1. DB floor flys 2-3sets x8-10 + eccentric only.gif",
                 description: "Lying on the floor, open and close your arms with dumbbells to work the chest safely."
             },
             { 
@@ -44,7 +44,7 @@ const exercisesData = {
             },
             { 
                 name: "5.1 Bodyweight dips 1set xfailure +Partials", 
-                gif: "Pictures/Chest/Day1/5.1 Bodyweight dips 1set xfailure (+Partials).gif",
+                gif: "Pictures/Chest/Day1/5.1 Bodyweight dips 1set xfailure +Partials.gif",
                 description: "Lower and press your body between parallel bars to target chest, shoulders, and triceps."
             }
             
