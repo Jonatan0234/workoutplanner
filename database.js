@@ -52,7 +52,7 @@ const exercisesData = {
         "triceps": [
             { 
                 name: "Fondos en Paralelas", 
-                gif: "https://www.inspireusafoundation.org/wp-content/uploads/2022/04/triceps-dips.gif",
+                gif: "Pictures/Chest/Day2/Primer. -Band pull aparts 1-2sets 10-15 sub max.gif",
                 description: "Sujetado en barras paralelas, baja el cuerpo doblando los codos hasta formar 90°, luego empuja hacia arriba."
             },
             { 
