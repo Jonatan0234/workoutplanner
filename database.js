@@ -29,7 +29,7 @@ const exercisesData = {
             },
             { 
                 name: "3.1. DB floor flys 2-3sets x8-10 (+ eccentric only)", 
-                gif: "Pictures/3.1. DB floor flys 2-3sets x8-10 (+ eccentric only).gif",
+                gif: "Pictures/Chest/Day1/3.1. DB floor flys 2-3sets x8-10 (+ eccentric only).gif",
                 description: "Lying on the floor, open and close your arms with dumbbells to work the chest safely."
             },
             { 
