@@ -1,7 +1,7 @@
 // Base de datos de ejercicios - Ahora con días separados
 const exercisesData = {
     "day1": {
-     "chest": [
+     "pecho": [
             { 
                 name: "Fondos en Paralelas", 
                 gif: "Pictures/Chest/Day2/Primer. -Band pull aparts 1-2sets 10-15 sub max.gif",
