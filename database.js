@@ -1,7 +1,7 @@
 // Base de datos de ejercicios - Ahora con días separados
 const exercisesData = {
     "day1": {
-     "pecho": [
+     "chest": [
             { 
                 name: "Primer", 
                 gif: "Pictures/Chest/Day1/Primer.gif",
@@ -71,7 +71,7 @@ const exercisesData = {
                 description: "Acostado en banco, baja la barra hacia la frente manteniendo los codos apuntando al techo, luego extiende los brazos."
             }
         ],
-        "espalda": [
+        "back": [
             { 
                 name: "Dominadas", 
                 gif: "https://www.inspireusafoundation.org/wp-content/uploads/2022/05/pull-up.gif",
@@ -105,7 +105,7 @@ const exercisesData = {
                 description: "Sentado, apoya el codo en el muslo interno y levanta la mancuerna concentrando el esfuerzo en el bíceps."
             }
         ],
-        "piernas": [
+        "legs": [
             { 
                 name: "Sentadillas", 
                 gif: "https://www.fitnessrxformen.com/wp-content/uploads/2016/09/Barbell-Squat.gif",
@@ -122,7 +122,7 @@ const exercisesData = {
                 description: "Sentado en máquina, apoya los tobillos en los rodillos y extiende las piernas contra la resistencia, luego baja controladamente."
             }
         ],
-        "hombros": [
+        "shoulders": [
             { 
                 name: "Press Militar", 
                 gif: "https://www.fitnessrxformen.com/wp-content/uploads/2016/09/Shoulder-Press.gif",
@@ -141,7 +141,7 @@ const exercisesData = {
         ]
     },
     "day2": {
-        "pecho": [
+        "chest": [
             { 
                 name: "Press Declinado con Barra", 
                 gif: "https://www.fitnessrxformen.com/wp-content/uploads/2016/09/Decline-Bench-Press.gif",
@@ -175,7 +175,7 @@ const exercisesData = {
                 description: "Inclinado, extiende el brazo hacia atrás con una mancuerna para aislar el tríceps."
             }
         ],
-        "espalda": [
+        "back": [
             { 
                 name: "Remo con Mancuerna a una Mano", 
                 gif: "https://www.fitnessrxformen.com/wp-content/uploads/2016/09/Dumbbell-Row.gif",
@@ -209,7 +209,7 @@ const exercisesData = {
                 description: "De pie frente a polea baja, realiza curl de bíceps con cable para tensión constante."
             }
         ],
-        "piernas": [
+        "legs": [
             { 
                 name: "Sentadillas Frontales", 
                 gif: "https://www.fitnessrxformen.com/wp-content/uploads/2016/09/Front-Squat.gif",
@@ -226,7 +226,7 @@ const exercisesData = {
                 description: "Tumbado boca abajo, flexiona las piernas para trabajar isquiotibiales."
             }
         ],
-        "hombros": [
+        "shoulders": [
             { 
                 name: "Press Arnold", 
                 gif: "https://www.inspireusafoundation.org/wp-content/uploads/2022/05/arnold-press.gif",
