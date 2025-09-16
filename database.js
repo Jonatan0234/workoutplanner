@@ -2,25 +2,50 @@
 const exercisesData = {
     "day1": {
      "pecho": [
-            { 
-                name: "Fondos en Paralelas", 
-                gif: "Pictures/Chest/Day2/Primer. -Band pull aparts 1-2sets 10-15 sub max.gif",
-                description: "Sujetado en barras paralelas, baja el cuerpo doblando los codos hasta formar 90°, luego empuja hacia arriba."
+                        { 
+                name: "Primer", 
+                gif: "Pictures/Chest/Day1/Primer.gif",
+                description: "Keep your elbow at 90° by your side and rotate your forearm outward against the band to strengthen the rotator cuff."
             },
             { 
-                name: "Fondos en Paralelas", 
-                gif: "Pictures/Chest/Day2/Primer. -Band pull aparts 1-2sets 10-15 sub max.gif",
-                description: "Sujetado en barras paralelas, baja el cuerpo doblando los codos hasta formar 90°, luego empuja hacia arriba."
-            },            
-            { 
-                name: "Extensiones de Tríceps con Polea", 
-                gif: "https://www.fitnessrxformen.com/wp-content/uploads/2016/09/Triceps-Pushdown.gif",
-                description: "De pie frente a polea alta, empuja la barra hacia abajo extendiendo los codos manteniendo los brazos pegados al cuerpo."
+                name: "1. Incline DB bench press 3 sets x5-8 form failure.", 
+                gif: "Pictures/Chest/Day1/1.gif",
+                description: "Press dumbbells upward on an incline bench to target upper chest and shoulders."
             },
             { 
-                name: "Press Francés", 
-                gif: "https://www.inspireusafoundation.org/wp-content/uploads/2023/06/lying-tricep-extension.gif",
-                description: "Acostado en banco, baja la barra hacia la frente manteniendo los codos apuntando al techo, luego extiende los brazos."
+                name: "2. crossovers 3 sets x10-12", 
+                gif: "Pictures/Chest/Day1/2.gif",
+                description: "Pull the cables together in front of your chest to build and define the pectorals."
+            },
+            { 
+                name: "2.1. crossovers 3 sets x10-12 +partials", 
+                gif: "Pictures/Chest/Day1/2-1.gif",
+                description: "Pull the cables together in front of your chest to build and define the pectorals."
+            },
+            { 
+                name: "3. DB floor flys 2-3sets x8-10", 
+                gif: "Pictures/Chest/Day1/3.gif",
+                description: "Lying on the floor, open and close your arms with dumbbells to work the chest safely."
+            },
+            { 
+                name: "3.1. DB floor flys 2-3sets x8-10 + eccentric only", 
+                gif: "Pictures/Chest/Day1/3-1.gif",
+                description: "Lying on the floor, open and close your arms with dumbbells to work the chest safely."
+            },
+            { 
+                name: "4. Deficit 1.5 Rep pushup ladder 1set xfailure", 
+                gif: "Pictures/Chest/Day1/4.gif",
+                description: "Do push-ups on raised platforms with a half rep added each time to increase chest and triceps strength."
+            },
+            { 
+                name: "5. Bodyweight dips 1set xfailure", 
+                gif: "Pictures/Chest/Day1/5.gif",
+                description: "Lower and press your body between parallel bars to target chest, shoulders, and triceps."
+            },
+            { 
+                name: "5.1 Bodyweight dips 1set xfailure +Partials", 
+                gif: "Pictures/Chest/Day1/5-1.gif",
+                description: "Lower and press your body between parallel bars to target chest, shoulders, and triceps."
             }
         ],
                 
