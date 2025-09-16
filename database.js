@@ -1,14 +1,29 @@
 // Base de datos de ejercicios - Ahora con días separados
 const exercisesData = {
     "day1": {
-        "chest": [
+     "chest": [
             { 
                 name: "Fondos en Paralelas", 
                 gif: "Pictures/Chest/Day2/Primer. -Band pull aparts 1-2sets 10-15 sub max.gif",
                 description: "Sujetado en barras paralelas, baja el cuerpo doblando los codos hasta formar 90°, luego empuja hacia arriba."
+            },
+            { 
+                name: "Fondos en Paralelas", 
+                gif: "Pictures/Chest/Day2/Primer. -Band pull aparts 1-2sets 10-15 sub max.gif",
+                description: "Sujetado en barras paralelas, baja el cuerpo doblando los codos hasta formar 90°, luego empuja hacia arriba."
+            },            
+            { 
+                name: "Extensiones de Tríceps con Polea", 
+                gif: "https://www.fitnessrxformen.com/wp-content/uploads/2016/09/Triceps-Pushdown.gif",
+                description: "De pie frente a polea alta, empuja la barra hacia abajo extendiendo los codos manteniendo los brazos pegados al cuerpo."
+            },
+            { 
+                name: "Press Francés", 
+                gif: "https://www.inspireusafoundation.org/wp-content/uploads/2023/06/lying-tricep-extension.gif",
+                description: "Acostado en banco, baja la barra hacia la frente manteniendo los codos apuntando al techo, luego extiende los brazos."
             }
-            
         ],
+                
         "triceps": [
             { 
                 name: "Fondos en Paralelas", 
