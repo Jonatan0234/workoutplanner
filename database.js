@@ -2,7 +2,7 @@
 const exercisesData = {
     "day1": {
      "pecho": [
-                        { 
+            { 
                 name: "Primer", 
                 gif: "Pictures/Chest/Day1/Primer.gif",
                 description: "Keep your elbow at 90° by your side and rotate your forearm outward against the band to strengthen the rotator cuff."
