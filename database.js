@@ -51,9 +51,9 @@ const exercisesData = {
                 
         "triceps": [
             { 
-                name: "Fondos en Paralelas", 
-                gif: "Pictures/Chest/Day2/Primer. -Band pull aparts 1-2sets 10-15 sub max.gif",
-                description: "Sujetado en barras paralelas, baja el cuerpo doblando los codos hasta formar 90°, luego empuja hacia arriba."
+                name: "1. Triceps Pushdowns 2-3sets x6-8 FF", 
+                gif: "Pictures/Triceps/Day1/1.gif",
+                description: "Stand at the cable machine with a slight lean. Keep elbows fixed to your sides. Push the weight down until arms are straight, flexing the triceps. Control the return."
             },
             { 
                 name: "Fondos en Paralelas", 
