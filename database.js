@@ -56,20 +56,35 @@ const exercisesData = {
                 description: "Stand at the cable machine with a slight lean. Keep elbows fixed to your sides. Push the weight down until arms are straight, flexing the triceps. Control the return."
             },
             { 
-                name: "Fondos en Paralelas", 
-                gif: "Pictures/Chest/Day2/Primer. -Band pull aparts 1-2sets 10-15 sub max.gif",
-                description: "Sujetado en barras paralelas, baja el cuerpo doblando los codos hasta formar 90°, luego empuja hacia arriba."
+                name: "2. lying DB extensions 2-3sets x8-10 + eccentric only", 
+                gif: "Pictures/Chest/Day1/2.gif",
+                description: "Lie on a bench. Hold two dumbbells overhead with upper arms vertical. Lower the weight by bending only your elbows toward your head. Extend arms to flex the triceps."
             },            
             { 
-                name: "Extensiones de Tríceps con Polea", 
-                gif: "https://www.fitnessrxformen.com/wp-content/uploads/2016/09/Triceps-Pushdown.gif",
-                description: "De pie frente a polea alta, empuja la barra hacia abajo extendiendo los codos manteniendo los brazos pegados al cuerpo."
+                name: "2.1. Eccentric only", 
+                gif: "Pictures/Chest/Day1/2-1.gif",
+                description: "Use two hands to lift the weight. Slowly lower the dumbbell -3 or 5 seconds with one arm, bending the elbow towards the head. Use two hands to lift for the next rep"
             },
             { 
-                name: "Press Francés", 
-                gif: "https://www.inspireusafoundation.org/wp-content/uploads/2023/06/lying-tricep-extension.gif",
-                description: "Acostado en banco, baja la barra hacia la frente manteniendo los codos apuntando al techo, luego extiende los brazos."
-            }
+                name: "3. DB or Cable triceps kickbacks 2-3sets x10-12 +Partials.", 
+                gif: "Pictures/Chest/Day1/3.gif",
+                description: "Hinge forward at the hips, keeping your back flat and elbows pinned high to your sides. Starting with your forearm vertical, kick the dumbbell back until your arm is straight, flexing the triceps. Control the return."
+            },
+            { 
+                name: "3-1. Cable triceps kickbacks 2-3sets x10-12.", 
+                gif: "Pictures/Chest/Day1/3-1.gif",
+                description: "Hinge forward at the hips, keeping your back flat and elbows pinned high to your sides. Starting with your forearm vertical, kick the dumbbell back until your arm is straight, flexing the triceps. Control the return."
+            },   
+            { 
+                name: "3-2. Partials.", 
+                gif: "Pictures/Chest/Day1/3-2.gif",
+                description: ""
+            },
+            { 
+                name: "4. Cobra pushups 1set xF", 
+                gif: "Pictures/Chest/Day1/4.gif",
+                description: "Start face down, hands under shoulders, elbows tucked. Push up until arms are fully extended, keeping the body straight. Lower slowly to complete the rep."
+            }            
         ],
         "back": [
             { 
