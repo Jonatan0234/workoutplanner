@@ -57,32 +57,32 @@ const exercisesData = {
             },
             { 
                 name: "2. lying DB extensions 2-3sets x8-10 + eccentric only", 
-                gif: "Pictures/Chest/Day1/2.gif",
+                gif: "Pictures/Triceps/Day1/2.gif",
                 description: "Lie on a bench. Hold two dumbbells overhead with upper arms vertical. Lower the weight by bending only your elbows toward your head. Extend arms to flex the triceps."
             },            
             { 
                 name: "2.1. Eccentric only", 
-                gif: "Pictures/Chest/Day1/2-1.gif",
+                gif: "Pictures/Triceps/Day1/2-1.gif",
                 description: "Use two hands to lift the weight. Slowly lower the dumbbell -3 or 5 seconds with one arm, bending the elbow towards the head. Use two hands to lift for the next rep"
             },
             { 
                 name: "3. DB or Cable triceps kickbacks 2-3sets x10-12 +Partials.", 
-                gif: "Pictures/Chest/Day1/3.gif",
+                gif: "Pictures/Triceps/Day1/3.gif",
                 description: "Hinge forward at the hips, keeping your back flat and elbows pinned high to your sides. Starting with your forearm vertical, kick the dumbbell back until your arm is straight, flexing the triceps. Control the return."
             },
             { 
                 name: "3-1. Cable triceps kickbacks 2-3sets x10-12.", 
-                gif: "Pictures/Chest/Day1/3-1.gif",
+                gif: "Pictures/Triceps/Day1/3-1.gif",
                 description: "Hinge forward at the hips, keeping your back flat and elbows pinned high to your sides. Starting with your forearm vertical, kick the dumbbell back until your arm is straight, flexing the triceps. Control the return."
             },   
             { 
                 name: "3-2. Partials.", 
-                gif: "Pictures/Chest/Day1/3-2.gif",
+                gif: "Pictures/Triceps/Day1/3-2.gif",
                 description: ""
             },
             { 
                 name: "4. Cobra pushups 1set xF", 
-                gif: "Pictures/Chest/Day1/4.gif",
+                gif: "Pictures/Triceps/Day1/4.gif",
                 description: "Start face down, hands under shoulders, elbows tucked. Push up until arms are fully extended, keeping the body straight. Lower slowly to complete the rep."
             }            
         ],
