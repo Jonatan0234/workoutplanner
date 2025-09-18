@@ -195,19 +195,34 @@ const exercisesData = {
         ],
         "triceps": [
             { 
-                name: "Extensiones de Tríceps con Mancuerna", 
-                gif: "https://www.inspireusafoundation.org/wp-content/uploads/2022/05/overhead-tricep-extension.gif",
-                description: "Sentado o de pie, extiende los brazos con una mancuerna sobre la cabeza."
+                name: "1. PJR pullovers 2-3sets x6-8FF.", 
+                gif: "Pictures/Triceps/Day2/1.gif",
+                description: "Lie on a bench. Lower the dumbbell behind your head by bending the elbows for a deep triceps stretch. Extend the arms and pull the weight up, focusing on the triceps."
             },
             { 
-                name: "Fondos en Banco", 
-                gif: "https://www.inspireusafoundation.org/wp-content/uploads/2022/05/bench-dips.gif",
-                description: "Con las manos en un banco, baja el cuerpo doblando los codos para trabajar tríceps."
+                name: "2. Cable triceps pushaways 2-3sets x10-12 +Partials.", 
+                gif: "Pictures/Triceps/Day2/2.gif",
+                description: "Face away from the cable machine. Push the handle forward from behind your head until arms are straight. Control the weight back."
             },
             { 
-                name: "Patada de Tríceps", 
-                gif: "https://www.inspireusafoundation.org/wp-content/uploads/2022/05/tricep-kickback.gif",
-                description: "Inclinado, extiende el brazo hacia atrás con una mancuerna para aislar el tríceps."
+                name: "2.1. Partials", 
+                gif: "Pictures/Triceps/Day2/2-1.gif",
+                description: "Face away from the cable machine. Push the handle forward from behind your head until arms are straight. Control the weight back."
+            },
+            { 
+                name: "3. X pushdowns 2-3sets x10-12 +Partials.", 
+                gif: "Pictures/Triceps/Day2/3.gif",
+                description: "Use two high cables, grabbing the opposite handles. Push both cables down in an 'X' motion until arms are straight. Control back up."
+            },
+            { 
+                name: "3.1. Partials.", 
+                gif: "Pictures/Triceps/Day2/3-1.gif",
+                description: "Use two high cables, grabbing the opposite handles. Push both cables down in an 'X' motion until arms are straight. Control back up."
+            },
+            { 
+                name: "4. Bench dips 1set xF", 
+                gif: "Pictures/Triceps/Day2/4.gif",
+                description: "Place hands on a bench. Lower your body by bending your elbows to 90º. Push back up using your triceps."
             }
         ],
         "back": [
