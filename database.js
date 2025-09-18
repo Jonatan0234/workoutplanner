@@ -158,20 +158,40 @@ const exercisesData = {
     "day2": {
         "chest": [
             { 
-                name: "Press Declinado con Barra", 
-                gif: "https://www.fitnessrxformen.com/wp-content/uploads/2016/09/Decline-Bench-Press.gif",
-                description: "Acostado en banco declinado, realiza press de banca para enfocar la parte inferior del pecho."
+                name: "Primer. -Band pull aparts 1-2sets 10-15 sub max.", 
+                gif: "Pictures/Chest/Day2/Primer.gif",
+                description: "Hold a resistance band at shoulder width with straight arms out in front. Pull the band apart (horizontally) until your arms form a 'T', squeezing your upper back/shoulder blades. Control the band as you slowly return."
             },
             { 
-                name: "Press con Mancuernas en Banco Plano", 
-                gif: "https://www.inspireusafoundation.org/wp-content/uploads/2022/04/dumbbell-bench-press.gif",
-                description: "Acostado en banco plano, presiona las mancuernas hacia arriba con control."
+                name: "1. DB bench press 3set x5-8 form failure.", 
+                gif: "Pictures/Chest/Day2/1.gif",
+                description: "Lie on a bench holding dumbbells at your chest, palms facing forward. Press the weights up until your arms are fully extended over your shoulders. Lower slowly back to the starting position"
             },
             { 
-                name: "Cruces en Polea Alta", 
-                gif: "https://www.inspireusafoundation.org/wp-content/uploads/2022/03/cable-crossover.gif",
-                description: "De pie, cruza los brazos frente a ti utilizando las poleas altas para trabajar el pecho."
-            }
+                name: "2. High to low crossover 3sets x10-12", 
+                gif: "Pictures/Chest/Day2/2.gif",
+                description: "Stand between cables set high. Pull handles down and across your body toward the opposite hip, squeezing your lower chest. Control the return."
+            },
+            { 
+                name: "2.1. Partials", 
+                gif: "Pictures/Chest/Day2/2-1.gif",
+                description: "Stand between cables set high. Pull handles down and across your body toward the opposite hip, squeezing your lower chest. Control the return."
+            },
+            { 
+                name: "3. incline cable press 2-3set x8-10 form failure", 
+                gif: "Pictures/Chest/Day2/3.gif",
+                description: "Set cables low, use an incline bench. Lie back and press the handles up and slightly inward over your upper chest. Control the return."
+            },
+            { 
+                name: "4. 1.5 Rep dip ladder 1set xfailure - fondos 1.5 x1set", 
+                gif: "Pictures/Chest/Day2/4.gif",
+                description: "Perform Dips using an ascending rep scheme (e.g., 1, 2, 3...). Rest briefly between sets. Stop when near failure, then restart the ladder from rep 1."
+            },
+            { 
+                name: "5. Prision yard pushup 1set xfailure", 
+                gif: "Pictures/Chest/Day2/5.gif",
+                description: "A Push-Up using a very wide hand position (much wider than shoulders) to maximize chest engagement. Keep the body straight."
+            }            
         ],
         "triceps": [
             { 
