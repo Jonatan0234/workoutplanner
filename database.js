@@ -122,36 +122,77 @@ const exercisesData = {
         ],
         "legs": [
             { 
-                name: "Sentadillas", 
-                gif: "https://www.fitnessrxformen.com/wp-content/uploads/2016/09/Barbell-Squat.gif",
-                description: "Con barra sobre hombros, baja el cuerpo doblando rodillas y cadera manteniendo la espalda recta, hasta que los muslos estén paralelos al suelo."
+                name: "Primer. -Reverse hypers 1-2sets x10-15sub max", 
+                gif: "Pictures/Legs/Day1/Primer.gif",
+                description: "Lie face down with hips off the bench. Raise legs until parallel, squeezing glutes. Control down."
             },
             { 
-                name: "Prensa de Piernas", 
-                gif: "https://www.inspireusafoundation.org/wp-content/uploads/2022/05/leg-press.gif",
-                description: "Sentado en máquina, apoya los pies en la plataforma y empuja manteniendo la espalda apoyada y las rodillas alineadas con los pies."
+                name: "1. Deadlifts -0pt trap bar- 3sets x5", 
+                gif: "Pictures/Legs/Day1/1.gif",
+                description: "Hinge down to the bar, back flat. Stand up by driving hips forward. Lower with control."
             },
             { 
-                name: "Extensiones de Cuádriceps", 
-                gif: "https://www.inspireusafoundation.org/wp-content/uploads/2022/05/leg-extension.gif",
-                description: "Sentado en máquina, apoya los tobillos en los rodillos y extiende las piernas contra la resistencia, luego baja controladamente."
+                name: "2. Barbell front squats 2-3set x6-8", 
+                gif: "Pictures/Legs/Day1/2.gif",
+                description: "Bar on front shoulders. Squat deep, elbows high. Stand up."
+            },
+            { 
+                name: "3. Alternating DB reverse lunges 2-3sets x10 each leg", 
+                gif: "Pictures/Legs/Day1/3.gif",
+                description: "Hold dumbbells. Step one leg back and lower the knee. Stand up. Alternate legs."
+            },
+            { 
+                name: "4. SFV curls - Hamstring Slides - + eccentric or Seated hamstring curls 1set xF", 
+                gif: "Pictures/Legs/Day1/4.gif",
+                description: "Lie on back, heels on sliders. Bridge hips up. Slide feet out, then curl back in."
+            },
+            { 
+                name: "4-1. Eccentric", 
+                gif: "Pictures/Legs/Day1/4-1.gif",
+                description: "Lie on back, heels on sliders. Bridge hips up. Slide feet out, then curl back in."
+            },
+            { 
+                name: "4-2. Seated hamstring curls 3sets 3x10 in each leg + eccentric", 
+                gif: "Pictures/Legs/Day1/4-2.gif",
+                description: "Sit in the machine. Curl the weight back by bending knees. Squeeze, then return slowly."
+            },
+            { 
+                name: "4-3. Eccentric", 
+                gif: "Pictures/Legs/Day1/4-3.gif",
+                description: "Sit in the machine. Curl the weight back by bending knees. Squeeze, then return slowly."
+            },
+            { 
+                name: "5. Standing calf raises 2-3sets x10-12 +Partials", 
+                gif: "Pictures/Legs/Day1/5.gif",
+                description: "Stand on toes. Raise heels high, then lower slowly."
+            },
+            { 
+                name: "5-1. Partials", 
+                gif: "Pictures/Legs/Day1/5-1.gif",
+                description: "Stand on toes. Raise heels high, then lower slowly."
             }
+            
         ],
         "shoulders": [
             { 
-                name: "Press Militar", 
-                gif: "https://www.fitnessrxformen.com/wp-content/uploads/2016/09/Shoulder-Press.gif",
-                description: "De pie o sentado, levanta la barra por encima de la cabeza manteniendo el core activo y los pies firmes."
+                name: "1. DB single arm OHP 2-3sets x 6-8 FF", 
+                gif: "Pictures/Shoulders/Day1/1.gif",
+                description: "Brace on bench. Pull dumbbell to hip, squeezing back. Lower slowl."
             },
             { 
-                name: "Elevaciones Laterales", 
-                gif: "https://www.inspireusafoundation.org/wp-content/uploads/2022/05/lateral-raise.gif",
-                description: "De pie con ligera flexión de rodillas, levanta mancuernas a los lados hasta altura de hombros con codos ligeramente flexionados."
+                name: "2. DB lateral raises - SA -BA 3-4sets x10-12 + partials", 
+                gif: "Pictures/Shoulders/Day1/2.gif",
+                description: "Hold weights. Raise arms to sides to shoulder height. Lower slow."
             },
             { 
-                name: "Face Pull", 
-                gif: "https://www.inspireusafoundation.org/wp-content/uploads/2022/05/face-pull.gif",
-                description: "Con polea a altura de cara, tira de la cuerda hacia la frente separando las manos al final del movimiento."
+                name: "2-1. Partials", 
+                gif: "Pictures/Shoulders/Day1/2-1.gif",
+                description: "Hold weights. Raise arms to sides to shoulder height. Lower slow."
+            },
+            { 
+                name: "3. DB rear delt rows 2sets x10-12", 
+                gif: "Pictures/Shoulders/Day1/3.gif",
+                description: "Bend over. Pull weights out/up to the sides. Lower slow."
             }
         ]
     },
