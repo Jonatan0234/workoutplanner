@@ -1,346 +1,875 @@
 <!DOCTYPE html>
-<html lang="es">
+<html lang="en" data-bs-theme="dark">
+
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Planificador de Ejercicios Semanal</title>
-    <link rel="stylesheet" href="styles.css">
-    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
-    <link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@400;600;700&family=Open+Sans:wght@300;400;600&display=swap" rel="stylesheet">
+    <title>My Workout Planner</title>
+
+    <!-- Bootstrap 5 CSS -->
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/css/bootstrap.min.css" rel="stylesheet">
+    <!-- Font Awesome -->
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <style>
+        /* Estilos personalizados */
+        .hero-section {
+            background: linear-gradient(135deg, #1a1a2e 0%, #16213e 100%);
+            padding-top: 100px;
+            position: relative;
+            overflow: hidden;
+        }
+
+        .hero-title {
+            font-size: 3.5rem;
+            font-weight: 800;
+            margin-bottom: 1.5rem;
+        }
+
+        .text-gradient {
+            background: linear-gradient(90deg, #6366f1, #8b5cf6);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+        }
+
+        .shadow-glow {
+            box-shadow: 0 0 40px rgba(99, 102, 241, 0.3);
+        }
+
+        .calendar-section {
+            background: rgba(30, 41, 59, 0.7);
+            backdrop-filter: blur(10px);
+            border-radius: 15px;
+            padding: 2rem;
+            border: 1px solid rgba(255, 255, 255, 0.1);
+        }
+
+        .calendar-week-header {
+            display: grid;
+            grid-template-columns: repeat(7, 1fr);
+            gap: 10px;
+            margin-bottom: 20px;
+        }
+
+        .calendar-day-header {
+            text-align: center;
+            padding: 15px 10px;
+            border-radius: 10px;
+            background: rgba(15, 23, 42, 0.7);
+            position: relative;
+        }
+
+        .calendar-day-header.today {
+            background: rgba(99, 102, 241, 0.2);
+            border: 1px solid rgba(99, 102, 241, 0.5);
+        }
+
+        .today-badge {
+            position: absolute;
+            top: -8px;
+            right: -8px;
+            background: #6366f1;
+            color: white;
+            font-size: 0.7rem;
+            padding: 2px 8px;
+            border-radius: 10px;
+        }
+
+        .calendar-week-days {
+            display: grid;
+            grid-template-columns: repeat(7, 1fr);
+            gap: 10px;
+        }
+
+        .calendar-day-column {
+            min-height: 300px;
+            background: rgba(15, 23, 42, 0.5);
+            border-radius: 10px;
+            padding: 15px;
+        }
+
+        .calendar-day-column.today-column {
+            border: 1px solid rgba(99, 102, 241, 0.5);
+        }
+
+        .calendar-event-item {
+            background: rgba(30, 41, 59, 0.8);
+            border-left: 4px solid #6366f1;
+            border-radius: 8px;
+            padding: 10px;
+            margin-bottom: 10px;
+            font-size: 0.85rem;
+        }
+
+        .event-time {
+            font-size: 0.75rem;
+            color: #94a3b8;
+            margin-bottom: 5px;
+            display: flex;
+            align-items: center;
+        }
+
+        .event-title {
+            font-weight: 600;
+            margin-bottom: 5px;
+        }
+
+        .event-description {
+            font-size: 0.75rem;
+            color: #94a3b8;
+            margin-top: 5px;
+        }
+
+        .no-events {
+            text-align: center;
+            color: #64748b;
+            padding: 20px 0;
+        }
+
+        .no-events i {
+            font-size: 2rem;
+            margin-bottom: 10px;
+            opacity: 0.5;
+        }
+
+        .event-badge {
+            font-size: 0.7rem;
+            padding: 0.2rem 0.5rem;
+            border-radius: 10px;
+            margin-left: 0.5rem;
+        }
+
+        .event-badge.real {
+            background: #10b981;
+            color: white;
+        }
+
+        .event-badge.example {
+            background: #f59e0b;
+            color: white;
+        }
+
+        .event-location {
+            font-size: 0.75rem;
+            color: #64748b;
+            margin-top: 0.5rem;
+            display: flex;
+            align-items: center;
+            gap: 0.5rem;
+        }
+
+        .nav-link.active {
+            color: #6366f1 !important;
+        }
+
+        .navbar {
+            background: rgba(15, 23, 42, 0.9) !important;
+            backdrop-filter: blur(10px);
+        }
+
+        @keyframes spin {
+            from {
+                transform: rotate(0deg);
+            }
+
+            to {
+                transform: rotate(360deg);
+            }
+        }
+
+        .fa-sync-alt.spin {
+            animation: spin 1s linear infinite;
+        }
+
+        .day-name {
+            font-weight: 600;
+            font-size: 1.1rem;
+        }
+
+        .day-date {
+            font-size: 0.9rem;
+            color: #94a3b8;
+        }
+    </style>
 </head>
+
 <body>
+    <!-- Navigation -->
+    <nav class="navbar navbar-expand-lg navbar-dark fixed-top">
+        <div class="container-fluid">
+            <a class="navbar-brand" href="index.html">
+                <i class="fas fa-dumbbell me-2"></i>My Workout Planner
+            </a>
 
+            <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNav">
+                <span class="navbar-toggler-icon"></span>
+            </button>
 
-    
-    <!-- Modal para el progreso -->
-    <div id="progress-modal" class="modal">
-        <div class="modal-content">
-            <span class="close">&times;</span>
-            <h2 class="exercise-title">Tu Progreso</h2>
-
-            <div class="filter-section">
-                <div class="filter-group">
-                    <label for="exercise-filter">Filtrar por ejercicio:</label>
-                    <select id="exercise-filter">
-                        <option value="all">Todos los ejercicios</option>
-                    </select>
+            <div class="collapse navbar-collapse" id="navbarNav">
+                <div class="navbar-nav ms-auto">
+                    <a class="nav-link active" href="index.html">Home</a>
+                    <a class="nav-link" href="workouts.html">Workouts</a>
                 </div>
-
-                <div class="filter-group">
-                    <label for="date-filter">Filtrar por fecha:</label>
-                    <input type="date" id="date-filter">
-                </div>
-
-                <div class="filter-group">
-                    <label for="muscle-filter">Filtrar por grupo muscular:</label>
-                    <select id="muscle-filter">
-                        <option value="all">Todos los grupos</option>
-                        <option value="chest">Chest</option>
-                        <option value="triceps">Tríceps</option>
-                        <option value="back">Back</option>
-                        <option value="biceps">Bíceps</option>
-                        <option value="legs">Legs</option>
-                        <option value="shoulders">Shoulders</option>
-                    </select>
-                </div>
-            </div>
-
-            <div class="chart-container">
-                <canvas id="progress-chart"></canvas>
-            </div>
-
-            <table class="progress-table">
-                <thead>
-                    <tr>
-                        <th>Fecha</th>
-                        <th>Ejercicio</th>
-                        <th>Set 1</th>
-                        <th>Set 2</th>
-                        <th>Set 3</th>
-                        <th>Set 4</th>
-                    </tr>
-                </thead>
-                <tbody id="progress-data">
-                </tbody>
-            </table>
-            <div class="btn-container">
-                <button class="btn btn-danger" id="clear-history">
-                    <i class="fas fa-trash"></i> Borrar Historial Completo
-                </button>
-                <button class="btn btn-secondary" id="close-modal">
-                    <i class="fas fa-times"></i> Cerrar
-                </button>
             </div>
         </div>
-    </div>
+    </nav>
 
-
-    
-    
-    <div class="container">
-        <header>
-            <div class="header-content">
-                <h1><i class="fas fa-dumbbell"></i> Planificador de Ejercicios</h1>
-                <p class="subtitle">Organiza tus rutinas, registra tu progreso y alcanza tus metas de fitness</p>
-            </div>
-        </header>
-        
-        <div class="main-content">
-            <div class="menu-section">
-                <div class="section-header">
-                    <i class="fas fa-list"></i>
-                    <h2>Mis Rutinas</h2>
-                </div>
-                
-                <div class="routine-container">
-                    <div class="routine-card">
-                        <div class="routine-header" data-routine="chest-triceps">
-                            <div class="routine-icon">
-                                <i class="fas fa-fire"></i>
-                            </div>
-                            <h3>Chest & Tríceps</h3>
-                            <span class="toggle-arrow"><i class="fas fa-chevron-down"></i></span>
-                        </div>
-                        <div class="submenu">
-                            <div class="day">
-                                <div class="day-item" data-day="1">
-                                    <i class="fas fa-calendar-day"></i>
-                                    <span>Day 1</span>
-                                    <span class="toggle-arrow"><i class="fas fa-chevron-down"></i></span>
-                                </div>
-                                <div class="muscle-submenu">
-                                    <div class="muscle-item" data-muscle="chest">
-                                        <i class="fas fa-circle"></i>
-                                        <span>Chest</span>
-                                    </div>
-                                    <div class="muscle-item" data-muscle="triceps">
-                                        <i class="fas fa-circle"></i>
-                                        <span>Tríceps</span>
-                                    </div>
-                                </div>
-                            </div>
-                            <div class="day">
-                                <div class="day-item" data-day="2">
-                                    <i class="fas fa-calendar-day"></i>
-                                    <span>Day 2</span>
-                                    <span class="toggle-arrow"><i class="fas fa-chevron-down"></i></span>
-                                </div>
-                                <div class="muscle-submenu">
-                                    <div class="muscle-item" data-muscle="chest">
-                                        <i class="fas fa-circle"></i>
-                                        <span>Chest</span>
-                                    </div>
-                                    <div class="muscle-item" data-muscle="triceps">
-                                        <i class="fas fa-circle"></i>
-                                        <span>Tríceps</span>
-                                    </div>
-                                </div>
-                            </div>
-                        </div>
-                    </div>
-
-                    <div class="routine-card">
-                        <div class="routine-header" data-routine="back-biceps">
-                            <div class="routine-icon">
-                                <i class="fas fa-mountain"></i>
-                            </div>
-                            <h3>Back and Bíceps</h3>
-                            <span class="toggle-arrow"><i class="fas fa-chevron-down"></i></span>
-                        </div>
-                        <div class="submenu">
-                            <div class="day">
-                                <div class="day-item" data-day="1">
-                                    <i class="fas fa-calendar-day"></i>
-                                    <span>Day 1</span>
-                                    <span class="toggle-arrow"><i class="fas fa-chevron-down"></i></span>
-                                </div>
-                                <div class="muscle-submenu">
-                                    <div class="muscle-item" data-muscle="back">
-                                        <i class="fas fa-circle"></i>
-                                        <span>Back</span>
-                                    </div>
-                                    <div class="muscle-item" data-muscle="biceps">
-                                        <i class="fas fa-circle"></i>
-                                        <span>Bíceps</span>
-                                    </div>
-                                </div>
-                            </div>
-                            <div class="day">
-                                <div class="day-item" data-day="2">
-                                    <i class="fas fa-calendar-day"></i>
-                                    <span>Day 2</span>
-                                    <span class="toggle-arrow"><i class="fas fa-chevron-down"></i></span>
-                                </div>
-                                <div class="muscle-submenu">
-                                    <div class="muscle-item" data-muscle="back">
-                                        <i class="fas fa-circle"></i>
-                                        <span>Back</span>
-                                    </div>
-                                    <div class="muscle-item" data-muscle="biceps">
-                                        <i class="fas fa-circle"></i>
-                                        <span>Bíceps</span>
-                                    </div>
-                                </div>
-                            </div>
-                        </div>
-                    </div>
-
-                    <div class="routine-card">
-                        <div class="routine-header" data-routine="legs-shoulders">
-                            <div class="routine-icon">
-                                <i class="fas fa-walking"></i>
-                            </div>
-                            <h3>Legs & Shoulders</h3>
-                            <span class="toggle-arrow"><i class="fas fa-chevron-down"></i></span>
-                        </div>
-                        <div class="submenu">
-                            <div class="day">
-                                <div class="day-item" data-day="1">
-                                    <i class="fas fa-calendar-day"></i>
-                                    <span>Day 1</span>
-                                    <span class="toggle-arrow"><i class="fas fa-chevron-down"></i></span>
-                                </div>
-                                <div class="muscle-submenu">
-                                    <div class="muscle-item" data-muscle="legs">
-                                        <i class="fas fa-circle"></i>
-                                        <span>Legs</span>
-                                    </div>
-                                    <div class="muscle-item" data-muscle="shoulders">
-                                        <i class="fas fa-circle"></i>
-                                        <span>Shoulders</span>
-                                    </div>
-                                </div>
-                            </div>
-                            <div class="day">
-                                <div class="day-item" data-day="2">
-                                    <i class="fas fa-calendar-day"></i>
-                                    <span>Day 2</span>
-                                    <span class="toggle-arrow"><i class="fas fa-chevron-down"></i></span>
-                                </div>
-                                <div class="muscle-submenu">
-                                    <div class="muscle-item" data-muscle="legs">
-                                        <i class="fas fa-circle"></i>
-                                        <span>Legs</span>
-                                    </div>
-                                    <div class="muscle-item" data-muscle="shoulders">
-                                        <i class="fas fa-circle"></i>
-                                        <span>Shoulders</span>
-                                    </div>
-                                </div>
-                            </div>
-                        </div>
-                    </div>
-                </div>
-                
-                <div class="btn-container">
-                    <button class="btn btn-accent" id="show-progress">
-                        <i class="fas fa-chart-line"></i> Check Progress
-                    </button>
-                </div>
-            </div>
-            
-            <div class="display-section">
-                <div class="welcome-message" id="welcome-message">
-                    <div class="welcome-content">
-                        <i class="fas fa-dumbbell"></i>
-                        <h2>¡Bienvenido a tu Planificador de Ejercicios!</h2>
-                        <p>Selecciona una rutina, día y grupo muscular para comenzar a visualizar tus ejercicios y registrar tu progreso.</p>
-                        <div class="instructions">
-                            <div class="instruction">
-                                <div class="number">1</div>
-                                <p>Selecciona una rutina de entrenamiento</p>
-                            </div>
-                            <div class="instruction">
-                                <div class="number">2</div>
-                                <p>Elige el día de your rutina</p>
-                            </div>
-                            <div class="instruction">
-                                <div class="number">3</div>
-                                <p>Select Muscular Group</p>
-                            </div>
-                            <div class="instruction">
-                                <div class="number">4</div>
-                                <p>¡Visualiza y registra tus ejercicios!</p>
-                            </div>
-                        </div>
-                    </div>
-                </div>
-                
-                <div class="exercise-display" id="exercise-display">
-                    <h2 class="exercise-title" id="exercise-title"></h2>
-                    
-                    <div id="exercises-container" class="exercises-container">
-                        <!-- Los ejercicios se insertarán aquí dinámicamente -->
-                    </div>
-                </div>
-                
-                <div class="progress-section" id="progress-section">
-                    <h2 class="exercise-title">Tu Progreso</h2>
-                    
-                    <div class="filter-section">
-                        <div class="filter-group">
-                            <label for="exercise-filter">Filtrar por ejercicio:</label>
-                            <select id="exercise-filter">
-                                <option value="all">Todos los ejercicios</option>
-                                <!-- Las opciones se llenan dinámicamente -->
-                            </select>
-                        </div>
-                        
-                        <div class="filter-group">
-                            <label for="date-filter">Filtrar por fecha:</label>
-                            <input type="date" id="date-filter">
-                        </div>
-                        
-                        <div class="filter-group">
-                            <label for="muscle-filter">Filtrar por grupo muscular:</label>
-                            <select id="muscle-filter">
-                                <option value="all">Todos los grupos</option>
-                                <option value="chest">Chest</option>
-                                <option value="triceps">Tríceps</option>
-                                <option value="back">Back</option>
-                                <option value="biceps">Bíceps</option>
-                                <option value="legs">Legs</option>
-                                <option value="shoulders">Shoulders</option>
-                            </select>
-                        </div>
-                    </div>
-                    
-                    <div class="chart-container">
-                        <canvas id="progress-chart"></canvas>
-                    </div>
-                    
-                    <table class="progress-table">
-                        <thead>
-                            <tr>
-                                <th>Fecha</th>
-                                <th>Ejercicio</th>
-                                <th>Set 1</th>
-                                <th>Set 2</th>
-                                <th>Set 3</th>
-                                <th>Set 4</th>
-                            </tr>
-                        </thead>
-                        <tbody id="progress-data">
-                            <!-- Datos de progreso se llenan dinámicamente -->
-                        </tbody>
-                    </table>
-                    <div class="btn-container">
-                        <button class="btn btn-secondary" id="back-btn">
-                            <i class="fas fa-arrow-left"></i> Volver a ejercicios
+    <!-- Hero Section -->
+    <section class="hero-section">
+        <div class="container">
+            <div class="row align-items-center min-vh-100">
+                <div class="col-lg-6">
+                    <h1 class="hero-title">
+                        My Personal
+                        <span class="text-gradient">Workout Planner</span>
+                    </h1>
+                    <p class="hero-subtitle">
+                        Welcome to your personal workout space. Track your progress and stay consistent with your
+                        fitness goals.
+                    </p>
+                    <div class="d-flex gap-3 flex-wrap">
+                        <a href="workouts.html" class="btn btn-primary btn-lg">
+                            <i class="fas fa-dumbbell me-2"></i>View Workouts
+                        </a>
+                        <button class="btn btn-outline-light btn-lg" onclick="loadCalendar()">
+                            <i class="fas fa-sync-alt me-2"></i>Refresh Calendar
                         </button>
                     </div>
                 </div>
+
+                <div class="col-lg-6">
+                    <div class="text-center">
+                        <img src="https://images.unsplash.com/photo-1534438327276-14e5300c3a48?ixlib=rb-4.0.3&auto=format&fit=crop&w=1000&q=80"
+                            alt="Fitness" class="img-fluid rounded-3 shadow-glow">
+                    </div>
+                </div>
             </div>
         </div>
-        
-        <footer>
-            <p>Plan de Ejercicios Semanal &copy; 2023 - Desarrollado para ayudarte a alcanzar tus metas fitness</p>
-        </footer>
-    </div>
+    </section>
 
-    <!-- Incluir la base de datos primero -->
-    <script src="database.js"></script>
-    <script src="script.js"></script>
+    <!-- Calendar Section -->
+    <section class="py-5">
+        <div class="container">
+            <div class="row justify-content-center">
+                <div class="col-lg-12">
+                    <div class="calendar-section">
+                        <div class="row align-items-center mb-4">
+                            <div class="col-md-8">
+                                <h2 class="mb-3">
+                                    <i class="fas fa-calendar-alt text-primary me-2"></i>
+                                    Workout Calendar
+                                </h2>
+                                <p class="text-muted mb-0" id="calendarStatus">
+                                    Loading your calendar events...
+                                </p>
+                            </div>
+                            <div class="col-md-4 text-md-end">
+                                <button class="btn btn-primary" onclick="loadCalendar()">
+                                    <i class="fas fa-sync-alt me-2"></i>Refresh
+                                </button>
+                                <a href="webcal://p162-caldav.icloud.com/published/2/NDM1NjgzNzQwNDM1NjgzN9K8AFwQL0suOvwYnQC10mKli_j_u4hAzrX6GT07Fb15_-VeOkUxk1uiakayFx7wCv6PONa07SfUVQLFlrJ4EHo"
+                                    class="btn btn-outline-light" target="_blank">
+                                    <i class="fab fa-apple me-2"></i>iCal Link
+                                </a>
+                            </div>
+                        </div>
+
+                        <!-- Calendar View -->
+                        <div id="calendarView">
+                            <div class="text-center py-5">
+                                <div class="spinner-border text-primary" role="status">
+                                    <span class="visually-hidden">Loading calendar...</span>
+                                </div>
+                                <p class="mt-3 text-muted">Loading your calendar events...</p>
+                            </div>
+                        </div>
+
+                        <!-- Calendar Info -->
+                        <div class="row mt-4">
+                            <div class="col-12">
+                                <div class="alert alert-info">
+                                    <small>
+                                        <i class="fas fa-info-circle me-1"></i>
+                                        <strong>Connected to:</strong> Apple iCloud Calendar (webcal protocol)<br>
+                                        <strong>Showing:</strong> REAL events from your public calendar
+                                    </small>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Bootstrap & Scripts -->
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/js/bootstrap.bundle.min.js"></script>
+    <script>
+        // Configuración del calendario Apple iCloud
+        const APPLE_CALENDAR_URL = "webcal://p162-caldav.icloud.com/published/2/NDM1NjgzNzQwNDM1NjgzN9K8AFwQL0suOvwYnQC10mKli_j_u4hAzrX6GT07Fb15_-VeOkUxk1uiakayFx7wCv6PONa07SfUVQLFlrJ4EHo";
+
+        // Cargar calendario al iniciar
+        document.addEventListener('DOMContentLoaded', function () {
+            loadCalendar();
+        });
+
+        function loadCalendar() {
+            const calendarEl = document.getElementById('calendarView');
+            const statusEl = document.getElementById('calendarStatus');
+
+            showLoadingState(calendarEl, statusEl);
+
+            // Cargar desde Apple Calendar
+            loadAppleCalendar()
+                .then(events => {
+                    console.log('Eventos cargados desde Apple Calendar:', events);
+                    renderCalendar(events);
+                    updateStatus(statusEl, 'success', events.length, 'APPLE CALENDAR');
+                })
+                .catch(error => {
+                    console.error('Error loading Apple Calendar:', error);
+                    // Fallback a datos de ejemplo
+                    const exampleEvents = generateExampleEvents();
+                    renderCalendar(exampleEvents);
+                    updateStatus(statusEl, 'error', exampleEvents.length, 'USING EXAMPLE DATA');
+
+                    // Mostrar error específico
+                    const errorHTML = `
+                        <div class="alert alert-warning mt-3">
+                            <i class="fas fa-exclamation-triangle me-2"></i>
+                            <strong>Note:</strong> Could not load Apple Calendar. Showing example data.<br>
+                            <small>Error: ${error.message}</small>
+                            <div class="mt-2">
+                                <small>
+                                    <strong>Troubleshooting:</strong><br>
+                                    • Apple iCloud calendars may have CORS restrictions<br>
+                                    • Try opening the iCal link directly in a new tab<br>
+                                    • Ensure your calendar is publicly shared
+                                </small>
+                            </div>
+                        </div>
+                    `;
+
+                    // Insertar el error después del calendario
+                    setTimeout(() => {
+                        const calendarContainer = document.querySelector('.calendar-week-view');
+                        if (calendarContainer) {
+                            calendarContainer.insertAdjacentHTML('afterend', errorHTML);
+                        } else {
+                            calendarEl.insertAdjacentHTML('beforeend', errorHTML);
+                        }
+                    }, 100);
+                });
+        }
+
+        function showLoadingState(calendarEl, statusEl) {
+            calendarEl.innerHTML = `
+                <div class="text-center py-4">
+                    <div class="spinner-border text-primary" role="status">
+                        <span class="visually-hidden">Loading calendar...</span>
+                    </div>
+                    <p class="mt-2 text-muted">Loading your Apple Calendar events...</p>
+                </div>
+            `;
+            statusEl.innerHTML = '<i class="fas fa-sync-alt spin me-2"></i>Connecting to Apple Calendar...';
+        }
+
+        function updateStatus(statusEl, type, count, source) {
+            const badges = {
+                success: {class: 'bg-success', icon: 'fa-check-circle'},
+                error: {class: 'bg-warning', icon: 'fa-exclamation-triangle'}
+            };
+
+            const badge = badges[type];
+            statusEl.innerHTML = `
+                <span class="badge ${badge.class} me-2">
+                    <i class="fas ${badge.icon} me-1"></i>${source}
+                </span>
+                Loaded ${count} events
+            `;
+        }
+
+        async function loadAppleCalendar() {
+            try {
+                // Convertir webcal:// a https:// para fetch
+                const icalUrl = APPLE_CALENDAR_URL.replace('webcal://', 'https://');
+                console.log('🔗 Conectando a:', icalUrl);
+
+                // Proxy CORS (principal y fallback)
+                const proxies = [
+                    'https://api.allorigins.win/raw?url=',
+                    'https://corsproxy.io/?',
+                    'https://api.codetabs.com/v1/proxy?quest='
+                ];
+
+                let icalData = null;
+                let lastError = null;
+
+                // Probar proxies en orden hasta que uno funcione
+                for (const proxy of proxies) {
+                    try {
+                        const target = encodeURIComponent(icalUrl);
+                        const fetchUrl = proxy + target;
+
+                        const response = await fetch(fetchUrl, {
+                            method: 'GET',
+                            headers: {
+                                'Accept': 'text/calendar'
+                            }
+                        });
+
+                        if (!response.ok) {
+                            throw new Error(`Proxy HTTP error: ${response.status} (${proxy})`);
+                        }
+
+                        icalData = await response.text();
+                        console.log('📥 Calendario descargado (proxy):', proxy, 'tamaño:', icalData.length);
+                        break; // si recibimos contenido, salimos del loop
+                    } catch (err) {
+                        console.warn('Proxy failed:', proxy, err);
+                        lastError = err;
+                    }
+                }
+
+                // Si no obtuvimos datos desde proxies, intentar fetch directo (puede fallar por CORS)
+                if (!icalData) {
+                    try {
+                        const directResponse = await fetch(icalUrl, {method: 'GET', headers: {'Accept': 'text/calendar'}});
+                        if (directResponse.ok) {
+                            icalData = await directResponse.text();
+                            console.log('📥 Calendario descargado (direct):', icalData.length);
+                        } else {
+                            throw new Error(`Direct fetch failed: ${directResponse.status}`);
+                        }
+                    } catch (err) {
+                        console.error('No se pudo descargar el iCal (proxies y directos fallaron):', err);
+                        throw err;
+                    }
+                }
+
+                if (!icalData || icalData.length < 50) {
+                    throw new Error('Calendar data empty or too short');
+                }
+
+                // Mejor split para soportar CRLF (\r\n) y LF (\n)
+                const events = parseICalData(icalData);
+                console.log('📅 Eventos parseados:', events.length);
+
+                return events;
+            } catch (error) {
+                console.error('❌ Error cargando calendario Apple:', error);
+                throw new Error(`Failed to load Apple Calendar: ${error.message}`);
+            }
+        }
+
+        function parseICalData(icalData) {
+            const events = [];
+            const lines = icalData.split(/\r?\n/);
+            let currentEvent = null;
+            let inEvent = false;
+
+            for (let i = 0; i < lines.length; i++) {
+                const line = lines[i].trim();
+
+                if (line === 'BEGIN:VEVENT') {
+                    currentEvent = {};
+                    inEvent = true;
+                    continue;
+                }
+
+                if (line === 'END:VEVENT') {
+                    if (currentEvent && isValidEvent(currentEvent)) {
+                        const parsedEvents = parseEvent(currentEvent);
+                        if (parsedEvents && parsedEvents.length > 0) {
+                            events.push(...parsedEvents);
+                        }
+                    }
+                    currentEvent = null;
+                    inEvent = false;
+                    continue;
+                }
+
+                if (inEvent && currentEvent) {
+                    // Manejar líneas multilínea
+                    if (line.startsWith(' ') && Object.keys(currentEvent).length > 0) {
+                        // Continuación de línea anterior
+                        const lastKey = Object.keys(currentEvent)[Object.keys(currentEvent).length - 1];
+                        currentEvent[lastKey] += line.substring(1);
+                    } else {
+                        const colonIndex = line.indexOf(':');
+                        if (colonIndex > 0) {
+                            const key = line.substring(0, colonIndex);
+                            let value = line.substring(colonIndex + 1);
+
+                            // Manejar propiedades con parámetros (ej: DTSTART;TZID=...)
+                            if (key.includes(';')) {
+                                const baseKey = key.split(';')[0];
+                                currentEvent[baseKey] = value;
+                            } else {
+                                currentEvent[key] = value;
+                            }
+                        }
+                    }
+                }
+            }
+
+            // Filtrar eventos recientes y futuros
+            const now = new Date();
+            const startRange = new Date(now.getTime() - 30 * 24 * 60 * 60 * 1000); // 30 días atrás
+            const endRange = new Date(now.getTime() + 90 * 24 * 60 * 60 * 1000); // 90 días adelante
+
+            return events.filter(event => {
+                const eventDate = new Date(event.start);
+                return eventDate >= startRange && eventDate <= endRange;
+            });
+        }
+
+        function isValidEvent(event) {
+            return event.SUMMARY && event.DTSTART;
+        }
+
+        function parseEvent(event) {
+            try {
+                const title = event.SUMMARY || 'Untitled Event';
+                const description = event.DESCRIPTION || '';
+                const location = event.LOCATION || '';
+                const rrule = event.RRULE || null;
+
+                // Parsear fecha de inicio
+                let startDate = parseICalDate(event.DTSTART);
+                if (!startDate) return null;
+
+                // Parsear fecha de fin
+                let endDate = event.DTEND ? parseICalDate(event.DTEND) : null;
+                if (!endDate) {
+                    // Si no hay fecha de fin, asumir 1 hora de duración
+                    endDate = new Date(startDate.getTime() + 60 * 60 * 1000);
+                }
+
+                // Determinar si es evento de todo el día
+                const allDay = event.DTSTART.length === 8 || event.DTSTART.includes('VALUE=DATE');
+
+                const baseEvent = {
+                    title: title,
+                    start: startDate,
+                    end: endDate,
+                    allDay: allDay,
+                    color: getEventColor(title),
+                    description: description,
+                    location: location,
+                    date: startDate.toISOString().split('T')[0],
+                    day_name: startDate.toLocaleDateString('en', {weekday: 'long'}),
+                    day_number: startDate.getDate(),
+                    month_name: startDate.toLocaleDateString('en', {month: 'long'}),
+                    isReal: true
+                };
+
+                // Si hay regla de recurrencia, generar eventos recurrentes
+                if (rrule) {
+                    return expandRecurringEvents(baseEvent, rrule);
+                } else {
+                    return [baseEvent];
+                }
+            } catch (error) {
+                console.error('Error parsing event:', error, event);
+                return null;
+            }
+        }
+
+        function expandRecurringEvents(baseEvent, rrule) {
+            const events = [baseEvent];
+            const now = new Date();
+            const endRange = new Date(now.getTime() + 90 * 24 * 60 * 60 * 1000); // 90 días adelante
+
+            // Parsear la regla de recurrencia
+            const ruleParts = rrule.split(';');
+            let freq = null;
+            let interval = 1;
+            let count = null;
+            let until = null;
+
+            for (const part of ruleParts) {
+                const [key, value] = part.split('=');
+                switch (key) {
+                    case 'FREQ':
+                        freq = value;
+                        break;
+                    case 'INTERVAL':
+                        interval = parseInt(value);
+                        break;
+                    case 'COUNT':
+                        count = parseInt(value);
+                        break;
+                    case 'UNTIL':
+                        until = parseICalDate(value);
+                        break;
+                }
+            }
+
+            // Si no hay frecuencia definida, retornar solo el evento base
+            if (!freq) return events;
+
+            let currentDate = new Date(baseEvent.start);
+            let occurrences = 1;
+
+            // Generar eventos recurrentes
+            while (currentDate < endRange && (count === null || occurrences < count)) {
+                // Calcular siguiente fecha según frecuencia
+                switch (freq) {
+                    case 'DAILY':
+                        currentDate.setDate(currentDate.getDate() + interval);
+                        break;
+                    case 'WEEKLY':
+                        currentDate.setDate(currentDate.getDate() + 7 * interval);
+                        break;
+                    case 'MONTHLY':
+                        currentDate.setMonth(currentDate.getMonth() + interval);
+                        break;
+                    default:
+                        console.warn('Frecuencia no soportada:', freq);
+                        return events;
+                }
+
+                // Verificar si hemos superado la fecha límite
+                if (until && currentDate > until) {
+                    break;
+                }
+
+                // Verificar límite de ocurrencias
+                if (count && occurrences >= count) {
+                    break;
+                }
+
+                // Crear nuevo evento para esta ocurrencia
+                const newEndDate = new Date(currentDate.getTime() + (baseEvent.end - baseEvent.start));
+
+                events.push({
+                    ...baseEvent,
+                    start: new Date(currentDate),
+                    end: newEndDate,
+                    date: currentDate.toISOString().split('T')[0],
+                    day_name: currentDate.toLocaleDateString('en', {weekday: 'long'}),
+                    day_number: currentDate.getDate(),
+                    month_name: currentDate.toLocaleDateString('en', {month: 'long'})
+                });
+
+                occurrences++;
+            }
+
+            return events;
+        }
+
+        function parseICalDate(dateString) {
+            try {
+                // Eliminar parámetros como TZID, VALUE, etc.
+                const cleanDateString = dateString.split(';')[0];
+
+                // Formato básico: YYYYMMDD o YYYYMMDDTHHMMSSZ
+                if (cleanDateString.length === 8) {
+                    // Formato YYYYMMDD (todo el día)
+                    const year = cleanDateString.substring(0, 4);
+                    const month = cleanDateString.substring(4, 6);
+                    const day = cleanDateString.substring(6, 8);
+                    return new Date(year, month - 1, day);
+                } else if (cleanDateString.includes('T')) {
+                    // Formato con hora YYYYMMDDTHHMMSS o YYYYMMDDTHHMMSSZ
+                    const datePart = cleanDateString.substring(0, 8);
+                    const timePart = cleanDateString.substring(9);
+
+                    const year = datePart.substring(0, 4);
+                    const month = datePart.substring(4, 6);
+                    const day = datePart.substring(6, 8);
+
+                    let hour = '00', minute = '00', second = '00';
+
+                    if (timePart.length >= 6) {
+                        hour = timePart.substring(0, 2);
+                        minute = timePart.substring(2, 4);
+                        second = timePart.substring(4, 6);
+                    }
+
+                    // Si termina con Z, es UTC, sino es hora local
+                    if (cleanDateString.endsWith('Z')) {
+                        return new Date(Date.UTC(year, month - 1, day, hour, minute, second));
+                    } else {
+                        return new Date(year, month - 1, day, hour, minute, second);
+                    }
+                }
+
+                return null;
+            } catch (error) {
+                console.error('Error parsing date:', dateString, error);
+                return null;
+            }
+        }
+
+        function getEventColor(eventTitle) {
+            if (!eventTitle) return "#8b5cf6";
+
+            const titleLower = eventTitle.toLowerCase();
+            if (titleLower.includes('chest') || titleLower.includes('triceps') || titleLower.includes('bench') || titleLower.includes('press')) {
+                return "#6366f1";
+            } else if (titleLower.includes('back') || titleLower.includes('biceps') || titleLower.includes('pull') || titleLower.includes('row')) {
+                return "#f59e0b";
+            } else if (titleLower.includes('legs') || titleLower.includes('shoulders') || titleLower.includes('squat') || titleLower.includes('deadlift')) {
+                return "#10b981";
+            } else if (titleLower.includes('cardio') || titleLower.includes('run') || titleLower.includes('bike') || titleLower.includes('swim')) {
+                return "#ef4444";
+            } else if (titleLower.includes('rest') || titleLower.includes('recovery') || titleLower.includes('off')) {
+                return "#64748b";
+            } else if (titleLower.includes('yoga') || titleLower.includes('stretch') || titleLower.includes('flexibility')) {
+                return "#06b6d4";
+            } else {
+                return "#8b5cf6";
+            }
+        }
+
+        function generateExampleEvents() {
+            const events = [];
+            const today = new Date();
+
+            for (let i = 0; i < 7; i++) {
+                const date = new Date(today);
+                date.setDate(today.getDate() + i);
+
+                const workoutTypes = ['Chest & Triceps', 'Back & Biceps', 'Legs & Shoulders'];
+                const workoutType = workoutTypes[i % 3];
+
+                events.push({
+                    title: `${workoutType} Workout`,
+                    start: date,
+                    end: new Date(date.getTime() + 60 * 60 * 1000),
+                    allDay: false,
+                    color: getEventColor(workoutType),
+                    date: date.toISOString().split('T')[0],
+                    day_name: date.toLocaleDateString('en', {weekday: 'long'}),
+                    day_number: date.getDate(),
+                    month_name: date.toLocaleDateString('en', {month: 'long'}),
+                    isReal: false
+                });
+            }
+
+            return events;
+        }
+
+        function renderCalendar(events) {
+            const calendarEl = document.getElementById('calendarView');
+
+            if (events.length === 0) {
+                calendarEl.innerHTML = `
+                    <div class="text-center py-5">
+                        <i class="fas fa-calendar-plus display-1 text-muted mb-4"></i>
+                        <h3 class="text-muted">No Events Found</h3>
+                        <p class="text-muted">No events found in your Apple Calendar.</p>
+                        <div class="alert alert-warning mt-3">
+                            <i class="fas fa-lightbulb me-2"></i>
+                            Add events to your iPhone Calendar to see them here
+                        </div>
+                        <button class="btn btn-primary mt-3" onclick="loadCalendar()">
+                            <i class="fas fa-redo me-2"></i>Try Again
+                        </button>
+                    </div>
+                `;
+                return;
+            }
+
+            const weekDays = [];
+            const today = new Date();
+
+            for (let i = 0; i < 7; i++) {
+                const date = new Date(today);
+                date.setDate(today.getDate() + i);
+                weekDays.push(date);
+            }
+
+            const eventsByDate = {};
+            events.forEach(event => {
+                const dateKey = event.date;
+                if (!eventsByDate[dateKey]) eventsByDate[dateKey] = [];
+                eventsByDate[dateKey].push(event);
+            });
+
+            let calendarHTML = `
+                <div class="calendar-week-view">
+                    <div class="calendar-week-header">
+            `;
+
+            weekDays.forEach(day => {
+                const dayName = day.toLocaleDateString('en', {weekday: 'long'});
+                const dayNumber = day.getDate();
+                const monthName = day.toLocaleDateString('en', {month: 'short'});
+                const isToday = isSameDay(day, new Date());
+
+                calendarHTML += `
+                    <div class="calendar-day-header ${isToday ? 'today' : ''}">
+                        <div class="day-name">${dayName}</div>
+                        <div class="day-date">${monthName} ${dayNumber}</div>
+                        ${isToday ? '<span class="today-badge">Today</span>' : ''}
+                    </div>
+                `;
+            });
+
+            calendarHTML += `
+                    </div>
+                    <div class="calendar-week-days">
+            `;
+
+            weekDays.forEach(day => {
+                const dateKey = day.toISOString().split('T')[0];
+                const dayEvents = eventsByDate[dateKey] || [];
+                const isToday = isSameDay(day, new Date());
+
+                calendarHTML += `
+                    <div class="calendar-day-column ${isToday ? 'today-column' : ''}">
+                        <div class="calendar-day-events">
+                `;
+
+                if (dayEvents.length === 0) {
+                    calendarHTML += `
+                        <div class="no-events">
+                            <i class="fas fa-calendar-minus"></i>
+                            <p>No events</p>
+                        </div>
+                    `;
+                } else {
+                    dayEvents.forEach(event => {
+                        const eventTime = event.allDay ?
+                            'All Day' :
+                            new Date(event.start).toLocaleTimeString([], {hour: '2-digit', minute: '2-digit'});
+
+                        calendarHTML += `
+                            <div class="calendar-event-item" style="border-left-color: ${event.color}">
+                                <div class="event-time">
+                                    <i class="fas fa-clock me-1"></i>${eventTime}
+                                    ${event.isReal ? '<span class="event-badge real">REAL</span>' : '<span class="event-badge example">EXAMPLE</span>'}
+                                </div>
+                                <div class="event-title">${event.title}</div>
+                                ${event.description ? `<div class="event-description">${event.description}</div>` : ''}
+                                ${event.location ? `<div class="event-location"><i class="fas fa-map-marker-alt me-1"></i>${event.location}</div>` : ''}
+                            </div>
+                        `;
+                    });
+                }
+
+                calendarHTML += `
+                        </div>
+                    </div>
+                `;
+            });
+
+            calendarHTML += `
+                    </div>
+                </div>
+            `;
+
+            calendarEl.innerHTML = calendarHTML;
+        }
+
+        function isSameDay(date1, date2) {
+            return date1.getDate() === date2.getDate() &&
+                date1.getMonth() === date2.getMonth() &&
+                date1.getFullYear() === date2.getFullYear();
+        }
+    </script>
 </body>
+
 </html>
