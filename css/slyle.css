@@ -1259,3 +1259,246 @@ body.sidebar-open {
 .text-muted {
   color: #94a3b8 !important;
 }
+
+/* ===== CALENDAR WEEK VIEW STYLES ===== */
+.calendar-week-view {
+  background: rgba(255, 255, 255, 0.05);
+  border: 1px solid rgba(255, 255, 255, 0.1);
+  border-radius: var(--border-radius-lg);
+  overflow: hidden;
+}
+
+.calendar-week-header {
+  display: grid;
+  grid-template-columns: repeat(7, 1fr);
+  background: rgba(255, 255, 255, 0.1);
+  border-bottom: 1px solid rgba(255, 255, 255, 0.1);
+}
+
+.calendar-day-header {
+  padding: 1rem;
+  text-align: center;
+  font-weight: 600;
+  color: var(--light);
+  border-right: 1px solid rgba(255, 255, 255, 0.1);
+  position: relative;
+}
+
+.calendar-day-header.today {
+  background: rgba(99, 102, 241, 0.2);
+}
+
+.calendar-day-header:last-child {
+  border-right: none;
+}
+
+.day-name {
+  font-size: 0.9rem;
+  margin-bottom: 0.25rem;
+  color: #cbd5e1;
+}
+
+.day-date {
+  font-size: 1.1rem;
+  font-weight: 700;
+  color: var(--primary);
+}
+
+.today-badge {
+  position: absolute;
+  top: 0.5rem;
+  right: 0.5rem;
+  background: var(--primary);
+  color: white;
+  padding: 0.2rem 0.5rem;
+  border-radius: 10px;
+  font-size: 0.7rem;
+  font-weight: 600;
+}
+
+.calendar-week-days {
+  display: grid;
+  grid-template-columns: repeat(7, 1fr);
+  min-height: 400px;
+}
+
+.calendar-day-column {
+  border-right: 1px solid rgba(255, 255, 255, 0.1);
+  padding: 1rem;
+  min-height: 400px;
+  background: rgba(255, 255, 255, 0.02);
+}
+
+.calendar-day-column.today-column {
+  background: rgba(99, 102, 241, 0.05);
+}
+
+.calendar-day-column:nth-child(even) {
+  background: rgba(255, 255, 255, 0.03);
+}
+
+.calendar-day-column:last-child {
+  border-right: none;
+}
+
+.calendar-day-events {
+  display: flex;
+  flex-direction: column;
+  gap: 0.75rem;
+  height: 100%;
+}
+
+.calendar-event-item {
+  background: rgba(255, 255, 255, 0.08);
+  border-left: 4px solid;
+  border-radius: 8px;
+  padding: 1rem;
+  font-size: 0.85rem;
+  transition: all 0.3s ease;
+  position: relative;
+}
+
+.calendar-event-item:hover {
+  background: rgba(255, 255, 255, 0.12);
+  transform: translateY(-2px);
+  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.2);
+}
+
+.event-time {
+  font-size: 0.75rem;
+  color: #cbd5e1;
+  margin-bottom: 0.5rem;
+  font-weight: 600;
+  display: flex;
+  align-items: center;
+  gap: 0.5rem;
+}
+
+.event-title {
+  font-weight: 600;
+  color: var(--light);
+  line-height: 1.3;
+  margin-bottom: 0.5rem;
+}
+
+.event-description {
+  font-size: 0.75rem;
+  color: #94a3b8;
+  line-height: 1.4;
+}
+
+.event-location {
+  font-size: 0.75rem;
+  color: #64748b;
+  margin-top: 0.5rem;
+  display: flex;
+  align-items: center;
+  gap: 0.5rem;
+}
+
+.no-events {
+  text-align: center;
+  color: #64748b;
+  font-style: italic;
+  font-size: 0.875rem;
+  padding: 2rem 1rem;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  height: 100%;
+}
+
+.no-events i {
+  font-size: 1.5rem;
+  margin-bottom: 0.5rem;
+}
+
+/* Responsive calendar */
+@media (max-width: 768px) {
+
+  .calendar-week-header,
+  .calendar-week-days {
+    grid-template-columns: 1fr;
+  }
+
+  .calendar-day-header {
+    display: none;
+  }
+
+  .calendar-day-column {
+    border-right: none;
+    border-bottom: 1px solid rgba(255, 255, 255, 0.1);
+    min-height: auto;
+    padding: 1rem 0.5rem;
+  }
+
+  .calendar-day-column:last-child {
+    border-bottom: none;
+  }
+
+  .mobile-day-header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin-bottom: 1rem;
+    padding-bottom: 0.5rem;
+    border-bottom: 1px solid rgba(255, 255, 255, 0.1);
+  }
+
+  .mobile-day-name {
+    font-weight: 600;
+    color: var(--primary);
+  }
+
+  .mobile-day-date {
+    color: #cbd5e1;
+    font-size: 0.9rem;
+  }
+}
+
+/* Animation for calendar */
+@keyframes fadeInUp {
+  from {
+    opacity: 0;
+    transform: translateY(20px);
+  }
+
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+.calendar-week-view {
+  animation: fadeInUp 0.5s ease-out;
+}
+
+/* Asegurar que el spinner sea visible */
+.spinner-border {
+  width: 3rem;
+  height: 3rem;
+}
+
+/* Mejorar la visibilidad del estado de carga */
+.text-muted {
+  color: #94a3b8 !important;
+}
+
+/* Badges para eventos */
+.event-badge {
+  font-size: 0.7rem;
+  padding: 0.2rem 0.5rem;
+  border-radius: 10px;
+  margin-left: 0.5rem;
+}
+
+.event-badge.real {
+  background: #10b981;
+  color: white;
+}
+
+.event-badge.example {
+  background: #f59e0b;
+  color: white;
+}
