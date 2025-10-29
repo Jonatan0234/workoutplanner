@@ -205,8 +205,13 @@
         }
 
         @keyframes spin {
-            from { transform: rotate(0deg); }
-            to { transform: rotate(360deg); }
+            from {
+                transform: rotate(0deg);
+            }
+
+            to {
+                transform: rotate(360deg);
+            }
         }
 
         .fa-sync-alt.spin {
@@ -232,11 +237,11 @@
             .calendar-mobile-view {
                 display: block;
             }
-            
+
             .calendar-week-view {
                 display: none;
             }
-            
+
             .mobile-day-card {
                 background: rgba(15, 23, 42, 0.7);
                 border-radius: 10px;
@@ -244,12 +249,12 @@
                 margin-bottom: 15px;
                 border: 1px solid rgba(255, 255, 255, 0.1);
             }
-            
+
             .mobile-day-card.today {
                 border: 1px solid rgba(99, 102, 241, 0.5);
                 background: rgba(99, 102, 241, 0.1);
             }
-            
+
             .mobile-day-header {
                 display: flex;
                 justify-content: space-between;
@@ -258,17 +263,17 @@
                 padding-bottom: 10px;
                 border-bottom: 1px solid rgba(255, 255, 255, 0.1);
             }
-            
+
             .mobile-day-title {
                 font-weight: 600;
                 font-size: 1.1rem;
             }
-            
+
             .mobile-day-date {
                 color: #94a3b8;
                 font-size: 0.9rem;
             }
-            
+
             .mobile-today-badge {
                 background: #6366f1;
                 color: white;
@@ -276,7 +281,7 @@
                 padding: 3px 8px;
                 border-radius: 10px;
             }
-            
+
             .mobile-event-item {
                 background: rgba(30, 41, 59, 0.8);
                 border-left: 4px solid #6366f1;
@@ -284,7 +289,7 @@
                 padding: 12px;
                 margin-bottom: 10px;
             }
-            
+
             .mobile-event-time {
                 font-size: 0.8rem;
                 color: #94a3b8;
@@ -292,24 +297,24 @@
                 display: flex;
                 align-items: center;
             }
-            
+
             .mobile-event-title {
                 font-weight: 600;
                 margin-bottom: 5px;
             }
-            
+
             .mobile-event-description {
                 font-size: 0.8rem;
                 color: #94a3b8;
                 margin-top: 5px;
             }
-            
+
             .mobile-no-events {
                 text-align: center;
                 color: #64748b;
                 padding: 15px 0;
             }
-            
+
             .mobile-no-events i {
                 font-size: 1.5rem;
                 margin-bottom: 8px;
@@ -324,15 +329,15 @@
                 flex-direction: column;
                 gap: 10px;
             }
-            
+
             .btn-group-mobile .btn {
                 width: 100%;
             }
-            
+
             .calendar-section .row.align-items-center.mb-4 {
                 margin-bottom: 1rem !important;
             }
-            
+
             .calendar-section h2 {
                 font-size: 1.5rem;
             }
@@ -415,9 +420,7 @@
                                     <i class="fas fa-sync-alt me-2"></i>Refresh
                                 </button>
                                 <a href="webcal://p162-caldav.icloud.com/published/2/NDM1NjgzNzQwNDM1NjgzN9K8AFwQL0suOvwYnQC10mKli_j_u4hAzrX6GT07Fb15_-VeOkUxk1uiakayFx7wCv6PONa07SfUVQLFlrJ4EHo"
-                                    class="btn btn-outline-light" target="_blank">
-                                    <i class="fab fa-apple me-2"></i>iCal Link
-                                </a>
+                                    </a>
                             </div>
                         </div>
 
@@ -472,6 +475,8 @@
                     console.log('Eventos cargados desde Apple Calendar:', events);
                     renderCalendar(events);
                     updateStatus(statusEl, 'success', events.length, 'APPLE CALENDAR');
+
+
                 })
                 .catch(error => {
                     console.error('Error loading Apple Calendar:', error);
@@ -499,8 +504,8 @@
 
                     // Insertar el error después del calendario
                     setTimeout(() => {
-                        const calendarContainer = document.querySelector('.calendar-week-view') || 
-                                                  document.querySelector('.calendar-mobile-view');
+                        const calendarContainer = document.querySelector('.calendar-week-view') ||
+                            document.querySelector('.calendar-mobile-view');
                         if (calendarContainer) {
                             calendarContainer.insertAdjacentHTML('afterend', errorHTML);
                         } else {
@@ -524,9 +529,9 @@
 
         function updateStatus(statusEl, type, count, source) {
             const badges = {
-                success: {class: 'bg-success', icon: 'fa-check-circle'},
-                error: {class: 'bg-warning', icon: 'fa-exclamation-triangle'}
+                success: {class: 'bg-success', icon: 'fab fa-apple me-2'}, error: {class: 'bg-warning', icon: 'fa-exclamation-triangle'}
             };
+
 
             const badge = badges[type];
             statusEl.innerHTML = `
@@ -536,6 +541,8 @@
                 Loaded ${count} events
             `;
         }
+
+
 
         async function loadAppleCalendar() {
             try {
