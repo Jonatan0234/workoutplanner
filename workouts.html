@@ -12,6 +12,164 @@
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
     <!-- Custom CSS -->
     <link rel="stylesheet" href="css/style.css">
+    <style>
+        /* Estilos adicionales para grupos desplegables */
+        .muscle-group-card {
+            background: rgba(15, 23, 42, 0.7);
+            border: 1px solid rgba(255, 255, 255, 0.1);
+            border-radius: 12px;
+            margin-bottom: 1.5rem;
+            overflow: hidden;
+            transition: all 0.3s ease;
+        }
+
+        .muscle-group-card:hover {
+            border-color: rgba(99, 102, 241, 0.3);
+            box-shadow: 0 10px 25px rgba(0, 0, 0, 0.2);
+        }
+
+        .muscle-group-header {
+            padding: 1.25rem 1.5rem;
+            background: rgba(30, 41, 59, 0.8);
+            cursor: pointer;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            transition: all 0.3s ease;
+            border: none;
+            width: 100%;
+            text-align: left;
+        }
+
+        .muscle-group-header:hover {
+            background: rgba(99, 102, 241, 0.1);
+        }
+
+        .muscle-group-header:not(.collapsed) {
+            background: rgba(99, 102, 241, 0.15);
+            border-bottom: 1px solid rgba(99, 102, 241, 0.2);
+        }
+
+        .muscle-group-title {
+            display: flex;
+            align-items: center;
+            gap: 1rem;
+            margin: 0;
+        }
+
+        .muscle-group-icon {
+            width: 40px;
+            height: 40px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            background: rgba(99, 102, 241, 0.2);
+            border-radius: 10px;
+            color: #6366f1;
+            font-size: 1.2rem;
+        }
+
+        .muscle-group-header:not(.collapsed) .muscle-group-icon {
+            background: rgba(99, 102, 241, 0.3);
+            color: #8b5cf6;
+        }
+
+        .muscle-group-content {
+            padding: 0;
+        }
+
+        .muscle-group-stats {
+            display: flex;
+            align-items: center;
+            gap: 1rem;
+        }
+
+        .exercise-count {
+            background: rgba(99, 102, 241, 0.2);
+            color: #6366f1;
+            padding: 0.4rem 0.8rem;
+            border-radius: 20px;
+            font-weight: 600;
+            font-size: 0.9rem;
+        }
+
+        .muscle-group-header:not(.collapsed) .exercise-count {
+            background: rgba(99, 102, 241, 0.3);
+            color: #8b5cf6;
+        }
+
+        .toggle-icon {
+            transition: transform 0.3s ease;
+            color: #6366f1;
+        }
+
+        .muscle-group-header:not(.collapsed) .toggle-icon {
+            transform: rotate(180deg);
+            color: #8b5cf6;
+        }
+
+        /* Mejoras para la cuadrícula de ejercicios */
+        .workouts-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fill, minmax(300px, 1fr));
+            gap: 1.5rem;
+            padding: 1.5rem;
+            animation: fadeIn 0.5s ease;
+        }
+
+        @keyframes fadeIn {
+            from {
+                opacity: 0;
+                transform: translateY(10px);
+            }
+
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+
+        /* Estado vacío mejorado */
+        .empty-state {
+            text-align: center;
+            padding: 3rem 2rem;
+            color: #64748b;
+        }
+
+        .empty-state i {
+            font-size: 4rem;
+            margin-bottom: 1.5rem;
+            opacity: 0.5;
+        }
+
+        .empty-state h3 {
+            margin-bottom: 1rem;
+            color: #94a3b8;
+        }
+
+        /* Responsive */
+        @media (max-width: 768px) {
+            .muscle-group-header {
+                padding: 1rem;
+            }
+
+            .muscle-group-title {
+                font-size: 1.1rem;
+            }
+
+            .muscle-group-stats {
+                flex-direction: column;
+                gap: 0.5rem;
+                align-items: flex-end;
+            }
+
+            .workouts-grid {
+                grid-template-columns: 1fr;
+                gap: 1rem;
+                padding: 1rem;
+            }
+        }
+    </style>
 </head>
 
 <body>
@@ -123,9 +281,9 @@
                     <!-- Workout Content -->
                     <div id="workoutContent">
                         <!-- Empty State -->
-                        <div class="text-center py-5">
-                            <i class="fas fa-dumbbell display-1 text-muted mb-4"></i>
-                            <h3 class="text-muted">No Workout Selected</h3>
+                        <div class="empty-state">
+                            <i class="fas fa-dumbbell"></i>
+                            <h3>No Workout Selected</h3>
                             <p class="text-muted">Choose a workout plan from the sidebar to view exercises</p>
                         </div>
                     </div>
@@ -681,7 +839,7 @@
                         },
                         {
                             "name": "DB incline curls +partials.",
-                            "image": "https://raw.githubusercontent.com/Jonatan0234/workoutplanner/main/Pictures/Biceps/Day2/2.gif",
+                            "image": "https://raw.githubusercontent.com/Jonatan0234/workoutplanner/main/Pictures/Biceps/Day2/3.gif",
                             "muscle_image": "https://raw.githubusercontent.com/Jonatan0234/workoutplanner/main/Muscles/Biceps.png",
                             "description": "Cues: Sit on a bench set to a 45-60degrees incline. Let arms hang straight down, fully extended. Curl the dumbbells up, keeping your upper arms pinned back and stable. Emphasize the deep stretch at the bottom and a full squeeze at the top.",
                             "sets": "3 sets 12Kg",
@@ -690,7 +848,7 @@
                         },
                         {
                             "name": "Partials.",
-                            "image": "https://raw.githubusercontent.com/Jonatan0234/workoutplanner/main/Pictures/Biceps/Day2/2.gif",
+                            "image": "https://raw.githubusercontent.com/Jonatan0234/workoutplanner/main/Pictures/Biceps/Day2/3-1.gif",
                             "muscle_image": "https://raw.githubusercontent.com/Jonatan0234/workoutplanner/main/Muscles/Biceps.png",
                             "description": "Cues: Sit on a bench set to a 45-60degrees incline. Let arms hang straight down, fully extended. Curl the dumbbells up, keeping your upper arms pinned back and stable. Emphasize the deep stretch at the bottom and a full squeeze at the top.",
                             "sets": "3 sets 12Kg",
@@ -699,7 +857,7 @@
                         },
                         {
                             "name": "Standing DB curls (trap set).",
-                            "image": "https://raw.githubusercontent.com/Jonatan0234/workoutplanner/main/Pictures/Biceps/Day2/2.gif",
+                            "image": "https://raw.githubusercontent.com/Jonatan0234/workoutplanner/main/Pictures/Biceps/Day2/4.gif",
                             "muscle_image": "https://raw.githubusercontent.com/Jonatan0234/workoutplanner/main/Muscles/Biceps.png",
                             "description": "Cues: Stand upright (core tight, shoulders pinned back). Keep elbows tucked. Curl dumbbells up strictly, avoiding swinging. Tempo Ladder (Ascending to 5 seconds, then Descending)",
                             "sets": "3 sets 12Kg",
@@ -713,41 +871,131 @@
                 "day1": {
                     "legs": [
                         {
-                            "name": "Squats",
-                            "image": "https://raw.githubusercontent.com/Jonatan0234/workoutplanner/main/Pictures/Legs/Day1/1.gif",
+                            "name": "Primer. Reverse hypers",
+                            "image": "https://raw.githubusercontent.com/Jonatan0234/workoutplanner/main/Pictures/Legs/Day1/Primer.gif",
                             "muscle_image": "https://raw.githubusercontent.com/Jonatan0234/workoutplanner/main/Muscles/Legs.png",
                             "description": "Feet shoulder-width, drive hips back and down. Keep chest up and knees tracking toes. Drive through heels.",
-                            "sets": "4 sets",
-                            "reps": "6-10 reps",
-                            "rest": "120s rest"
+                            "sets": "2 sets",
+                            "reps": "12-15 reps",
+                            "rest": "60s rest"
                         },
                         {
-                            "name": "Lunges",
+                            "name": "Barbell deadlift",
+                            "image": "https://raw.githubusercontent.com/Jonatan0234/workoutplanner/main/Pictures/Legs/Day1/1.gif",
+                            "muscle_image": "https://raw.githubusercontent.com/Jonatan0234/workoutplanner/main/Muscles/Legs.png",
+                            "description": "Cues: Start with the bar over your mid-foot. Maintain a flat back (chest up, core braced). Drive through your heels/mid-foot by extending your hips and knees simultaneously. Finish by squeezing the glutes at the top.",
+                            "sets": "3 sets - 60/70Kg in total",
+                            "reps": "8-10 reps",
+                            "rest": "90s rest"
+                        },
+                        {
+                            "name": "Barbell front squats",
                             "image": "https://raw.githubusercontent.com/Jonatan0234/workoutplanner/main/Pictures/Legs/Day1/2.gif",
                             "muscle_image": "https://raw.githubusercontent.com/Jonatan0234/workoutplanner/main/Muscles/Legs.png",
-                            "description": "Step forward, lower until both knees ~90°. Keep torso vertical and push through front heel.",
+                            "description": "Cues: Start with the bar over your mid-foot. Maintain a flat back (chest up, core braced). Drive through your heels/mid-foot by extending your hips and knees simultaneously. Finish by squeezing the glutes at the top.",
+                            "sets": "3 sets - 25/30Kg in total",
+                            "reps": "6-8 reps",
+                            "rest": "90s rest"
+                        },
+                        {
+                            "name": "Alternating DB reverse lunges",
+                            "image": "https://raw.githubusercontent.com/Jonatan0234/workoutplanner/main/Pictures/Legs/Day1/3.gif",
+                            "muscle_image": "https://raw.githubusercontent.com/Jonatan0234/workoutplanner/main/Muscles/Legs.png",
+                            "description": "Cues: Stand tall, holding dumbbells. Step backward and drop straight down until both knees are bent at 90degrees. Ensure the front knee tracks over the ankle. Drive through the front heel to return. Maintain an upright torso.",
+                            "sets": "3 sets - 12Kg in each arm",
+                            "reps": "10 reps each leg",
+                            "rest": "90s rest"
+                        },
+                        {
+                            "name": "Floor hamstring curl +eccentric",
+                            "image": "https://raw.githubusercontent.com/Jonatan0234/workoutplanner/main/Pictures/Legs/Day1/4.gif",
+                            "muscle_image": "https://raw.githubusercontent.com/Jonatan0234/workoutplanner/main/Muscles/Legs.png",
+                            "description": "Cues: Lie on your back. Bridge your hips up and keep them elevated. Slide heels out slowly to extend legs. Pull heels back to the start, focusing solely on hamstring contraction.",
                             "sets": "3 sets",
+                            "reps": "10 reps FF",
+                            "rest": "90s rest"
+                        },
+                        {
+                            "name": "Eccentric",
+                            "image": "https://raw.githubusercontent.com/Jonatan0234/workoutplanner/main/Pictures/Legs/Day1/4-1.gif",
+                            "muscle_image": "https://raw.githubusercontent.com/Jonatan0234/workoutplanner/main/Muscles/Legs.png",
+                            "description": "Cues: Lie on your back. Bridge your hips up and keep them elevated. Slide heels out slowly to extend legs. Pull heels back to the start, focusing solely on hamstring contraction.",
+                            "sets": "3 sets",
+                            "reps": "8-10 reps FF",
+                            "rest": "90s rest"
+                        },
+                        {
+                            "name": "Seated hamstring curls +eccentric",
+                            "image": "https://raw.githubusercontent.com/Jonatan0234/workoutplanner/main/Pictures/Legs/Day1/4-2.gif",
+                            "muscle_image": "https://raw.githubusercontent.com/Jonatan0234/workoutplanner/main/Muscles/Legs.png",
+                            "description": "Cues: Align your knees with the pivot point and secure the thigh pad to lock your hips down. Curl the lever in with a powerful squeeze, then slowly extend your legs back out, feeling a deep stretch in the hamstrings throughout the return.",
+                            "sets": "3 sets - 20Kg",
                             "reps": "10-12 reps",
+                            "rest": "90s rest"
+                        },
+                        {
+                            "name": "Eccentric",
+                            "image": "https://raw.githubusercontent.com/Jonatan0234/workoutplanner/main/Pictures/Legs/Day1/4-3.gif",
+                            "muscle_image": "https://raw.githubusercontent.com/Jonatan0234/workoutplanner/main/Muscles/Legs.png",
+                            "description": "Cues: Align your knees with the pivot point and secure the thigh pad to lock your hips down. Curl the lever in with a powerful squeeze, then slowly extend your legs back out, feeling a deep stretch in the hamstrings throughout the return.",
+                            "sets": "3 sets - 10Kg",
+                            "reps": "10 reps xleg",
+                            "rest": "90s rest"
+                        },
+                        {
+                            "name": "Standing calf raises +partials",
+                            "image": "https://raw.githubusercontent.com/Jonatan0234/workoutplanner/main/Pictures/Legs/Day1/5.gif",
+                            "muscle_image": "https://raw.githubusercontent.com/Jonatan0234/workoutplanner/main/Muscles/Legs.png",
+                            "description": "Cues: Position the barbell high on your back as if squatting and stand with the balls of your feet on a block or step. Lower your heels fully to feel a deep stretch, then drive up onto your toes as high as possible and hold the top squeeze for four seconds. Control the descent down for four seconds before repeating.",
+                            "sets": "3 sets 30Kg in total",
+                            "reps": "10-12 reps",
+                            "rest": "90s rest"
+                        },
+                        {
+                            "name": "Partials",
+                            "image": "https://raw.githubusercontent.com/Jonatan0234/workoutplanner/main/Pictures/Legs/Day1/5-1.gif",
+                            "muscle_image": "https://raw.githubusercontent.com/Jonatan0234/workoutplanner/main/Muscles/Legs.png",
+                            "description": "Cues: Position the barbell high on your back as if squatting and stand with the balls of your feet on a block or step. Lower your heels fully to feel a deep stretch, then drive up onto your toes as high as possible and hold the top squeeze for four seconds. Control the descent down for four seconds before repeating.",
+                            "sets": "3 sets",
+                            "reps": "14-18 reps",
                             "rest": "90s rest"
                         }
                     ],
                     "shoulders": [
                         {
-                            "name": "Overhead Press",
+                            "name": "DB single arm OHP (OverHead Press)",
                             "image": "https://raw.githubusercontent.com/Jonatan0234/workoutplanner/main/Pictures/Shoulders/Day1/1.gif",
                             "muscle_image": "https://raw.githubusercontent.com/Jonatan0234/workoutplanner/main/Muscles/Shoulders.png",
-                            "description": "Press the weight overhead with a tight core, avoid excessive lumbar extension. Lock out and control the descent.",
-                            "sets": "4 sets",
-                            "reps": "8-12 reps",
+                            "description": "Cues: Stand tall, brace your core, and keep your free hand steady. Press the dumbbell straight overhead to fully lock out your arm. Actively pull the weight down with control, keeping your elbow under your wrist, and immediately begin the next press.",
+                            "sets": "3 sets 22/25Kg",
+                            "reps": "8-10 reps",
                             "rest": "90s rest"
                         },
                         {
-                            "name": "Lateral Raise",
+                            "name": "DB lateral raise +partials",
                             "image": "https://raw.githubusercontent.com/Jonatan0234/workoutplanner/main/Pictures/Shoulders/Day1/2.gif",
                             "muscle_image": "https://raw.githubusercontent.com/Jonatan0234/workoutplanner/main/Muscles/Shoulders.png",
-                            "description": "Slight bend in elbow, raise to shoulder height focusing on the lateral deltoid.",
+                            "description": "Cues: Stand with slightly bent elbows, leading the movement with them. Raise the dumbbells out to the sides until your arms are near parallel with the floor. Control the descent slowly and avoid resting the weights on your hips to maintain continuous tension.",
+                            "sets": "3 sets - 12,5Kg",
+                            "reps": "10-12 reps",
+                            "rest": "90s rest"
+                        },
+                        {
+                            "name": "Partials",
+                            "image": "https://raw.githubusercontent.com/Jonatan0234/workoutplanner/main/Pictures/Shoulders/Day1/2-1.gif",
+                            "muscle_image": "https://raw.githubusercontent.com/Jonatan0234/workoutplanner/main/Muscles/Shoulders.png",
+                            "description": "Cues: Stand with slightly bent elbows, leading the movement with them. Raise the dumbbells out to the sides until your arms are near parallel with the floor. Control the descent slowly and avoid resting the weights on your hips to maintain continuous tension.",
                             "sets": "3 sets",
-                            "reps": "15-20 reps",
+                            "reps": "5-7 reps",
+                            "rest": "90s rest"
+                        },
+                        {
+                            "name": "DB rear delt rows",
+                            "image": "https://raw.githubusercontent.com/Jonatan0234/workoutplanner/main/Pictures/Shoulders/Day1/3.gif",
+                            "muscle_image": "https://raw.githubusercontent.com/Jonatan0234/workoutplanner/main/Muscles/Shoulders.png",
+                            "description": "Sit on a bench and lean your torso forward over your thighs with the dumbbells hanging straight down. Pull your elbows wide and high toward the ceiling, actively squeezing the rear portion of your shoulders together. Control the dumbbells slowly back down to the starting position without swinging or using momentum.",
+                            "sets": "3 sets - 12,5Kg",
+                            "reps": "10-12 reps",
                             "rest": "60s rest"
                         }
                     ]
@@ -795,6 +1043,17 @@
                     ]
                 }
             }
+        };
+
+
+        // Iconos para cada grupo muscular
+        const muscleIcons = {
+            'chest': 'fas fa-fire',
+            'triceps': 'fas fa-fist-raised',
+            'back': 'fas fa-mountain',
+            'biceps': 'fas fa-dumbbell',
+            'legs': 'fas fa-running',
+            'shoulders': 'fas fa-arrows-alt-h'
         };
 
         document.addEventListener('DOMContentLoaded', function () {
@@ -889,7 +1148,6 @@
             const workoutTitle = document.getElementById('workoutTitle');
 
             console.log('Cargando workout:', category, day);
-            console.log('Datos disponibles:', exercises);
 
             const selected = exercises[category] && exercises[category][day] ? exercises[category][day] : null;
 
@@ -902,14 +1160,29 @@
                 let workoutHTML = '';
 
                 for (const [group, exList] of Object.entries(selected)) {
-                    workoutHTML += `
-                        <div class="row mb-4">
-                            <div class="group-header">
-                                <h3 class="text-capitalize fw-bold text-gradient group-title">${group}</h3>
-                                <span class="badge bg-primary fs-6">${exList.length} exercises</span>
-                            </div>
+                    const groupName = group.replace(/\b\w/g, l => l.toUpperCase());
+                    const groupIcon = muscleIcons[group] || 'fas fa-dumbbell';
+                    const collapseId = `${category}_${day}_${group}`.replace(/\s/g, '_');
 
-                            <div class="workouts-grid">
+                    workoutHTML += `
+                        <div class="muscle-group-card">
+                            <button class="muscle-group-header collapsed" type="button" data-bs-toggle="collapse" data-bs-target="#${collapseId}" aria-expanded="false" aria-controls="${collapseId}">
+                                <div class="muscle-group-title">
+                                    <div class="muscle-group-icon">
+                                        <i class="${groupIcon}"></i>
+                                    </div>
+                                    <div>
+                                        <h4 class="mb-0">${groupName}</h4>
+                                        <small class="text-muted">${exList.length} exercises</small>
+                                    </div>
+                                </div>
+                                <div class="muscle-group-stats">
+                                    <span class="exercise-count">${exList.length} exercises</span>
+                                    <i class="fas fa-chevron-down toggle-icon"></i>
+                                </div>
+                            </button>
+                            <div class="collapse muscle-group-content" id="${collapseId}">
+                                <div class="workouts-grid">
                     `;
 
                     exList.forEach((ex, index) => {
@@ -1021,6 +1294,7 @@
                     });
 
                     workoutHTML += `
+                                </div>
                             </div>
                         </div>
                     `;
@@ -1032,9 +1306,9 @@
                 console.error('No se encontraron ejercicios para:', category, day);
                 workoutTitle.textContent = 'Workout Library';
                 workoutContent.innerHTML = `
-                    <div class="text-center py-5">
-                        <i class="fas fa-dumbbell display-1 text-muted mb-4"></i>
-                        <h3 class="text-muted">No Workout Selected</h3>
+                    <div class="empty-state">
+                        <i class="fas fa-dumbbell"></i>
+                        <h3>No Workout Selected</h3>
                         <p class="text-muted">Choose a workout plan from the sidebar to view exercises</p>
                     </div>
                 `;
