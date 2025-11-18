@@ -118,15 +118,8 @@
         }
 
         @keyframes fadeIn {
-            from {
-                opacity: 0;
-                transform: translateY(10px);
-            }
-
-            to {
-                opacity: 1;
-                transform: translateY(0);
-            }
+            from { opacity: 0; transform: translateY(10px); }
+            to { opacity: 1; transform: translateY(0); }
         }
 
         /* Estado vacío mejorado */
@@ -145,6 +138,86 @@
         .empty-state h3 {
             margin-bottom: 1rem;
             color: #94a3b8;
+        }
+
+        /* Modal de eventos de hoy */
+        .today-events-modal .modal-content {
+            background: rgba(15, 23, 42, 0.95);
+            backdrop-filter: blur(20px);
+            border: 1px solid rgba(99, 102, 241, 0.3);
+            border-radius: 16px;
+            box-shadow: 0 25px 50px -12px rgba(0, 0, 0, 0.5);
+        }
+
+        .today-events-modal .modal-header {
+            border-bottom: 1px solid rgba(99, 102, 241, 0.2);
+            background: rgba(99, 102, 241, 0.1);
+            padding: 1.25rem 1.5rem;
+        }
+
+        .today-events-modal .modal-body {
+            padding: 1.5rem;
+            max-height: 60vh;
+            overflow-y: auto;
+        }
+
+        .today-events-modal .modal-title {
+            color: #8b5cf6;
+            font-weight: 700;
+        }
+
+        .today-event-item {
+            background: rgba(255, 255, 255, 0.05);
+            border-left: 4px solid;
+            border-radius: 10px;
+            padding: 1.25rem;
+            margin-bottom: 1rem;
+            transition: all 0.3s ease;
+        }
+
+        .today-event-item:hover {
+            background: rgba(255, 255, 255, 0.08);
+            transform: translateX(5px);
+        }
+
+        .today-event-time {
+            font-size: 0.85rem;
+            color: #94a3b8;
+            margin-bottom: 0.5rem;
+            display: flex;
+            align-items: center;
+            gap: 0.5rem;
+        }
+
+        .today-event-title {
+            font-weight: 600;
+            font-size: 1.1rem;
+            margin-bottom: 0.5rem;
+            color: white;
+        }
+
+        .today-event-description {
+            font-size: 0.9rem;
+            color: #cbd5e1;
+            line-height: 1.5;
+        }
+
+        .no-events-today {
+            text-align: center;
+            padding: 2rem;
+            color: #64748b;
+        }
+
+        .no-events-today i {
+            font-size: 3rem;
+            margin-bottom: 1rem;
+            opacity: 0.5;
+        }
+
+        /* Botón de eventos de hoy en navbar */
+        #todayEventsBtn {
+            font-size: 0.875rem;
+            padding: 0.4rem 0.8rem;
         }
 
         /* Responsive */
@@ -168,6 +241,24 @@
                 gap: 1rem;
                 padding: 1rem;
             }
+
+            .today-events-modal .modal-body {
+                max-height: 70vh;
+            }
+        }
+
+        @media (max-width: 576px) {
+            #todayEventsBtn .btn-text {
+                display: none;
+            }
+
+            #todayEventsBtn {
+                padding: 0.5rem;
+            }
+
+            #todayEventsBtn i {
+                margin-right: 0;
+            }
         }
     </style>
 </head>
@@ -183,6 +274,12 @@
             <!-- Botón para mostrar/ocultar sidebar en PC -->
             <button class="btn btn-outline-light d-none d-lg-inline-block me-2" id="toggleSidebarPC">
                 <i class="fas fa-bars" id="sidebarIcon"></i>
+            </button>
+
+            <!-- Botón para eventos de hoy -->
+            <button class="btn btn-outline-info me-2" id="todayEventsBtn" data-bs-toggle="modal" data-bs-target="#todayEventsModal">
+                <i class="fas fa-calendar-day me-1"></i>
+                <span class="btn-text">Today's Events</span>
             </button>
 
             <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNav">
@@ -207,6 +304,30 @@
 
     <!-- Overlay para móviles -->
     <div class="sidebar-overlay" id="sidebarOverlay"></div>
+
+    <!-- Modal para eventos de hoy -->
+    <div class="modal fade today-events-modal" id="todayEventsModal" tabindex="-1" aria-labelledby="todayEventsModalLabel" aria-hidden="true">
+        <div class="modal-dialog modal-dialog-centered">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h5 class="modal-title" id="todayEventsModalLabel">
+                        <i class="fas fa-calendar-day me-2"></i>Today's Workout Events
+                    </h5>
+                    <button type="button" class="btn-close btn-close-white" data-bs-dismiss="modal" aria-label="Close"></button>
+                </div>
+                <div class="modal-body">
+                    <div id="todayEventsContent">
+                        <div class="text-center py-4">
+                            <div class="spinner-border text-primary" role="status">
+                                <span class="visually-hidden">Loading events...</span>
+                            </div>
+                            <p class="mt-2 text-muted">Loading today's events...</p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
 
     <div class="container-fluid">
         <div class="row">
@@ -301,831 +422,830 @@
                 "day1": {
                     "chest": [
                         {
-                            "name": "Primer",
-                            "image": "https://raw.githubusercontent.com/Jonatan0234/workoutplanner/main/Pictures/Chest/Day1/Primer.gif",
-                            "muscle_image": "https://raw.githubusercontent.com/Jonatan0234/workoutplanner/main/Muscles/Chest.png",
-                            "description": "Keep your elbow at 90° by your side and rotate your forearm outward against the band to strengthen the rotator cuff.",
-                            "sets": "2 sets - 12,5Kg",
-                            "reps": "12-15 reps",
-                            "rest": "60s rest"
-                        },
+                                        "name": "Primer",
+                                        "image": "https://raw.githubusercontent.com/Jonatan0234/workoutplanner/main/Pictures/Chest/Day1/Primer.gif",
+                                        "muscle_image": "https://raw.githubusercontent.com/Jonatan0234/workoutplanner/main/Muscles/Chest.png",
+                                        "description": "Keep your elbow at 90° by your side and rotate your forearm outward against the band to strengthen the rotator cuff.",
+                                        "sets": "2 sets - 12,5Kg",
+                                        "reps": "12-15 reps",
+                                        "rest": "60s rest"
+                                    },
 
-                        {
-                            "name": "Incline DB bench press",
-                            "image": "https://raw.githubusercontent.com/Jonatan0234/workoutplanner/main/Pictures/Chest/Day1/1.gif",
-                            "muscle_image": "https://raw.githubusercontent.com/Jonatan0234/workoutplanner/main/Muscles/Chest.png",
-                            "description": "Press dumbbells upward on an incline bench to target upper chest and shoulders.",
-                            "sets": "3 sets - 32kg",
-                            "reps": "6-8 reps Form failure",
-                            "rest": "90s rest"
-                        },
-                        {
-                            "name": "Crossovers",
-                            "image": "https://raw.githubusercontent.com/Jonatan0234/workoutplanner/main/Pictures/Chest/Day1/2.gif",
-                            "muscle_image": "https://raw.githubusercontent.com/Jonatan0234/workoutplanner/main/Muscles/Chest.png",
-                            "description": "Pull the cables together in front of your chest to build and define the pectorals.",
-                            "sets": "3 sets - 12,5Kg",
-                            "reps": "10-12 reps",
-                            "rest": "75s rest"
-                        },
-                        {
-                            "name": "Partials",
-                            "image": "https://raw.githubusercontent.com/Jonatan0234/workoutplanner/main/Pictures/Chest/Day1/2-1.gif",
-                            "muscle_image": "https://raw.githubusercontent.com/Jonatan0234/workoutplanner/main/Muscles/Chest.png",
-                            "description": "Pull the cables together in front of your chest to build and define the pectorals.",
-                            "sets": "3 sets",
-                            "reps": "10-12 reps",
-                            "rest": "75s rest"
-                        },
-                        {
-                            "name": "DB floor flys",
-                            "image": "https://raw.githubusercontent.com/Jonatan0234/workoutplanner/main/Pictures/Chest/Day1/3.gif",
-                            "muscle_image": "https://raw.githubusercontent.com/Jonatan0234/workoutplanner/main/Muscles/Chest.png",
-                            "description": "Lying on the floor, open and close your arms with dumbbells to work the chest safely.",
-                            "sets": "2-3 sets - 22.5kg",
-                            "reps": "8-10 reps",
-                            "rest": "90s rest"
-                        },
-                        {
-                            "name": "Eccentric only",
-                            "image": "https://raw.githubusercontent.com/Jonatan0234/workoutplanner/main/Pictures/Chest/Day1/3-1.gif",
-                            "muscle_image": "https://raw.githubusercontent.com/Jonatan0234/workoutplanner/main/Muscles/Chest.png",
-                            "description": "Lying on the floor, open and close your arms with dumbbells to work the chest safely.",
-                            "sets": "3 sets",
-                            "reps": "10-12 reps",
-                            "rest": "75s rest"
-                        },
-                        {
-                            "name": "Deficit 1.5 Rep pushup ladder",
-                            "image": "https://raw.githubusercontent.com/Jonatan0234/workoutplanner/main/Pictures/Chest/Day1/4.gif",
-                            "muscle_image": "https://raw.githubusercontent.com/Jonatan0234/workoutplanner/main/Muscles/Chest.png",
-                            "description": "Do push-ups on raised platforms with a half rep added each time to increase chest and triceps strength.",
-                            "sets": "3 sets xfailure",
-                            "reps": "10-12 reps",
-                            "rest": "90s rest"
-                        },
-                        {
-                            "name": "Bodyweight dips",
-                            "image": "https://raw.githubusercontent.com/Jonatan0234/workoutplanner/main/Pictures/Chest/Day1/5.gif",
-                            "muscle_image": "https://raw.githubusercontent.com/Jonatan0234/workoutplanner/main/Muscles/Chest.png",
-                            "description": "Lower and press your body between parallel bars to target chest, shoulders, and triceps.",
-                            "sets": "3 sets",
-                            "reps": "10-12 reps",
-                            "rest": "90s rest"
-                        },
-                        {
-                            "name": "Partials",
-                            "image": "https://raw.githubusercontent.com/Jonatan0234/workoutplanner/main/Pictures/Chest/Day1/5-1.gif",
-                            "muscle_image": "https://raw.githubusercontent.com/Jonatan0234/workoutplanner/main/Muscles/Chest.png",
-                            "description": "Do push-ups on raised platforms with a half rep added each time to increase chest and triceps strength.",
-                            "sets": "Form failure",
-                            "reps": "5-7 reps",
-                            "rest": "90s rest"
-                        }
+                                    {
+                                        "name": "Incline DB bench press",
+                                        "image": "https://raw.githubusercontent.com/Jonatan0234/workoutplanner/main/Pictures/Chest/Day1/1.gif",
+                                        "muscle_image": "https://raw.githubusercontent.com/Jonatan0234/workoutplanner/main/Muscles/Chest.png",
+                                        "description": "Press dumbbells upward on an incline bench to target upper chest and shoulders.",
+                                        "sets": "3 sets - 32kg",
+                                        "reps": "6-8 reps Form failure",
+                                        "rest": "90s rest"
+                                    },
+                                    {
+                                        "name": "Crossovers",
+                                        "image": "https://raw.githubusercontent.com/Jonatan0234/workoutplanner/main/Pictures/Chest/Day1/2.gif",
+                                        "muscle_image": "https://raw.githubusercontent.com/Jonatan0234/workoutplanner/main/Muscles/Chest.png",
+                                        "description": "Pull the cables together in front of your chest to build and define the pectorals.",
+                                        "sets": "3 sets - 12,5Kg",
+                                        "reps": "10-12 reps",
+                                        "rest": "75s rest"
+                                    },
+                                    {
+                                        "name": "Partials",
+                                        "image": "https://raw.githubusercontent.com/Jonatan0234/workoutplanner/main/Pictures/Chest/Day1/2-1.gif",
+                                        "muscle_image": "https://raw.githubusercontent.com/Jonatan0234/workoutplanner/main/Muscles/Chest.png",
+                                        "description": "Pull the cables together in front of your chest to build and define the pectorals.",
+                                        "sets": "3 sets",
+                                        "reps": "10-12 reps",
+                                        "rest": "75s rest"
+                                    },
+                                    {
+                                        "name": "DB floor flys",
+                                        "image": "https://raw.githubusercontent.com/Jonatan0234/workoutplanner/main/Pictures/Chest/Day1/3.gif",
+                                        "muscle_image": "https://raw.githubusercontent.com/Jonatan0234/workoutplanner/main/Muscles/Chest.png",
+                                        "description": "Lying on the floor, open and close your arms with dumbbells to work the chest safely.",
+                                        "sets": "2-3 sets - 22.5kg",
+                                        "reps": "8-10 reps",
+                                        "rest": "90s rest"
+                                    },
+                                    {
+                                        "name": "Eccentric only",
+                                        "image": "https://raw.githubusercontent.com/Jonatan0234/workoutplanner/main/Pictures/Chest/Day1/3-1.gif",
+                                        "muscle_image": "https://raw.githubusercontent.com/Jonatan0234/workoutplanner/main/Muscles/Chest.png",
+                                        "description": "Lying on the floor, open and close your arms with dumbbells to work the chest safely.",
+                                        "sets": "3 sets",
+                                        "reps": "10-12 reps",
+                                        "rest": "75s rest"
+                                    },
+                                    {
+                                        "name": "Deficit 1.5 Rep pushup ladder",
+                                        "image": "https://raw.githubusercontent.com/Jonatan0234/workoutplanner/main/Pictures/Chest/Day1/4.gif",
+                                        "muscle_image": "https://raw.githubusercontent.com/Jonatan0234/workoutplanner/main/Muscles/Chest.png",
+                                        "description": "Do push-ups on raised platforms with a half rep added each time to increase chest and triceps strength.",
+                                        "sets": "3 sets xfailure",
+                                        "reps": "10-12 reps",
+                                        "rest": "90s rest"
+                                    },
+                                    {
+                                        "name": "Bodyweight dips",
+                                        "image": "https://raw.githubusercontent.com/Jonatan0234/workoutplanner/main/Pictures/Chest/Day1/5.gif",
+                                        "muscle_image": "https://raw.githubusercontent.com/Jonatan0234/workoutplanner/main/Muscles/Chest.png",
+                                        "description": "Lower and press your body between parallel bars to target chest, shoulders, and triceps.",
+                                        "sets": "3 sets",
+                                        "reps": "10-12 reps",
+                                        "rest": "90s rest"
+                                    },
+                                    {
+                                        "name": "Partials",
+                                        "image": "https://raw.githubusercontent.com/Jonatan0234/workoutplanner/main/Pictures/Chest/Day1/5-1.gif",
+                                        "muscle_image": "https://raw.githubusercontent.com/Jonatan0234/workoutplanner/main/Muscles/Chest.png",
+                                        "description": "Do push-ups on raised platforms with a half rep added each time to increase chest and triceps strength.",
+                                        "sets": "Form failure",
+                                        "reps": "5-7 reps",
+                                        "rest": "90s rest"
+                                    }
 
-                    ],
-                    "triceps": [
-                        {
-                            "name": "Triceps Pushdowns.",
-                            "image": "https://raw.githubusercontent.com/Jonatan0234/workoutplanner/main/Pictures/Triceps/Day1/1.gif",
-                            "muscle_image": "https://raw.githubusercontent.com/Jonatan0234/workoutplanner/main/Muscles/Triceps.png",
-                            "description": "Stand at the cable machine with a slight lean. Keep elbows fixed to your sides. Push the weight down until arms are straight, flexing the triceps. Control the return.",
-                            "sets": "2-3 sets - 25Kg",
-                            "reps": "6-8 FF reps",
-                            "rest": "60s rest"
-                        },
-                        {
-                            "name": "lying DB extensions.",
-                            "image": "https://raw.githubusercontent.com/Jonatan0234/workoutplanner/main/Pictures/Triceps/Day1/2.gif",
-                            "muscle_image": "https://raw.githubusercontent.com/Jonatan0234/workoutplanner/main/Muscles/Triceps.png",
-                            "description": "Lie on a bench. Hold two dumbbells overhead with upper arms vertical. Lower the weight by bending only your elbows toward your head. Extend arms to flex the triceps.",
-                            "sets": "2-3 sets 12Kg x arm",
-                            "reps": "8-10 reps",
-                            "rest": "45s rest"
-                        },
-                        {
-                            "name": "Eccentric only",
-                            "image": "https://raw.githubusercontent.com/Jonatan0234/workoutplanner/main/Pictures/Triceps/Day1/2-1.gif",
-                            "muscle_image": "https://raw.githubusercontent.com/Jonatan0234/workoutplanner/main/Muscles/Triceps.png",
-                            "description": "Lie on a bench. Hold two dumbbells overhead with upper arms vertical. Lower the weight by bending only your elbows toward your head. Extend arms to flex the triceps.",
-                            "sets": "3 sets",
-                            "reps": "5-7 FF reps",
-                            "rest": "45s rest"
-                        },
-                        {
-                            "name": "DB triceps kickbacks +Partials.",
-                            "image": "https://raw.githubusercontent.com/Jonatan0234/workoutplanner/main/Pictures/Triceps/Day1/3.gif",
-                            "muscle_image": "https://raw.githubusercontent.com/Jonatan0234/workoutplanner/main/Muscles/Triceps.png",
-                            "description": "Hinge forward at the hips, keeping your back flat and elbows pinned high to your sides. Starting with your forearm vertical, kick the dumbbell back until your arm is straight, flexing the triceps. Control the return.",
-                            "sets": "2-3 sets - 8Kg x arm",
-                            "reps": "10-12 reps",
-                            "rest": "45s rest"
-                        },
-                        {
-                            "name": "Partials",
-                            "image": "https://raw.githubusercontent.com/Jonatan0234/workoutplanner/main/Pictures/Triceps/Day1/3-1.gif",
-                            "muscle_image": "https://raw.githubusercontent.com/Jonatan0234/workoutplanner/main/Muscles/Triceps.png",
-                            "description": "Hinge forward at the hips, keeping your back flat and elbows pinned high to your sides. Starting with your forearm vertical, kick the dumbbell back until your arm is straight, flexing the triceps. Control the return.",
-                            "sets": "4 sets",
-                            "reps": "5-7 reps",
-                            "rest": "45s rest"
-                        },
-                        {
-                            "name": "Optional - Cable triceps kickbacks",
-                            "image": "https://raw.githubusercontent.com/Jonatan0234/workoutplanner/main/Pictures/Triceps/Day1/3-1.gif",
-                            "muscle_image": "https://raw.githubusercontent.com/Jonatan0234/workoutplanner/main/Muscles/Triceps.png",
-                            "description": "Hinge forward at the hips, keeping your back flat and elbows pinned high to your sides. Starting with your forearm vertical, kick the dumbbell back until your arm is straight, flexing the triceps. Control the return.",
-                            "sets": "4 sets",
-                            "reps": "15-20 reps",
-                            "rest": "45s rest"
-                        },
-                        {
-                            "name": "Optional - Partials",
-                            "image": "https://raw.githubusercontent.com/Jonatan0234/workoutplanner/main/Pictures/Triceps/Day1/3-1.gif",
-                            "muscle_image": "https://raw.githubusercontent.com/Jonatan0234/workoutplanner/main/Muscles/Triceps.png",
-                            "description": "Hinge forward at the hips, keeping your back flat and elbows pinned high to your sides. Starting with your forearm vertical, kick the dumbbell back until your arm is straight, flexing the triceps. Control the return.",
-                            "sets": "3 sets - 10Kg",
-                            "reps": "5-7 reps",
-                            "rest": "45s rest"
-                        },
-                        {
-                            "name": "Cobra pushups 1set xF",
-                            "image": "https://raw.githubusercontent.com/Jonatan0234/workoutplanner/main/Pictures/Triceps/Day1/4.gif",
-                            "muscle_image": "https://raw.githubusercontent.com/Jonatan0234/workoutplanner/main/Muscles/Triceps.png",
-                            "description": "Start face down, hands under shoulders, elbows tucked. Push up until arms are fully extended, keeping the body straight. Lower slowly to complete the rep.",
-                            "sets": "3 sets",
-                            "reps": "8-10 FF reps",
-                            "rest": "45s rest"
-                        }
-                    ]
-                },
-                "day2": {
-                    "chest": [
-                        {
-                            "name": "Primer. -Band pull aparts sub max",
-                            "image": "https://raw.githubusercontent.com/Jonatan0234/workoutplanner/main/Pictures/Chest/Day2/Primer.gif",
-                            "muscle_image": "https://raw.githubusercontent.com/Jonatan0234/workoutplanner/main/Muscles/Chest.png",
-                            "description": "Hold the band straight out at chest height. Keep your arms straight and your core braced. Pull the band apart until it touches your chest, strongly squeezing your shoulder blades together. Control the return to the start.",
-                            "sets": "2 sets",
-                            "reps": "12-15 reps",
-                            "rest": "60s rest"
-                        },
-                        {
-                            "name": "DB bench press.",
-                            "image": "https://raw.githubusercontent.com/Jonatan0234/workoutplanner/main/Pictures/Chest/Day2/1.gif",
-                            "muscle_image": "https://raw.githubusercontent.com/Jonatan0234/workoutplanner/main/Muscles/Chest.png",
-                            "description": "Retract shoulders. Lower to chest, elbows tucked (45°). Press up and in, squeeze chest at the top.",
-                            "sets": "3 sets - 32/36Kg.",
-                            "reps": "8-10 FF reps.",
-                            "rest": "90s rest"
-                        },
-                        {
-                            "name": "High to low crossover +partials.",
-                            "image": "https://raw.githubusercontent.com/Jonatan0234/workoutplanner/main/Pictures/Chest/Day2/2.gif",
-                            "muscle_image": "https://raw.githubusercontent.com/Jonatan0234/workoutplanner/main/Muscles/Chest.png",
-                            "description": "Set pulleys high (above head). Step forward into a staggered stance with a slight forward lean. Pull the handles down and across your body, bringing your hands together in front of your belly button. Keep a slight bend in the elbow and squeeze the lower chest hard at the bottom. Control the stretch on the way back.",
-                            "sets": "3 sets - 12,5Kg.",
-                            "reps": "8-10 reps.",
-                            "rest": "90s rest"
-                        },
-                        {
-                            "name": "Partials.",
-                            "image": "https://raw.githubusercontent.com/Jonatan0234/workoutplanner/main/Pictures/Chest/Day2/2-1.gif",
-                            "muscle_image": "https://raw.githubusercontent.com/Jonatan0234/workoutplanner/main/Muscles/Chest.png",
-                            "description": "Set pulleys high (above head). Step forward into a staggered stance with a slight forward lean. Pull the handles down and across your body, bringing your hands together in front of your belly button. Keep a slight bend in the elbow and squeeze the lower chest hard at the bottom. Control the stretch on the way back.",
-                            "sets": "3 sets.",
-                            "reps": "5-7 reps.",
-                            "rest": "90s rest"
-                        },
-                        {
-                            "name": "incline cable press.",
-                            "image": "https://raw.githubusercontent.com/Jonatan0234/workoutplanner/main/Pictures/Chest/Day2/3.gif",
-                            "muscle_image": "https://raw.githubusercontent.com/Jonatan0234/workoutplanner/main/Muscles/Chest.png",
-                            "description": "Set bench 30-45°. Pulleys at the bottom. Lie on bench, retract shoulders. Press handles up and forward toward the midline. Squeeze upper chest. Control the stretch back.",
-                            "sets": "3 sets - 7,5Kg.",
-                            "reps": "10-12 FF reps.",
-                            "rest": "90s rest"
-                        },
-                        {
-                            "name": "1.5 Rep dip ladder.",
-                            "image": "https://raw.githubusercontent.com/Jonatan0234/workoutplanner/main/Pictures/Chest/Day2/4.gif",
-                            "muscle_image": "https://raw.githubusercontent.com/Jonatan0234/workoutplanner/main/Muscles/Chest.png",
-                            "description": "Dip Form: Start high, shoulders down. Lower to 90degree.1.5 Rep: Lower to full depth. Press up halfway. Lower back to full depth. Press up to the top (this completes 1.5 reps).Ladder: Perform a set of 1.5 reps. Rest briefly. Perform a set of 2 times 1.5 reps. Rest. Continue increasing reps by one set at a time (1, 2, 3...).Goal: Accumulate high volume while managing fatigue.",
-                            "sets": "3 sets",
-                            "reps": "10-12 FF reps.",
-                            "rest": "90s rest"
-                        },
-                        {
-                            "name": "Prision yard pushup.",
-                            "image": "https://raw.githubusercontent.com/Jonatan0234/workoutplanner/main/Pictures/Chest/Day2/5.gif",
-                            "muscle_image": "https://raw.githubusercontent.com/Jonatan0234/workoutplanner/main/Muscles/Chest.png",
-                            "description": "Cues: Perfect form (straight body, tight core). Variations: Perform many reps of Diamond, Wide, or Tempo pushups. Advanced: Progress towards One-Arm Pushup. Routine: High frequency (daily) and high sets/reps.",
-                            "sets": "3 sets.",
-                            "reps": "30-40 FF reps.",
-                            "rest": "90s rest"
-                        }
-                    ],
-                    "triceps": [
-                        {
-                            "name": "PJR pullovers.",
-                            "image": "https://raw.githubusercontent.com/Jonatan0234/workoutplanner/main/Pictures/Triceps/Day2/1.gif",
-                            "muscle_image": "https://raw.githubusercontent.com/Jonatan0234/workoutplanner/main/Muscles/Triceps.png",
-                            "description": "Cues: Lie on a flat bench. Lower the dumbbell behind your head while simultaneously bending your elbows to maximize the triceps stretch. Reverse the movement by extending your elbows to push the weight back up.",
-                            "sets": "3 sets - 32Kg",
-                            "reps": "8-10 FF reps",
-                            "rest": "75s rest"
-                        },
-                        {
-                            "name": "Cable triceps pushaways +partials.",
-                            "image": "https://raw.githubusercontent.com/Jonatan0234/workoutplanner/main/Pictures/Triceps/Day2/2.gif",
-                            "muscle_image": "https://raw.githubusercontent.com/Jonatan0234/workoutplanner/main/Muscles/Triceps.png",
-                            "description": "Cues: Stand facing the cable machine, grasp the attachment (bar/rope) with the cable set high. Lean slightly forward, keeping a rigid torso. Lock the elbows close to the body. Press the handle down and away from the body by only straightening the arms. Squeeze triceps at the bottom. Control the slow return.",
-                            "sets": "3 sets 12,5/15Kg",
-                            "reps": "10-12 reps",
-                            "rest": "60s rest"
-                        },
-                        {
-                            "name": "Partials.",
-                            "image": "https://raw.githubusercontent.com/Jonatan0234/workoutplanner/main/Pictures/Triceps/Day2/2-1.gif",
-                            "muscle_image": "https://raw.githubusercontent.com/Jonatan0234/workoutplanner/main/Muscles/Triceps.png",
-                            "description": "Cues: Stand facing the cable machine, grasp the attachment (bar/rope) with the cable set high. Lean slightly forward, keeping a rigid torso. Lock the elbows close to the body. Press the handle down and away from the body by only straightening the arms. Squeeze triceps at the bottom. Control the slow return.",
-                            "sets": "3 sets 12,5/15Kg",
-                            "reps": "10-12 reps",
-                            "rest": "60s rest"
-                        },
-                        {
-                            "name": "X pushdowns +partials.",
-                            "image": "https://raw.githubusercontent.com/Jonatan0234/workoutplanner/main/Pictures/Triceps/Day2/3.gif",
-                            "muscle_image": "https://raw.githubusercontent.com/Jonatan0234/workoutplanner/main/Muscles/Triceps.png",
-                            "description": "Cues: Use a rope or two single handles on a high cable. Begin with elbows tucked. Press the weight down and fully extend arms. At the bottom, separate or flare hands laterally/outward to achieve a full triceps squeeze and contraction. Control the slow return to the top.",
-                            "sets": "3 sets 7,5Kg x arm.",
-                            "reps": "10-12 reps",
-                            "rest": "60s rest"
-                        },
-                        {
-                            "name": "Partials.",
-                            "image": "https://raw.githubusercontent.com/Jonatan0234/workoutplanner/main/Pictures/Triceps/Day2/3-1.gif",
-                            "muscle_image": "https://raw.githubusercontent.com/Jonatan0234/workoutplanner/main/Muscles/Triceps.png",
-                            "description": "Cues: Use a rope or two single handles on a high cable. Begin with elbows tucked. Press the weight down and fully extend arms. At the bottom, separate or flare hands laterally/outward to achieve a full triceps squeeze and contraction. Control the slow return to the top.",
-                            "sets": "3 sets.",
-                            "reps": "5-7 reps",
-                            "rest": "60s rest"
-                        },
-                        {
-                            "name": "Bench dips.",
-                            "image": "https://raw.githubusercontent.com/Jonatan0234/workoutplanner/main/Pictures/Triceps/Day2/4.gif",
-                            "muscle_image": "https://raw.githubusercontent.com/Jonatan0234/workoutplanner/main/Muscles/Triceps.png",
-                            "description": "Cues: Hands shoulder-width on bench edge, fingers forward. Feet on floor/bench. Keep back close to the bench. Lower body by bending elbows to 90degrees. Keep shoulders down and back (retracted). Push up using only the triceps.",
-                            "sets": "3 sets.",
-                            "reps": "20-25 reps",
-                            "rest": "60s rest"
-                        }
-                    ]
-                }
-            },
-            "back_biceps": {
-                "day1": {
-                    "back": [
-                        {
-                            "name": "Primer. - Scap pulldown primer",
-                            "image": "https://raw.githubusercontent.com/Jonatan0234/workoutplanner/main/Pictures/Back/Day1/Primer.gif",
-                            "muscle_image": "https://raw.githubusercontent.com/Jonatan0234/workoutplanner/main/Muscles/Back.png",
-                            "description": "Hang with straight arms, then initiate the pull by drawing your shoulder blades down and back, without bending the elbows. Slowly return to the starting hang.",
-                            "sets": "2 sets - 30Kg",
-                            "reps": "12-15 reps",
-                            "rest": "60s rest"
-                        },
-                        {
-                            "name": "Lat pulldowns (narrow grip) +partials.",
-                            "image": "https://raw.githubusercontent.com/Jonatan0234/workoutplanner/main/Pictures/Back/Day1/2.gif",
-                            "muscle_image": "https://raw.githubusercontent.com/Jonatan0234/workoutplanner/main/Muscles/Back.png",
-                            "description": "Secure your seat, grip the V-handle, and drive your elbows down and back towards your hips, squeezing your back as the bar touches your upper chest. Control the weight back up.",
-                            "sets": "3 sets - 45/50 Kg",
-                            "reps": "8-10 reps",
-                            "rest": "75s rest"
-                        },
-                        {
-                            "name": "Partials.",
-                            "image": "https://raw.githubusercontent.com/Jonatan0234/workoutplanner/main/Pictures/Back/Day1/2-1.gif",
-                            "muscle_image": "https://raw.githubusercontent.com/Jonatan0234/workoutplanner/main/Muscles/Back.png",
-                            "description": "Secure your seat, grip the V-handle, and drive your elbows down and back towards your hips, squeezing your back as the bar touches your upper chest. Control the weight back up.",
-                            "sets": "3 sets - 45/50 Kg",
-                            "reps": "8-10 reps",
-                            "rest": "75s rest"
-                        },
-                        {
-                            "name": "Seated cable rows (elbows wide).",
-                            "image": "https://raw.githubusercontent.com/Jonatan0234/workoutplanner/main/Pictures/Back/Day1/1.gif",
-                            "muscle_image": "https://raw.githubusercontent.com/Jonatan0234/workoutplanner/main/Muscles/Back.png",
-                            "description": "Sit tall and pull the bar to your chest, driving your elbows high and wide while squeezing your shoulder blades together. Control the stretch back to the start.",
-                            "sets": "3 sets - 60Kg",
-                            "reps": "10-12 reps",
-                            "rest": "75s rest"
-                        },
-                        {
-                            "name": "Straight arm pushdown +eccentric.",
-                            "image": "https://raw.githubusercontent.com/Jonatan0234/workoutplanner/main/Pictures/Back/Day1/3.gif",
-                            "muscle_image": "https://raw.githubusercontent.com/Jonatan0234/workoutplanner/main/Muscles/Back.png",
-                            "description": "Stand with a slight lean forward and lock your elbows. Pull the bar down to your thighs in an arching motion, powerfully squeezing the lats. Control the bar back up to a full overhead stretch.",
-                            "sets": "3 sets - 22/25Kg",
-                            "reps": "8-10 reps",
-                            "rest": "75s rest"
-                        },
-                        {
-                            "name": "Eccentric.",
-                            "image": "https://raw.githubusercontent.com/Jonatan0234/workoutplanner/main/Pictures/Back/Day1/3-1.gif",
-                            "muscle_image": "https://raw.githubusercontent.com/Jonatan0234/workoutplanner/main/Muscles/Back.png",
-                            "description": "Stand with a slight lean forward and lock your elbows. Pull the bar down to your thighs in an arching motion, powerfully squeezing the lats. Control the bar back up to a full overhead stretch.",
-                            "sets": "3 sets - 22/25Kg",
-                            "reps": "5-7 reps",
-                            "rest": "75s rest"
-                        },
-                        {
-                            "name": "1.5 Pullover ladder.",
-                            "image": "https://raw.githubusercontent.com/Jonatan0234/workoutplanner/main/Pictures/Back/Day1/4.gif",
-                            "muscle_image": "https://raw.githubusercontent.com/Jonatan0234/workoutplanner/main/Muscles/Back.png",
-                            "description": "Lower the weight fully (1), bring it halfway up, lower fully again, then complete the rep (1.5). Repeat, increasing the stretch-hold time on each repetition.",
-                            "sets": "3 sets - 24Kg",
-                            "reps": "8-10 reps",
-                            "rest": "75s rest"
-                        },
-                        {
-                            "name": "Bodyweight pullups.",
-                            "image": "https://raw.githubusercontent.com/Jonatan0234/workoutplanner/main/Pictures/Back/Day1/5.gif",
-                            "muscle_image": "https://raw.githubusercontent.com/Jonatan0234/workoutplanner/main/Muscles/Back.png",
-                            "description": "Grasp the bar with an overhand grip from a dead hang. Pull your chest towards the bar, driving your elbows down and back. Control the descent back to the full hang.",
-                            "sets": "3 sets",
-                            "reps": "8-10 reps",
-                            "rest": "75s rest"
-                        },
-                        {
-                            "name": "Bodyweight banded pullups.",
-                            "image": "https://raw.githubusercontent.com/Jonatan0234/workoutplanner/main/Pictures/Back/Day1/5-1.gif",
-                            "muscle_image": "https://raw.githubusercontent.com/Jonatan0234/workoutplanner/main/Muscles/Back.png",
-                            "description": "Grasp the bar with an overhand grip from a dead hang. Pull your chest towards the bar, driving your elbows down and back. Control the descent back to the full hang.",
-                            "sets": "3 sets",
-                            "reps": "5-7 reps",
-                            "rest": "75s rest"
-                        }
-                    ],
-                    "biceps": [
-                        {
-                            "name": "Barbell strict Curl",
-                            "image": "https://raw.githubusercontent.com/Jonatan0234/workoutplanner/main/Pictures/Biceps/Day1/1.gif",
-                            "muscle_image": "https://raw.githubusercontent.com/Jonatan0234/workoutplanner/main/Muscles/Biceps.png",
-                            "description": "Stand against a wall, head/shoulders/butt against the surface. Keep your legs straight. Curl the bar to your chest without moving your back or hips. Control the lowering phase.",
-                            "sets": "3 sets 20/24 in total",
-                            "reps": "8-10 reps",
-                            "rest": "60s rest"
-                        },
-                        {
-                            "name": "cheat Barbell Curl",
-                            "image": "https://raw.githubusercontent.com/Jonatan0234/workoutplanner/main/Pictures/Biceps/Day1/1-1.gif",
-                            "muscle_image": "https://raw.githubusercontent.com/Jonatan0234/workoutplanner/main/Muscles/Biceps.png",
-                            "description": "Stand against a wall, head/shoulders/butt against the surface. Keep your legs straight. Curl the bar to your chest without moving your back or hips. Control the lowering phase.",
-                            "sets": "3",
-                            "reps": "5-7 reps",
-                            "rest": "60s rest"
-                        },
-                        {
-                            "name": "DB cross body hammer curls.",
-                            "image": "https://raw.githubusercontent.com/Jonatan0234/workoutplanner/main/Pictures/Biceps/Day1/2.gif",
-                            "muscle_image": "https://raw.githubusercontent.com/Jonatan0234/workoutplanner/main/Muscles/Biceps.png",
-                            "description": "Hold dumbbells with a neutral grip (palms facing in). Curl one dumbbell across your body toward the opposite shoulder, keeping your upper arm stable. Alternate sides, focusing on the contraction in the forearm/bicep.",
-                            "sets": "3 sets - 12Kg x arm",
-                            "reps": "10-12 FF reps",
-                            "rest": "60s rest"
-                        },
-                        {
-                            "name": "Cable stretch drag curls +Partials.",
-                            "image": "https://raw.githubusercontent.com/Jonatan0234/workoutplanner/main/Pictures/Biceps/Day1/3.gif",
-                            "muscle_image": "https://raw.githubusercontent.com/Jonatan0234/workoutplanner/main/Muscles/Biceps.png",
-                            "description": "Stand back from the low cable to get a full arm stretch. Keeping elbows pinned behind your torso, drag the bar straight up your body towards your chest. Control the descent back to the deep stretch position.",
-                            "sets": "3 sets - 7,5Kg x arm",
-                            "reps": "10-12 reps",
-                            "rest": "60s rest"
-                        },
-                        {
-                            "name": "Partials.",
-                            "image": "https://raw.githubusercontent.com/Jonatan0234/workoutplanner/main/Pictures/Biceps/Day1/3-1.gif",
-                            "muscle_image": "https://raw.githubusercontent.com/Jonatan0234/workoutplanner/main/Muscles/Biceps.png",
-                            "description": "Stand back from the low cable to get a full arm stretch. Keeping elbows pinned behind your torso, drag the bar straight up your body towards your chest. Control the descent back to the deep stretch position.",
-                            "sets": "3 sets - 7,5Kg x arm",
-                            "reps": "5-7 FF reps",
-                            "rest": "60s rest"
-                        },
-                        {
-                            "name": "Mentzer pulldown (trap set).",
-                            "image": "https://raw.githubusercontent.com/Jonatan0234/workoutplanner/main/Pictures/Biceps/Day1/4.gif",
-                            "muscle_image": "https://raw.githubusercontent.com/Jonatan0234/workoutplanner/main/Muscles/Biceps.png",
-                            "description": "Use a close, supinated grip on the pulldown bar. Initiate the pull by driving the elbows down and back towards the waist. Perform one set to absolute muscular failure (in the 12-15 rep range), using strict form and a slow, controlled eccentric (lowering phase)",
-                            "sets": "3 sets - 30Kg",
-                            "reps": "10-15 FF reps",
-                            "rest": "60s rest"
-                        }
-                    ]
-                },
-                "day2": {
-                    "back": [
-                        {
-                            "name": "Primer. Face pulls",
-                            "image": "https://raw.githubusercontent.com/Jonatan0234/workoutplanner/main/Pictures/Back/Day2/Primer.gif",
-                            "muscle_image": "https://raw.githubusercontent.com/Jonatan0234/workoutplanner/main/Muscles/Back.png",
-                            "description": "Cues: Rope attachment at eye/forehead level. Elbows high and flared out. Pull the rope toward the face, separating hands until thumbs point back. Squeeze shoulder blades together at peak contraction. Control the rope slowly back out.",
-                            "sets": "2 sets 10Kg",
-                            "reps": "12-15 reps",
-                            "rest": "60s rest"
-                        },
-                        {
-                            "name": "Barbell rows 2-3 sets x6-8.",
-                            "image": "https://raw.githubusercontent.com/Jonatan0234/workoutplanner/main/Pictures/Back/Day2/1.gif",
-                            "muscle_image": "https://raw.githubusercontent.com/Jonatan0234/workoutplanner/main/Muscles/Back.png",
-                            "description": "Cues: Hinge at hips to 45degrees to parallel with the floor. Neutral spine (flat back). Pull the bar toward your lower chest/upper abdomen. Drive with the elbows back; keep them relatively tucked. Squeeze shoulder blades at the top. Control the descent.",
-                            "sets": "3 sets - 50/60Kg in total.",
-                            "reps": "8-10 reps",
-                            "rest": "60s rest"
-                        },
-                        {
-                            "name": "Barbell rows (optional chest supported).",
-                            "image": "https://raw.githubusercontent.com/Jonatan0234/workoutplanner/main/Pictures/Back/Day2/1-1.gif",
-                            "muscle_image": "https://raw.githubusercontent.com/Jonatan0234/workoutplanner/main/Muscles/Back.png",
-                            "description": "Cues: Lie face down on an incline bench (30degrees to 45degrees). Chest firmly pressed against the pad. Grab the bar with full extension.",
-                            "sets": "3 sets - 60/70Kg.",
-                            "reps": "8-10 reps",
-                            "rest": "60s rest"
-                        },
-                        {
-                            "name": "Wide grip pulldowns +partials.",
-                            "image": "https://raw.githubusercontent.com/Jonatan0234/workoutplanner/main/Pictures/Back/Day2/2.gif",
-                            "muscle_image": "https://raw.githubusercontent.com/Jonatan0234/workoutplanner/main/Muscles/Back.png",
-                            "description": "Cues: Wide overhand grip. Chest up, lean back slightly. Pull bar to upper chest/collarbone. Drive elbows down and back, keeping them wide. Squeeze lats at the bottom. Full stretch at the top (let shoulders rise).",
-                            "sets": "3 sets - 45/50Kg.",
-                            "reps": "10-12 reps",
-                            "rest": "60s rest"
-                        },
-                        {
-                            "name": "Partials.",
-                            "image": "https://raw.githubusercontent.com/Jonatan0234/workoutplanner/main/Pictures/Back/Day2/2-1.gif",
-                            "muscle_image": "https://raw.githubusercontent.com/Jonatan0234/workoutplanner/main/Muscles/Back.png",
-                            "description": "Cues: Wide overhand grip. Chest up, lean back slightly. Pull bar to upper chest/collarbone. Drive elbows down and back, keeping them wide. Squeeze lats at the bottom. Full stretch at the top (let shoulders rise).",
-                            "sets": "3 sets.",
-                            "reps": "5-7 reps",
-                            "rest": "60s rest"
-                        },
-                        {
-                            "name": "DB High pulls (form failure).",
-                            "image": "https://raw.githubusercontent.com/Jonatan0234/workoutplanner/main/Pictures/Back/Day2/3.gif",
-                            "muscle_image": "https://raw.githubusercontent.com/Jonatan0234/workoutplanner/main/Muscles/Back.png",
-                            "description": "Cues: Slight hip hinge. Explosively extend hips, then shrug and pull DBs up, keeping them close. Elbows high and wide. Control the return.",
-                            "sets": "3 sets - 14Kg.",
-                            "reps": "10-12 FF reps",
-                            "rest": "60s rest"
-                        },
-                        {
-                            "name": "1.5 REP High cable row ladder to failure.",
-                            "image": "https://raw.githubusercontent.com/Jonatan0234/workoutplanner/main/Pictures/Back/Day2/4.gif",
-                            "muscle_image": "https://raw.githubusercontent.com/Jonatan0234/workoutplanner/main/Muscles/Back.png",
-                            "description": "Cues: Set pulley high. Pull to upper chest. Tempo: Ascend from 1 second per rep to 5 seconds per rep (1s, 2s, 3,s 4s, 5s), then descend back to 1 second.",
-                            "sets": "3 sets - 12/15Kg.",
-                            "reps": "10 FF reps",
-                            "rest": "60s rest"
-                        },
-                        {
-                            "name": "Inverted rows +partials.",
-                            "image": "https://raw.githubusercontent.com/Jonatan0234/workoutplanner/main/Pictures/Back/Day2/5.gif",
-                            "muscle_image": "https://raw.githubusercontent.com/Jonatan0234/workoutplanner/main/Muscles/Back.png",
-                            "description": "Maintain a rigid, straight body (plank). Pull chest to bar. Squeeze shoulder blades together.",
-                            "sets": "3 sets.",
-                            "reps": "10 FF reps",
-                            "rest": "60s rest"
-                        },
-                        {
-                            "name": "Partials.",
-                            "image": "https://raw.githubusercontent.com/Jonatan0234/workoutplanner/main/Pictures/Back/Day2/5-1.gif",
-                            "muscle_image": "https://raw.githubusercontent.com/Jonatan0234/workoutplanner/main/Muscles/Back.png",
-                            "description": "Maintain a rigid, straight body (plank). Pull chest to bar. Squeeze shoulder blades together.",
-                            "sets": "3 sets - 12/15Kg.",
-                            "reps": "10 FF reps",
-                            "rest": "60s rest"
-                        }
-                    ],
-                    "biceps": [
-                        {
-                            "name": "Chip ups (with weight) +eccentric chin hang (BW)",
-                            "image": "https://raw.githubusercontent.com/Jonatan0234/workoutplanner/main/Pictures/Biceps/Day2/1.gif",
-                            "muscle_image": "https://raw.githubusercontent.com/Jonatan0234/workoutplanner/main/Muscles/Biceps.png",
-                            "description": "Cues:Use a weight belt or vest. Supine (underhand) grip, shoulder-width. Pull from dead hang until chin clears bar. Focus on pulling elbows down.",
-                            "sets": "3 sets - 12Kg",
-                            "reps": "6-8 FF reps",
-                            "rest": "95s rest"
-                        },
-                        {
-                            "name": "Eccentric chin hang",
-                            "image": "https://raw.githubusercontent.com/Jonatan0234/workoutplanner/main/Pictures/Biceps/Day2/1-1.gif",
-                            "muscle_image": "https://raw.githubusercontent.com/Jonatan0234/workoutplanner/main/Muscles/Biceps.png",
-                            "description": "Cues: Jump or step up to the chin-over-bar position (supine grip). Brace core. Lower yourself slowly and with complete control for 3-5 seconds until arms are fully straight.",
-                            "sets": "3 sets",
-                            "reps": "5-7 reps",
-                            "rest": "95s rest"
-                        },
-                        {
-                            "name": "DB spider curls.",
-                            "image": "https://raw.githubusercontent.com/Jonatan0234/workoutplanner/main/Pictures/Biceps/Day2/2.gif",
-                            "muscle_image": "https://raw.githubusercontent.com/Jonatan0234/workoutplanner/main/Muscles/Biceps.png",
-                            "description": "Cues: Lie face-down on an incline bench (30-45degrees). Arms hang straight down. Curl up to your chin, keeping the upper arm locked (no elbow movement backward). Squeeze hard at the top. Lower slowly to maintain tension.",
-                            "sets": "3 sets 12Kg",
-                            "reps": "10-12 FF reps",
-                            "rest": "90s rest"
-                        },
-                        {
-                            "name": "DB incline curls +partials.",
-                            "image": "https://raw.githubusercontent.com/Jonatan0234/workoutplanner/main/Pictures/Biceps/Day2/3.gif",
-                            "muscle_image": "https://raw.githubusercontent.com/Jonatan0234/workoutplanner/main/Muscles/Biceps.png",
-                            "description": "Cues: Sit on a bench set to a 45-60degrees incline. Let arms hang straight down, fully extended. Curl the dumbbells up, keeping your upper arms pinned back and stable. Emphasize the deep stretch at the bottom and a full squeeze at the top.",
-                            "sets": "3 sets 12Kg",
-                            "reps": "10-12 FF reps",
-                            "rest": "90s rest"
-                        },
-                        {
-                            "name": "Partials.",
-                            "image": "https://raw.githubusercontent.com/Jonatan0234/workoutplanner/main/Pictures/Biceps/Day2/3-1.gif",
-                            "muscle_image": "https://raw.githubusercontent.com/Jonatan0234/workoutplanner/main/Muscles/Biceps.png",
-                            "description": "Cues: Sit on a bench set to a 45-60degrees incline. Let arms hang straight down, fully extended. Curl the dumbbells up, keeping your upper arms pinned back and stable. Emphasize the deep stretch at the bottom and a full squeeze at the top.",
-                            "sets": "3 sets 12Kg",
-                            "reps": "10-12 FF reps",
-                            "rest": "90s rest"
-                        },
-                        {
-                            "name": "Standing DB curls (trap set).",
-                            "image": "https://raw.githubusercontent.com/Jonatan0234/workoutplanner/main/Pictures/Biceps/Day2/4.gif",
-                            "muscle_image": "https://raw.githubusercontent.com/Jonatan0234/workoutplanner/main/Muscles/Biceps.png",
-                            "description": "Cues: Stand upright (core tight, shoulders pinned back). Keep elbows tucked. Curl dumbbells up strictly, avoiding swinging. Tempo Ladder (Ascending to 5 seconds, then Descending)",
-                            "sets": "3 sets 12Kg",
-                            "reps": "10 FF reps",
-                            "rest": "90s rest"
-                        }
-                    ]
-                }
-            },
-            "legs_shoulders": {
-                "day1": {
-                    "legs": [
-                        {
-                            "name": "Primer. Reverse hypers",
-                            "image": "https://raw.githubusercontent.com/Jonatan0234/workoutplanner/main/Pictures/Legs/Day1/Primer.gif",
-                            "muscle_image": "https://raw.githubusercontent.com/Jonatan0234/workoutplanner/main/Muscles/Legs.png",
-                            "description": "Feet shoulder-width, drive hips back and down. Keep chest up and knees tracking toes. Drive through heels.",
-                            "sets": "2 sets",
-                            "reps": "12-15 reps",
-                            "rest": "60s rest"
-                        },
-                        {
-                            "name": "Barbell deadlift",
-                            "image": "https://raw.githubusercontent.com/Jonatan0234/workoutplanner/main/Pictures/Legs/Day1/1.gif",
-                            "muscle_image": "https://raw.githubusercontent.com/Jonatan0234/workoutplanner/main/Muscles/Legs.png",
-                            "description": "Cues: Start with the bar over your mid-foot. Maintain a flat back (chest up, core braced). Drive through your heels/mid-foot by extending your hips and knees simultaneously. Finish by squeezing the glutes at the top.",
-                            "sets": "3 sets - 60/70Kg in total",
-                            "reps": "8-10 reps",
-                            "rest": "90s rest"
-                        },
-                        {
-                            "name": "Barbell front squats",
-                            "image": "https://raw.githubusercontent.com/Jonatan0234/workoutplanner/main/Pictures/Legs/Day1/2.gif",
-                            "muscle_image": "https://raw.githubusercontent.com/Jonatan0234/workoutplanner/main/Muscles/Legs.png",
-                            "description": "Cues: Start with the bar over your mid-foot. Maintain a flat back (chest up, core braced). Drive through your heels/mid-foot by extending your hips and knees simultaneously. Finish by squeezing the glutes at the top.",
-                            "sets": "3 sets - 25/30Kg in total",
-                            "reps": "6-8 reps",
-                            "rest": "90s rest"
-                        },
-                        {
-                            "name": "Alternating DB reverse lunges",
-                            "image": "https://raw.githubusercontent.com/Jonatan0234/workoutplanner/main/Pictures/Legs/Day1/3.gif",
-                            "muscle_image": "https://raw.githubusercontent.com/Jonatan0234/workoutplanner/main/Muscles/Legs.png",
-                            "description": "Cues: Stand tall, holding dumbbells. Step backward and drop straight down until both knees are bent at 90degrees. Ensure the front knee tracks over the ankle. Drive through the front heel to return. Maintain an upright torso.",
-                            "sets": "3 sets - 12Kg in each arm",
-                            "reps": "10 reps each leg",
-                            "rest": "90s rest"
-                        },
-                        {
-                            "name": "Floor hamstring curl +eccentric",
-                            "image": "https://raw.githubusercontent.com/Jonatan0234/workoutplanner/main/Pictures/Legs/Day1/4.gif",
-                            "muscle_image": "https://raw.githubusercontent.com/Jonatan0234/workoutplanner/main/Muscles/Legs.png",
-                            "description": "Cues: Lie on your back. Bridge your hips up and keep them elevated. Slide heels out slowly to extend legs. Pull heels back to the start, focusing solely on hamstring contraction.",
-                            "sets": "3 sets",
-                            "reps": "10 reps FF",
-                            "rest": "90s rest"
-                        },
-                        {
-                            "name": "Eccentric",
-                            "image": "https://raw.githubusercontent.com/Jonatan0234/workoutplanner/main/Pictures/Legs/Day1/4-1.gif",
-                            "muscle_image": "https://raw.githubusercontent.com/Jonatan0234/workoutplanner/main/Muscles/Legs.png",
-                            "description": "Cues: Lie on your back. Bridge your hips up and keep them elevated. Slide heels out slowly to extend legs. Pull heels back to the start, focusing solely on hamstring contraction.",
-                            "sets": "3 sets",
-                            "reps": "8-10 reps FF",
-                            "rest": "90s rest"
-                        },
-                        {
-                            "name": "Seated hamstring curls +eccentric",
-                            "image": "https://raw.githubusercontent.com/Jonatan0234/workoutplanner/main/Pictures/Legs/Day1/4-2.gif",
-                            "muscle_image": "https://raw.githubusercontent.com/Jonatan0234/workoutplanner/main/Muscles/Legs.png",
-                            "description": "Cues: Align your knees with the pivot point and secure the thigh pad to lock your hips down. Curl the lever in with a powerful squeeze, then slowly extend your legs back out, feeling a deep stretch in the hamstrings throughout the return.",
-                            "sets": "3 sets - 20Kg",
-                            "reps": "10-12 reps",
-                            "rest": "90s rest"
-                        },
-                        {
-                            "name": "Eccentric",
-                            "image": "https://raw.githubusercontent.com/Jonatan0234/workoutplanner/main/Pictures/Legs/Day1/4-3.gif",
-                            "muscle_image": "https://raw.githubusercontent.com/Jonatan0234/workoutplanner/main/Muscles/Legs.png",
-                            "description": "Cues: Align your knees with the pivot point and secure the thigh pad to lock your hips down. Curl the lever in with a powerful squeeze, then slowly extend your legs back out, feeling a deep stretch in the hamstrings throughout the return.",
-                            "sets": "3 sets - 10Kg",
-                            "reps": "10 reps xleg",
-                            "rest": "90s rest"
-                        },
-                        {
-                            "name": "Standing calf raises +partials",
-                            "image": "https://raw.githubusercontent.com/Jonatan0234/workoutplanner/main/Pictures/Legs/Day1/5.gif",
-                            "muscle_image": "https://raw.githubusercontent.com/Jonatan0234/workoutplanner/main/Muscles/Legs.png",
-                            "description": "Cues: Position the barbell high on your back as if squatting and stand with the balls of your feet on a block or step. Lower your heels fully to feel a deep stretch, then drive up onto your toes as high as possible and hold the top squeeze for four seconds. Control the descent down for four seconds before repeating.",
-                            "sets": "3 sets 30Kg in total",
-                            "reps": "10-12 reps",
-                            "rest": "90s rest"
-                        },
-                        {
-                            "name": "Partials",
-                            "image": "https://raw.githubusercontent.com/Jonatan0234/workoutplanner/main/Pictures/Legs/Day1/5-1.gif",
-                            "muscle_image": "https://raw.githubusercontent.com/Jonatan0234/workoutplanner/main/Muscles/Legs.png",
-                            "description": "Cues: Position the barbell high on your back as if squatting and stand with the balls of your feet on a block or step. Lower your heels fully to feel a deep stretch, then drive up onto your toes as high as possible and hold the top squeeze for four seconds. Control the descent down for four seconds before repeating.",
-                            "sets": "3 sets",
-                            "reps": "14-18 reps",
-                            "rest": "90s rest"
-                        }
-                    ],
-                    "shoulders": [
-                        {
-                            "name": "DB single arm OHP (OverHead Press)",
-                            "image": "https://raw.githubusercontent.com/Jonatan0234/workoutplanner/main/Pictures/Shoulders/Day1/1.gif",
-                            "muscle_image": "https://raw.githubusercontent.com/Jonatan0234/workoutplanner/main/Muscles/Shoulders.png",
-                            "description": "Cues: Stand tall, brace your core, and keep your free hand steady. Press the dumbbell straight overhead to fully lock out your arm. Actively pull the weight down with control, keeping your elbow under your wrist, and immediately begin the next press.",
-                            "sets": "3 sets 22/25Kg",
-                            "reps": "8-10 reps",
-                            "rest": "90s rest"
-                        },
-                        {
-                            "name": "DB lateral raise +partials",
-                            "image": "https://raw.githubusercontent.com/Jonatan0234/workoutplanner/main/Pictures/Shoulders/Day1/2.gif",
-                            "muscle_image": "https://raw.githubusercontent.com/Jonatan0234/workoutplanner/main/Muscles/Shoulders.png",
-                            "description": "Cues: Stand with slightly bent elbows, leading the movement with them. Raise the dumbbells out to the sides until your arms are near parallel with the floor. Control the descent slowly and avoid resting the weights on your hips to maintain continuous tension.",
-                            "sets": "3 sets - 12,5Kg",
-                            "reps": "10-12 reps",
-                            "rest": "90s rest"
-                        },
-                        {
-                            "name": "Partials",
-                            "image": "https://raw.githubusercontent.com/Jonatan0234/workoutplanner/main/Pictures/Shoulders/Day1/2-1.gif",
-                            "muscle_image": "https://raw.githubusercontent.com/Jonatan0234/workoutplanner/main/Muscles/Shoulders.png",
-                            "description": "Cues: Stand with slightly bent elbows, leading the movement with them. Raise the dumbbells out to the sides until your arms are near parallel with the floor. Control the descent slowly and avoid resting the weights on your hips to maintain continuous tension.",
-                            "sets": "3 sets",
-                            "reps": "5-7 reps",
-                            "rest": "90s rest"
-                        },
-                        {
-                            "name": "DB rear delt rows",
-                            "image": "https://raw.githubusercontent.com/Jonatan0234/workoutplanner/main/Pictures/Shoulders/Day1/3.gif",
-                            "muscle_image": "https://raw.githubusercontent.com/Jonatan0234/workoutplanner/main/Muscles/Shoulders.png",
-                            "description": "Sit on a bench and lean your torso forward over your thighs with the dumbbells hanging straight down. Pull your elbows wide and high toward the ceiling, actively squeezing the rear portion of your shoulders together. Control the dumbbells slowly back down to the starting position without swinging or using momentum.",
-                            "sets": "3 sets - 12,5Kg",
-                            "reps": "10-12 reps",
-                            "rest": "60s rest"
-                        }
-                    ]
-                },
-                "day2": {
-                    "legs": [
-                        {
-                            "name": "Primer. Banded overhead squats",
-                            "image": "https://raw.githubusercontent.com/Jonatan0234/workoutplanner/main/Pictures/Legs/Day2/Primer.gif",
-                            "muscle_image": "https://raw.githubusercontent.com/Jonatan0234/workoutplanner/main/Muscles/Legs.png",
-                            "description": "Cues: Hold the band pulled tight overhead and lock your arms behind your ears. Squat down by pushing your hips back, keeping your chest up and the band from drifting forward. Drive up powerfully through your feet.",
-                            "sets": "2 sets",
-                            "reps": "12-15 reps",
-                            "rest": "90s rest"
-                        },
-                        {
-                            "name": "Barrel back squat (70% max)",
-                            "image": "https://raw.githubusercontent.com/Jonatan0234/workoutplanner/main/Pictures/Legs/Day2/1.gif",
-                            "muscle_image": "https://raw.githubusercontent.com/Jonatan0234/workoutplanner/main/Muscles/Legs.png",
-                            "description": "Cues: Set the bar high on your back and brace your core. Push your hips back and down while driving your knees out. Keep your chest up, squat to depth, and drive forcefully through your feet to stand up.",
-                            "sets": "3 sets - 50Kg in total",
-                            "reps": "6-8 reps",
-                            "rest": "90s rest"
-                        },
-                        {
-                            "name": "Optional squats to a box(70% max)",
-                            "image": "https://raw.githubusercontent.com/Jonatan0234/workoutplanner/main/Pictures/Legs/Day2/1-1.gif",
-                            "muscle_image": "https://raw.githubusercontent.com/Jonatan0234/workoutplanner/main/Muscles/Legs.png",
-                            "description": "Cues: Set the bar high on your back and brace your core. Push your hips back and down while driving your knees out. Keep your chest up, squat to depth, and drive forcefully through your feet to stand up.",
-                            "sets": "3 sets - 50Kg in total",
-                            "reps": "6-8 reps",
-                            "rest": "90s rest"
-                        },
-                        {
-                            "name": "Barrel hip thrusts",
-                            "image": "https://raw.githubusercontent.com/Jonatan0234/workoutplanner/main/Pictures/Legs/Day2/2.gif",
-                            "muscle_image": "https://raw.githubusercontent.com/Jonatan0234/workoutplanner/main/Muscles/Legs.png",
-                            "description": "Cues: Set the bar on your hips with your upper back on a bench. Brace your core and drive through your heels to lift the bar until your body is a straight line. Squeeze your glutes hard at the top, then lower with control.",
-                            "sets": "3 sets - 80Kg in total",
-                            "reps": "6-8 reps",
-                            "rest": "90s rest"
-                        },
-                        {
-                            "name": "DB Spanish squats",
-                            "image": "https://raw.githubusercontent.com/Jonatan0234/workoutplanner/main/Pictures/Legs/Day2/3.gif",
-                            "muscle_image": "https://raw.githubusercontent.com/Jonatan0234/workoutplanner/main/Muscles/Legs.png",
-                            "description": "Cues: Anchor a band tightly behind your knees. Hold a dumbbell at your chest and lean back into the band's tension. Squat straight down while keeping your shins vertical. Drive up to stand, pushing your knees into the band the entire time.",
-                            "sets": "3 sets - 12Kg in each arm",
-                            "reps": "10-12 FF reps",
-                            "rest": "90s rest"
-                        },
-                        {
-                            "name": "Glute ham raise (GHR)",
-                            "image": "https://raw.githubusercontent.com/Jonatan0234/workoutplanner/main/Pictures/Legs/Day2/4.gif",
-                            "muscle_image": "https://raw.githubusercontent.com/Jonatan0234/workoutplanner/main/Muscles/Legs.png",
-                            "description": "Cues: Lock your ankles firmly and place your knees behind the pad. Start tall, keeping your body rigid from head to knee. Slowly lower your torso until parallel with the floor, then powerfully pull yourself back up using your hamstrings and glutes.",
-                            "sets": "3 sets",
-                            "reps": "6-8 FF reps",
-                            "rest": "90s rest"
-                        },
-                        {
-                            "name": "Optional GHR's assited",
-                            "image": "https://raw.githubusercontent.com/Jonatan0234/workoutplanner/main/Pictures/Legs/Day2/4-1.gif",
-                            "muscle_image": "https://raw.githubusercontent.com/Jonatan0234/workoutplanner/main/Muscles/Legs.png",
-                            "description": "Cues: Lock your ankles firmly and place your knees behind the pad. Start tall, keeping your body rigid from head to knee. Slowly lower your torso until parallel with the floor, then powerfully pull yourself back up using your hamstrings and glutes.",
-                            "sets": "3 sets",
-                            "reps": "6-8 FF reps",
-                            "rest": "90s rest"
-                        },
-                        {
-                            "name": "Seated calf raises +partials",
-                            "image": "https://raw.githubusercontent.com/Jonatan0234/workoutplanner/main/Pictures/Legs/Day2/5.gif",
-                            "muscle_image": "https://raw.githubusercontent.com/Jonatan0234/workoutplanner/main/Muscles/Legs.png",
-                            "description": "Cues: Secure the pads firmly across your thighs just above the knees. Lower your heels fully to feel a deep stretch in your calves. Drive up onto the balls of your feet as high as possible, holding the peak squeeze before lowering slowly.",
-                            "sets": "3 sets - 30Kg in total",
-                            "reps": "10-12 FF reps",
-                            "rest": "90s rest"
-                        },
-                        {
-                            "name": "Partials",
-                            "image": "https://raw.githubusercontent.com/Jonatan0234/workoutplanner/main/Pictures/Legs/Day2/5-1.gif",
-                            "muscle_image": "https://raw.githubusercontent.com/Jonatan0234/workoutplanner/main/Muscles/Legs.png",
-                            "description": "Cues: Secure the pads firmly across your thighs just above the knees. Lower your heels fully to feel a deep stretch in your calves. Drive up onto the balls of your feet as high as possible, holding the peak squeeze before lowering slowly.",
-                            "sets": "3 sets",
-                            "reps": "5-7 FF reps",
-                            "rest": "90s rest"
-                        }
-                    ],
-                    "shoulders": [
-                        {
-                            "name": "DB cheat laterals",
-                            "image": "https://raw.githubusercontent.com/Jonatan0234/workoutplanner/main/Pictures/Shoulders/Day2/1.gif",
-                            "muscle_image": "https://raw.githubusercontent.com/Jonatan0234/workoutplanner/main/Muscles/Shoulders.png",
-                            "description": "Raise weight in front of the body to shoulder height with straight arms (slight bend) to target anterior delts.",
-                            "sets": "3 sets - 16Kg",
-                            "reps": "10-12 reps",
-                            "rest": "60s rest"
-                        },
-                        {
-                            "name": "Incline DB front raises +partials",
-                            "image": "https://raw.githubusercontent.com/Jonatan0234/workoutplanner/main/Pictures/Shoulders/Day2/2.gif",
-                            "muscle_image": "https://raw.githubusercontent.com/Jonatan0234/workoutplanner/main/Muscles/Shoulders.png",
-                            "description": "Cues: Lie face up on an incline bench and let the dumbbells hang straight down. Keep your arms straight and raise the dumbbells forward and up until they are level with your shoulders. Control the descent slowly and maintain tension in the front of your shoulders.",
-                            "sets": "3 sets - 8Kg in each arm",
-                            "reps": "8-10 reps",
-                            "rest": "75s rest"
-                        },
-                        {
-                            "name": "Partials",
-                            "image": "https://raw.githubusercontent.com/Jonatan0234/workoutplanner/main/Pictures/Shoulders/Day2/2-1.gif",
-                            "muscle_image": "https://raw.githubusercontent.com/Jonatan0234/workoutplanner/main/Muscles/Shoulders.png",
-                            "description": "Cues: Lie face up on an incline bench and let the dumbbells hang straight down. Keep your arms straight and raise the dumbbells forward and up until they are level with your shoulders. Control the descent slowly and maintain tension in the front of your shoulders.",
-                            "sets": "3 sets",
-                            "reps": "5-7 reps",
-                            "rest": "75s rest"
-                        },
-                        {
-                            "name": "Face pulls",
-                            "image": "https://raw.githubusercontent.com/Jonatan0234/workoutplanner/main/Pictures/Shoulders/Day2/3.gif",
-                            "muscle_image": "https://raw.githubusercontent.com/Jonatan0234/workoutplanner/main/Muscles/Shoulders.png",
-                            "description": "Cues: Grab the rope high with an overhand grip and step back to tension. Pull the rope toward your face, aiming your hands outside your ears. Forcefully pull your elbows back and rotate your wrists outward, squeezing your rear shoulders hard.",
-                            "sets": "3 sets - 10Kg in each arm",
-                            "reps": "10-12 reps",
-                            "rest": "75s rest"
-                        }
+                                ],
+                                "triceps": [
+                                    {
+                                        "name": "Triceps Pushdowns.",
+                                        "image": "https://raw.githubusercontent.com/Jonatan0234/workoutplanner/main/Pictures/Triceps/Day1/1.gif",
+                                        "muscle_image": "https://raw.githubusercontent.com/Jonatan0234/workoutplanner/main/Muscles/Triceps.png",
+                                        "description": "Stand at the cable machine with a slight lean. Keep elbows fixed to your sides. Push the weight down until arms are straight, flexing the triceps. Control the return.",
+                                        "sets": "2-3 sets - 25Kg",
+                                        "reps": "6-8 FF reps",
+                                        "rest": "60s rest"
+                                    },
+                                    {
+                                        "name": "lying DB extensions.",
+                                        "image": "https://raw.githubusercontent.com/Jonatan0234/workoutplanner/main/Pictures/Triceps/Day1/2.gif",
+                                        "muscle_image": "https://raw.githubusercontent.com/Jonatan0234/workoutplanner/main/Muscles/Triceps.png",
+                                        "description": "Lie on a bench. Hold two dumbbells overhead with upper arms vertical. Lower the weight by bending only your elbows toward your head. Extend arms to flex the triceps.",
+                                        "sets": "2-3 sets 12Kg x arm",
+                                        "reps": "8-10 reps",
+                                        "rest": "45s rest"
+                                    },
+                                    {
+                                        "name": "Eccentric only",
+                                        "image": "https://raw.githubusercontent.com/Jonatan0234/workoutplanner/main/Pictures/Triceps/Day1/2-1.gif",
+                                        "muscle_image": "https://raw.githubusercontent.com/Jonatan0234/workoutplanner/main/Muscles/Triceps.png",
+                                        "description": "Lie on a bench. Hold two dumbbells overhead with upper arms vertical. Lower the weight by bending only your elbows toward your head. Extend arms to flex the triceps.",
+                                        "sets": "3 sets",
+                                        "reps": "5-7 FF reps",
+                                        "rest": "45s rest"
+                                    },
+                                    {
+                                        "name": "DB triceps kickbacks +Partials.",
+                                        "image": "https://raw.githubusercontent.com/Jonatan0234/workoutplanner/main/Pictures/Triceps/Day1/3.gif",
+                                        "muscle_image": "https://raw.githubusercontent.com/Jonatan0234/workoutplanner/main/Muscles/Triceps.png",
+                                        "description": "Hinge forward at the hips, keeping your back flat and elbows pinned high to your sides. Starting with your forearm vertical, kick the dumbbell back until your arm is straight, flexing the triceps. Control the return.",
+                                        "sets": "2-3 sets - 8Kg x arm",
+                                        "reps": "10-12 reps",
+                                        "rest": "45s rest"
+                                    },
+                                    {
+                                        "name": "Partials",
+                                        "image": "https://raw.githubusercontent.com/Jonatan0234/workoutplanner/main/Pictures/Triceps/Day1/3-1.gif",
+                                        "muscle_image": "https://raw.githubusercontent.com/Jonatan0234/workoutplanner/main/Muscles/Triceps.png",
+                                        "description": "Hinge forward at the hips, keeping your back flat and elbows pinned high to your sides. Starting with your forearm vertical, kick the dumbbell back until your arm is straight, flexing the triceps. Control the return.",
+                                        "sets": "4 sets",
+                                        "reps": "5-7 reps",
+                                        "rest": "45s rest"
+                                    },
+                                    {
+                                        "name": "Optional - Cable triceps kickbacks",
+                                        "image": "https://raw.githubusercontent.com/Jonatan0234/workoutplanner/main/Pictures/Triceps/Day1/3-1.gif",
+                                        "muscle_image": "https://raw.githubusercontent.com/Jonatan0234/workoutplanner/main/Muscles/Triceps.png",
+                                        "description": "Hinge forward at the hips, keeping your back flat and elbows pinned high to your sides. Starting with your forearm vertical, kick the dumbbell back until your arm is straight, flexing the triceps. Control the return.",
+                                        "sets": "4 sets",
+                                        "reps": "15-20 reps",
+                                        "rest": "45s rest"
+                                    },
+                                    {
+                                        "name": "Optional - Partials",
+                                        "image": "https://raw.githubusercontent.com/Jonatan0234/workoutplanner/main/Pictures/Triceps/Day1/3-1.gif",
+                                        "muscle_image": "https://raw.githubusercontent.com/Jonatan0234/workoutplanner/main/Muscles/Triceps.png",
+                                        "description": "Hinge forward at the hips, keeping your back flat and elbows pinned high to your sides. Starting with your forearm vertical, kick the dumbbell back until your arm is straight, flexing the triceps. Control the return.",
+                                        "sets": "3 sets - 10Kg",
+                                        "reps": "5-7 reps",
+                                        "rest": "45s rest"
+                                    },
+                                    {
+                                        "name": "Cobra pushups 1set xF",
+                                        "image": "https://raw.githubusercontent.com/Jonatan0234/workoutplanner/main/Pictures/Triceps/Day1/4.gif",
+                                        "muscle_image": "https://raw.githubusercontent.com/Jonatan0234/workoutplanner/main/Muscles/Triceps.png",
+                                        "description": "Start face down, hands under shoulders, elbows tucked. Push up until arms are fully extended, keeping the body straight. Lower slowly to complete the rep.",
+                                        "sets": "3 sets",
+                                        "reps": "8-10 FF reps",
+                                        "rest": "45s rest"
+                                    }
+                                ]
+                            },
+                            "day2": {
+                                "chest": [
+                                    {
+                                        "name": "Primer. -Band pull aparts sub max",
+                                        "image": "https://raw.githubusercontent.com/Jonatan0234/workoutplanner/main/Pictures/Chest/Day2/Primer.gif",
+                                        "muscle_image": "https://raw.githubusercontent.com/Jonatan0234/workoutplanner/main/Muscles/Chest.png",
+                                        "description": "Hold the band straight out at chest height. Keep your arms straight and your core braced. Pull the band apart until it touches your chest, strongly squeezing your shoulder blades together. Control the return to the start.",
+                                        "sets": "2 sets",
+                                        "reps": "12-15 reps",
+                                        "rest": "60s rest"
+                                    },
+                                    {
+                                        "name": "DB bench press.",
+                                        "image": "https://raw.githubusercontent.com/Jonatan0234/workoutplanner/main/Pictures/Chest/Day2/1.gif",
+                                        "muscle_image": "https://raw.githubusercontent.com/Jonatan0234/workoutplanner/main/Muscles/Chest.png",
+                                        "description": "Retract shoulders. Lower to chest, elbows tucked (45°). Press up and in, squeeze chest at the top.",
+                                        "sets": "3 sets - 32/36Kg.",
+                                        "reps": "8-10 FF reps.",
+                                        "rest": "90s rest"
+                                    },
+                                    {
+                                        "name": "High to low crossover +partials.",
+                                        "image": "https://raw.githubusercontent.com/Jonatan0234/workoutplanner/main/Pictures/Chest/Day2/2.gif",
+                                        "muscle_image": "https://raw.githubusercontent.com/Jonatan0234/workoutplanner/main/Muscles/Chest.png",
+                                        "description": "Set pulleys high (above head). Step forward into a staggered stance with a slight forward lean. Pull the handles down and across your body, bringing your hands together in front of your belly button. Keep a slight bend in the elbow and squeeze the lower chest hard at the bottom. Control the stretch on the way back.",
+                                        "sets": "3 sets - 12,5Kg.",
+                                        "reps": "8-10 reps.",
+                                        "rest": "90s rest"
+                                    },
+                                    {
+                                        "name": "Partials.",
+                                        "image": "https://raw.githubusercontent.com/Jonatan0234/workoutplanner/main/Pictures/Chest/Day2/2-1.gif",
+                                        "muscle_image": "https://raw.githubusercontent.com/Jonatan0234/workoutplanner/main/Muscles/Chest.png",
+                                        "description": "Set pulleys high (above head). Step forward into a staggered stance with a slight forward lean. Pull the handles down and across your body, bringing your hands together in front of your belly button. Keep a slight bend in the elbow and squeeze the lower chest hard at the bottom. Control the stretch on the way back.",
+                                        "sets": "3 sets.",
+                                        "reps": "5-7 reps.",
+                                        "rest": "90s rest"
+                                    },
+                                    {
+                                        "name": "incline cable press.",
+                                        "image": "https://raw.githubusercontent.com/Jonatan0234/workoutplanner/main/Pictures/Chest/Day2/3.gif",
+                                        "muscle_image": "https://raw.githubusercontent.com/Jonatan0234/workoutplanner/main/Muscles/Chest.png",
+                                        "description": "Set bench 30-45°. Pulleys at the bottom. Lie on bench, retract shoulders. Press handles up and forward toward the midline. Squeeze upper chest. Control the stretch back.",
+                                        "sets": "3 sets - 7,5Kg.",
+                                        "reps": "10-12 FF reps.",
+                                        "rest": "90s rest"
+                                    },
+                                    {
+                                        "name": "1.5 Rep dip ladder.",
+                                        "image": "https://raw.githubusercontent.com/Jonatan0234/workoutplanner/main/Pictures/Chest/Day2/4.gif",
+                                        "muscle_image": "https://raw.githubusercontent.com/Jonatan0234/workoutplanner/main/Muscles/Chest.png",
+                                        "description": "Dip Form: Start high, shoulders down. Lower to 90degree.1.5 Rep: Lower to full depth. Press up halfway. Lower back to full depth. Press up to the top (this completes 1.5 reps).Ladder: Perform a set of 1.5 reps. Rest briefly. Perform a set of 2 times 1.5 reps. Rest. Continue increasing reps by one set at a time (1, 2, 3...).Goal: Accumulate high volume while managing fatigue.",
+                                        "sets": "3 sets",
+                                        "reps": "10-12 FF reps.",
+                                        "rest": "90s rest"
+                                    },
+                                    {
+                                        "name": "Prision yard pushup.",
+                                        "image": "https://raw.githubusercontent.com/Jonatan0234/workoutplanner/main/Pictures/Chest/Day2/5.gif",
+                                        "muscle_image": "https://raw.githubusercontent.com/Jonatan0234/workoutplanner/main/Muscles/Chest.png",
+                                        "description": "Cues: Perfect form (straight body, tight core). Variations: Perform many reps of Diamond, Wide, or Tempo pushups. Advanced: Progress towards One-Arm Pushup. Routine: High frequency (daily) and high sets/reps.",
+                                        "sets": "3 sets.",
+                                        "reps": "30-40 FF reps.",
+                                        "rest": "90s rest"
+                                    }
+                                ],
+                                "triceps": [
+                                    {
+                                        "name": "PJR pullovers.",
+                                        "image": "https://raw.githubusercontent.com/Jonatan0234/workoutplanner/main/Pictures/Triceps/Day2/1.gif",
+                                        "muscle_image": "https://raw.githubusercontent.com/Jonatan0234/workoutplanner/main/Muscles/Triceps.png",
+                                        "description": "Cues: Lie on a flat bench. Lower the dumbbell behind your head while simultaneously bending your elbows to maximize the triceps stretch. Reverse the movement by extending your elbows to push the weight back up.",
+                                        "sets": "3 sets - 32Kg",
+                                        "reps": "8-10 FF reps",
+                                        "rest": "75s rest"
+                                    },
+                                    {
+                                        "name": "Cable triceps pushaways +partials.",
+                                        "image": "https://raw.githubusercontent.com/Jonatan0234/workoutplanner/main/Pictures/Triceps/Day2/2.gif",
+                                        "muscle_image": "https://raw.githubusercontent.com/Jonatan0234/workoutplanner/main/Muscles/Triceps.png",
+                                        "description": "Cues: Stand facing the cable machine, grasp the attachment (bar/rope) with the cable set high. Lean slightly forward, keeping a rigid torso. Lock the elbows close to the body. Press the handle down and away from the body by only straightening the arms. Squeeze triceps at the bottom. Control the slow return.",
+                                        "sets": "3 sets 12,5/15Kg",
+                                        "reps": "10-12 reps",
+                                        "rest": "60s rest"
+                                    },
+                                    {
+                                        "name": "Partials.",
+                                        "image": "https://raw.githubusercontent.com/Jonatan0234/workoutplanner/main/Pictures/Triceps/Day2/2-1.gif",
+                                        "muscle_image": "https://raw.githubusercontent.com/Jonatan0234/workoutplanner/main/Muscles/Triceps.png",
+                                        "description": "Cues: Stand facing the cable machine, grasp the attachment (bar/rope) with the cable set high. Lean slightly forward, keeping a rigid torso. Lock the elbows close to the body. Press the handle down and away from the body by only straightening the arms. Squeeze triceps at the bottom. Control the slow return.",
+                                        "sets": "3 sets 12,5/15Kg",
+                                        "reps": "10-12 reps",
+                                        "rest": "60s rest"
+                                    },
+                                    {
+                                        "name": "X pushdowns +partials.",
+                                        "image": "https://raw.githubusercontent.com/Jonatan0234/workoutplanner/main/Pictures/Triceps/Day2/3.gif",
+                                        "muscle_image": "https://raw.githubusercontent.com/Jonatan0234/workoutplanner/main/Muscles/Triceps.png",
+                                        "description": "Cues: Use a rope or two single handles on a high cable. Begin with elbows tucked. Press the weight down and fully extend arms. At the bottom, separate or flare hands laterally/outward to achieve a full triceps squeeze and contraction. Control the slow return to the top.",
+                                        "sets": "3 sets 7,5Kg x arm.",
+                                        "reps": "10-12 reps",
+                                        "rest": "60s rest"
+                                    },
+                                    {
+                                        "name": "Partials.",
+                                        "image": "https://raw.githubusercontent.com/Jonatan0234/workoutplanner/main/Pictures/Triceps/Day2/3-1.gif",
+                                        "muscle_image": "https://raw.githubusercontent.com/Jonatan0234/workoutplanner/main/Muscles/Triceps.png",
+                                        "description": "Cues: Use a rope or two single handles on a high cable. Begin with elbows tucked. Press the weight down and fully extend arms. At the bottom, separate or flare hands laterally/outward to achieve a full triceps squeeze and contraction. Control the slow return to the top.",
+                                        "sets": "3 sets.",
+                                        "reps": "5-7 reps",
+                                        "rest": "60s rest"
+                                    },
+                                    {
+                                        "name": "Bench dips.",
+                                        "image": "https://raw.githubusercontent.com/Jonatan0234/workoutplanner/main/Pictures/Triceps/Day2/4.gif",
+                                        "muscle_image": "https://raw.githubusercontent.com/Jonatan0234/workoutplanner/main/Muscles/Triceps.png",
+                                        "description": "Cues: Hands shoulder-width on bench edge, fingers forward. Feet on floor/bench. Keep back close to the bench. Lower body by bending elbows to 90degrees. Keep shoulders down and back (retracted). Push up using only the triceps.",
+                                        "sets": "3 sets.",
+                                        "reps": "20-25 reps",
+                                        "rest": "60s rest"
+                                    }
+                                ]
+                            }
+                        },
+                        "back_biceps": {
+                            "day1": {
+                                "back": [
+                                    {
+                                        "name": "Primer. - Scap pulldown primer",
+                                        "image": "https://raw.githubusercontent.com/Jonatan0234/workoutplanner/main/Pictures/Back/Day1/Primer.gif",
+                                        "muscle_image": "https://raw.githubusercontent.com/Jonatan0234/workoutplanner/main/Muscles/Back.png",
+                                        "description": "Hang with straight arms, then initiate the pull by drawing your shoulder blades down and back, without bending the elbows. Slowly return to the starting hang.",
+                                        "sets": "2 sets - 30Kg",
+                                        "reps": "12-15 reps",
+                                        "rest": "60s rest"
+                                    },
+                                    {
+                                        "name": "Lat pulldowns (narrow grip) +partials.",
+                                        "image": "https://raw.githubusercontent.com/Jonatan0234/workoutplanner/main/Pictures/Back/Day1/2.gif",
+                                        "muscle_image": "https://raw.githubusercontent.com/Jonatan0234/workoutplanner/main/Muscles/Back.png",
+                                        "description": "Secure your seat, grip the V-handle, and drive your elbows down and back towards your hips, squeezing your back as the bar touches your upper chest. Control the weight back up.",
+                                        "sets": "3 sets - 45/50 Kg",
+                                        "reps": "8-10 reps",
+                                        "rest": "75s rest"
+                                    },
+                                    {
+                                        "name": "Partials.",
+                                        "image": "https://raw.githubusercontent.com/Jonatan0234/workoutplanner/main/Pictures/Back/Day1/2-1.gif",
+                                        "muscle_image": "https://raw.githubusercontent.com/Jonatan0234/workoutplanner/main/Muscles/Back.png",
+                                        "description": "Secure your seat, grip the V-handle, and drive your elbows down and back towards your hips, squeezing your back as the bar touches your upper chest. Control the weight back up.",
+                                        "sets": "3 sets - 45/50 Kg",
+                                        "reps": "8-10 reps",
+                                        "rest": "75s rest"
+                                    },
+                                    {
+                                        "name": "Seated cable rows (elbows wide).",
+                                        "image": "https://raw.githubusercontent.com/Jonatan0234/workoutplanner/main/Pictures/Back/Day1/1.gif",
+                                        "muscle_image": "https://raw.githubusercontent.com/Jonatan0234/workoutplanner/main/Muscles/Back.png",
+                                        "description": "Sit tall and pull the bar to your chest, driving your elbows high and wide while squeezing your shoulder blades together. Control the stretch back to the start.",
+                                        "sets": "3 sets - 60Kg",
+                                        "reps": "10-12 reps",
+                                        "rest": "75s rest"
+                                    },
+                                    {
+                                        "name": "Straight arm pushdown +eccentric.",
+                                        "image": "https://raw.githubusercontent.com/Jonatan0234/workoutplanner/main/Pictures/Back/Day1/3.gif",
+                                        "muscle_image": "https://raw.githubusercontent.com/Jonatan0234/workoutplanner/main/Muscles/Back.png",
+                                        "description": "Stand with a slight lean forward and lock your elbows. Pull the bar down to your thighs in an arching motion, powerfully squeezing the lats. Control the bar back up to a full overhead stretch.",
+                                        "sets": "3 sets - 22/25Kg",
+                                        "reps": "8-10 reps",
+                                        "rest": "75s rest"
+                                    },
+                                    {
+                                        "name": "Eccentric.",
+                                        "image": "https://raw.githubusercontent.com/Jonatan0234/workoutplanner/main/Pictures/Back/Day1/3-1.gif",
+                                        "muscle_image": "https://raw.githubusercontent.com/Jonatan0234/workoutplanner/main/Muscles/Back.png",
+                                        "description": "Stand with a slight lean forward and lock your elbows. Pull the bar down to your thighs in an arching motion, powerfully squeezing the lats. Control the bar back up to a full overhead stretch.",
+                                        "sets": "3 sets - 22/25Kg",
+                                        "reps": "5-7 reps",
+                                        "rest": "75s rest"
+                                    },
+                                    {
+                                        "name": "1.5 Pullover ladder.",
+                                        "image": "https://raw.githubusercontent.com/Jonatan0234/workoutplanner/main/Pictures/Back/Day1/4.gif",
+                                        "muscle_image": "https://raw.githubusercontent.com/Jonatan0234/workoutplanner/main/Muscles/Back.png",
+                                        "description": "Lower the weight fully (1), bring it halfway up, lower fully again, then complete the rep (1.5). Repeat, increasing the stretch-hold time on each repetition.",
+                                        "sets": "3 sets - 24Kg",
+                                        "reps": "8-10 reps",
+                                        "rest": "75s rest"
+                                    },
+                                    {
+                                        "name": "Bodyweight pullups.",
+                                        "image": "https://raw.githubusercontent.com/Jonatan0234/workoutplanner/main/Pictures/Back/Day1/5.gif",
+                                        "muscle_image": "https://raw.githubusercontent.com/Jonatan0234/workoutplanner/main/Muscles/Back.png",
+                                        "description": "Grasp the bar with an overhand grip from a dead hang. Pull your chest towards the bar, driving your elbows down and back. Control the descent back to the full hang.",
+                                        "sets": "3 sets",
+                                        "reps": "8-10 reps",
+                                        "rest": "75s rest"
+                                    },
+                                    {
+                                        "name": "Bodyweight banded pullups.",
+                                        "image": "https://raw.githubusercontent.com/Jonatan0234/workoutplanner/main/Pictures/Back/Day1/5-1.gif",
+                                        "muscle_image": "https://raw.githubusercontent.com/Jonatan0234/workoutplanner/main/Muscles/Back.png",
+                                        "description": "Grasp the bar with an overhand grip from a dead hang. Pull your chest towards the bar, driving your elbows down and back. Control the descent back to the full hang.",
+                                        "sets": "3 sets",
+                                        "reps": "5-7 reps",
+                                        "rest": "75s rest"
+                                    }
+                                ],
+                                "biceps": [
+                                    {
+                                        "name": "Barbell strict Curl",
+                                        "image": "https://raw.githubusercontent.com/Jonatan0234/workoutplanner/main/Pictures/Biceps/Day1/1.gif",
+                                        "muscle_image": "https://raw.githubusercontent.com/Jonatan0234/workoutplanner/main/Muscles/Biceps.png",
+                                        "description": "Stand against a wall, head/shoulders/butt against the surface. Keep your legs straight. Curl the bar to your chest without moving your back or hips. Control the lowering phase.",
+                                        "sets": "3 sets 20/24 in total",
+                                        "reps": "8-10 reps",
+                                        "rest": "60s rest"
+                                    },
+                                    {
+                                        "name": "cheat Barbell Curl",
+                                        "image": "https://raw.githubusercontent.com/Jonatan0234/workoutplanner/main/Pictures/Biceps/Day1/1-1.gif",
+                                        "muscle_image": "https://raw.githubusercontent.com/Jonatan0234/workoutplanner/main/Muscles/Biceps.png",
+                                        "description": "Stand against a wall, head/shoulders/butt against the surface. Keep your legs straight. Curl the bar to your chest without moving your back or hips. Control the lowering phase.",
+                                        "sets": "3",
+                                        "reps": "5-7 reps",
+                                        "rest": "60s rest"
+                                    },
+                                    {
+                                        "name": "DB cross body hammer curls.",
+                                        "image": "https://raw.githubusercontent.com/Jonatan0234/workoutplanner/main/Pictures/Biceps/Day1/2.gif",
+                                        "muscle_image": "https://raw.githubusercontent.com/Jonatan0234/workoutplanner/main/Muscles/Biceps.png",
+                                        "description": "Hold dumbbells with a neutral grip (palms facing in). Curl one dumbbell across your body toward the opposite shoulder, keeping your upper arm stable. Alternate sides, focusing on the contraction in the forearm/bicep.",
+                                        "sets": "3 sets - 12Kg x arm",
+                                        "reps": "10-12 FF reps",
+                                        "rest": "60s rest"
+                                    },
+                                    {
+                                        "name": "Cable stretch drag curls +Partials.",
+                                        "image": "https://raw.githubusercontent.com/Jonatan0234/workoutplanner/main/Pictures/Biceps/Day1/3.gif",
+                                        "muscle_image": "https://raw.githubusercontent.com/Jonatan0234/workoutplanner/main/Muscles/Biceps.png",
+                                        "description": "Stand back from the low cable to get a full arm stretch. Keeping elbows pinned behind your torso, drag the bar straight up your body towards your chest. Control the descent back to the deep stretch position.",
+                                        "sets": "3 sets - 7,5Kg x arm",
+                                        "reps": "10-12 reps",
+                                        "rest": "60s rest"
+                                    },
+                                    {
+                                        "name": "Partials.",
+                                        "image": "https://raw.githubusercontent.com/Jonatan0234/workoutplanner/main/Pictures/Biceps/Day1/3-1.gif",
+                                        "muscle_image": "https://raw.githubusercontent.com/Jonatan0234/workoutplanner/main/Muscles/Biceps.png",
+                                        "description": "Stand back from the low cable to get a full arm stretch. Keeping elbows pinned behind your torso, drag the bar straight up your body towards your chest. Control the descent back to the deep stretch position.",
+                                        "sets": "3 sets - 7,5Kg x arm",
+                                        "reps": "5-7 FF reps",
+                                        "rest": "60s rest"
+                                    },
+                                    {
+                                        "name": "Mentzer pulldown (trap set).",
+                                        "image": "https://raw.githubusercontent.com/Jonatan0234/workoutplanner/main/Pictures/Biceps/Day1/4.gif",
+                                        "muscle_image": "https://raw.githubusercontent.com/Jonatan0234/workoutplanner/main/Muscles/Biceps.png",
+                                        "description": "Use a close, supinated grip on the pulldown bar. Initiate the pull by driving the elbows down and back towards the waist. Perform one set to absolute muscular failure (in the 12-15 rep range), using strict form and a slow, controlled eccentric (lowering phase)",
+                                        "sets": "3 sets - 30Kg",
+                                        "reps": "10-15 FF reps",
+                                        "rest": "60s rest"
+                                    }
+                                ]
+                            },
+                            "day2": {
+                                "back": [
+                                    {
+                                        "name": "Primer. Face pulls",
+                                        "image": "https://raw.githubusercontent.com/Jonatan0234/workoutplanner/main/Pictures/Back/Day2/Primer.gif",
+                                        "muscle_image": "https://raw.githubusercontent.com/Jonatan0234/workoutplanner/main/Muscles/Back.png",
+                                        "description": "Cues: Rope attachment at eye/forehead level. Elbows high and flared out. Pull the rope toward the face, separating hands until thumbs point back. Squeeze shoulder blades together at peak contraction. Control the rope slowly back out.",
+                                        "sets": "2 sets 10Kg",
+                                        "reps": "12-15 reps",
+                                        "rest": "60s rest"
+                                    },
+                                    {
+                                        "name": "Barbell rows 2-3 sets x6-8.",
+                                        "image": "https://raw.githubusercontent.com/Jonatan0234/workoutplanner/main/Pictures/Back/Day2/1.gif",
+                                        "muscle_image": "https://raw.githubusercontent.com/Jonatan0234/workoutplanner/main/Muscles/Back.png",
+                                        "description": "Cues: Hinge at hips to 45degrees to parallel with the floor. Neutral spine (flat back). Pull the bar toward your lower chest/upper abdomen. Drive with the elbows back; keep them relatively tucked. Squeeze shoulder blades at the top. Control the descent.",
+                                        "sets": "3 sets - 50/60Kg in total.",
+                                        "reps": "8-10 reps",
+                                        "rest": "60s rest"
+                                    },
+                                    {
+                                        "name": "Barbell rows (optional chest supported).",
+                                        "image": "https://raw.githubusercontent.com/Jonatan0234/workoutplanner/main/Pictures/Back/Day2/1-1.gif",
+                                        "muscle_image": "https://raw.githubusercontent.com/Jonatan0234/workoutplanner/main/Muscles/Back.png",
+                                        "description": "Cues: Lie face down on an incline bench (30degrees to 45degrees). Chest firmly pressed against the pad. Grab the bar with full extension.",
+                                        "sets": "3 sets - 60/70Kg.",
+                                        "reps": "8-10 reps",
+                                        "rest": "60s rest"
+                                    },
+                                    {
+                                        "name": "Wide grip pulldowns +partials.",
+                                        "image": "https://raw.githubusercontent.com/Jonatan0234/workoutplanner/main/Pictures/Back/Day2/2.gif",
+                                        "muscle_image": "https://raw.githubusercontent.com/Jonatan0234/workoutplanner/main/Muscles/Back.png",
+                                        "description": "Cues: Wide overhand grip. Chest up, lean back slightly. Pull bar to upper chest/collarbone. Drive elbows down and back, keeping them wide. Squeeze lats at the bottom. Full stretch at the top (let shoulders rise).",
+                                        "sets": "3 sets - 45/50Kg.",
+                                        "reps": "10-12 reps",
+                                        "rest": "60s rest"
+                                    },
+                                    {
+                                        "name": "Partials.",
+                                        "image": "https://raw.githubusercontent.com/Jonatan0234/workoutplanner/main/Pictures/Back/Day2/2-1.gif",
+                                        "muscle_image": "https://raw.githubusercontent.com/Jonatan0234/workoutplanner/main/Muscles/Back.png",
+                                        "description": "Cues: Wide overhand grip. Chest up, lean back slightly. Pull bar to upper chest/collarbone. Drive elbows down and back, keeping them wide. Squeeze lats at the bottom. Full stretch at the top (let shoulders rise).",
+                                        "sets": "3 sets.",
+                                        "reps": "5-7 reps",
+                                        "rest": "60s rest"
+                                    },
+                                    {
+                                        "name": "DB High pulls (form failure).",
+                                        "image": "https://raw.githubusercontent.com/Jonatan0234/workoutplanner/main/Pictures/Back/Day2/3.gif",
+                                        "muscle_image": "https://raw.githubusercontent.com/Jonatan0234/workoutplanner/main/Muscles/Back.png",
+                                        "description": "Cues: Slight hip hinge. Explosively extend hips, then shrug and pull DBs up, keeping them close. Elbows high and wide. Control the return.",
+                                        "sets": "3 sets - 14Kg.",
+                                        "reps": "10-12 FF reps",
+                                        "rest": "60s rest"
+                                    },
+                                    {
+                                        "name": "1.5 REP High cable row ladder to failure.",
+                                        "image": "https://raw.githubusercontent.com/Jonatan0234/workoutplanner/main/Pictures/Back/Day2/4.gif",
+                                        "muscle_image": "https://raw.githubusercontent.com/Jonatan0234/workoutplanner/main/Muscles/Back.png",
+                                        "description": "Cues: Set pulley high. Pull to upper chest. Tempo: Ascend from 1 second per rep to 5 seconds per rep (1s, 2s, 3,s 4s, 5s), then descend back to 1 second.",
+                                        "sets": "3 sets - 12/15Kg.",
+                                        "reps": "10 FF reps",
+                                        "rest": "60s rest"
+                                    },
+                                    {
+                                        "name": "Inverted rows +partials.",
+                                        "image": "https://raw.githubusercontent.com/Jonatan0234/workoutplanner/main/Pictures/Back/Day2/5.gif",
+                                        "muscle_image": "https://raw.githubusercontent.com/Jonatan0234/workoutplanner/main/Muscles/Back.png",
+                                        "description": "Maintain a rigid, straight body (plank). Pull chest to bar. Squeeze shoulder blades together.",
+                                        "sets": "3 sets.",
+                                        "reps": "10 FF reps",
+                                        "rest": "60s rest"
+                                    },
+                                    {
+                                        "name": "Partials.",
+                                        "image": "https://raw.githubusercontent.com/Jonatan0234/workoutplanner/main/Pictures/Back/Day2/5-1.gif",
+                                        "muscle_image": "https://raw.githubusercontent.com/Jonatan0234/workoutplanner/main/Muscles/Back.png",
+                                        "description": "Maintain a rigid, straight body (plank). Pull chest to bar. Squeeze shoulder blades together.",
+                                        "sets": "3 sets - 12/15Kg.",
+                                        "reps": "10 FF reps",
+                                        "rest": "60s rest"
+                                    }
+                                ],
+                                "biceps": [
+                                    {
+                                        "name": "Chip ups (with weight) +eccentric chin hang (BW)",
+                                        "image": "https://raw.githubusercontent.com/Jonatan0234/workoutplanner/main/Pictures/Biceps/Day2/1.gif",
+                                        "muscle_image": "https://raw.githubusercontent.com/Jonatan0234/workoutplanner/main/Muscles/Biceps.png",
+                                        "description": "Cues:Use a weight belt or vest. Supine (underhand) grip, shoulder-width. Pull from dead hang until chin clears bar. Focus on pulling elbows down.",
+                                        "sets": "3 sets - 12Kg",
+                                        "reps": "6-8 FF reps",
+                                        "rest": "95s rest"
+                                    },
+                                    {
+                                        "name": "Eccentric chin hang",
+                                        "image": "https://raw.githubusercontent.com/Jonatan0234/workoutplanner/main/Pictures/Biceps/Day2/1-1.gif",
+                                        "muscle_image": "https://raw.githubusercontent.com/Jonatan0234/workoutplanner/main/Muscles/Biceps.png",
+                                        "description": "Cues: Jump or step up to the chin-over-bar position (supine grip). Brace core. Lower yourself slowly and with complete control for 3-5 seconds until arms are fully straight.",
+                                        "sets": "3 sets",
+                                        "reps": "5-7 reps",
+                                        "rest": "95s rest"
+                                    },
+                                    {
+                                        "name": "DB spider curls.",
+                                        "image": "https://raw.githubusercontent.com/Jonatan0234/workoutplanner/main/Pictures/Biceps/Day2/2.gif",
+                                        "muscle_image": "https://raw.githubusercontent.com/Jonatan0234/workoutplanner/main/Muscles/Biceps.png",
+                                        "description": "Cues: Lie face-down on an incline bench (30-45degrees). Arms hang straight down. Curl up to your chin, keeping the upper arm locked (no elbow movement backward). Squeeze hard at the top. Lower slowly to maintain tension.",
+                                        "sets": "3 sets 12Kg",
+                                        "reps": "10-12 FF reps",
+                                        "rest": "90s rest"
+                                    },
+                                    {
+                                        "name": "DB incline curls +partials.",
+                                        "image": "https://raw.githubusercontent.com/Jonatan0234/workoutplanner/main/Pictures/Biceps/Day2/3.gif",
+                                        "muscle_image": "https://raw.githubusercontent.com/Jonatan0234/workoutplanner/main/Muscles/Biceps.png",
+                                        "description": "Cues: Sit on a bench set to a 45-60degrees incline. Let arms hang straight down, fully extended. Curl the dumbbells up, keeping your upper arms pinned back and stable. Emphasize the deep stretch at the bottom and a full squeeze at the top.",
+                                        "sets": "3 sets 12Kg",
+                                        "reps": "10-12 FF reps",
+                                        "rest": "90s rest"
+                                    },
+                                    {
+                                        "name": "Partials.",
+                                        "image": "https://raw.githubusercontent.com/Jonatan0234/workoutplanner/main/Pictures/Biceps/Day2/3-1.gif",
+                                        "muscle_image": "https://raw.githubusercontent.com/Jonatan0234/workoutplanner/main/Muscles/Biceps.png",
+                                        "description": "Cues: Sit on a bench set to a 45-60degrees incline. Let arms hang straight down, fully extended. Curl the dumbbells up, keeping your upper arms pinned back and stable. Emphasize the deep stretch at the bottom and a full squeeze at the top.",
+                                        "sets": "3 sets 12Kg",
+                                        "reps": "10-12 FF reps",
+                                        "rest": "90s rest"
+                                    },
+                                    {
+                                        "name": "Standing DB curls (trap set).",
+                                        "image": "https://raw.githubusercontent.com/Jonatan0234/workoutplanner/main/Pictures/Biceps/Day2/4.gif",
+                                        "muscle_image": "https://raw.githubusercontent.com/Jonatan0234/workoutplanner/main/Muscles/Biceps.png",
+                                        "description": "Cues: Stand upright (core tight, shoulders pinned back). Keep elbows tucked. Curl dumbbells up strictly, avoiding swinging. Tempo Ladder (Ascending to 5 seconds, then Descending)",
+                                        "sets": "3 sets 12Kg",
+                                        "reps": "10 FF reps",
+                                        "rest": "90s rest"
+                                    }
+                                ]
+                            }
+                        },
+                        "legs_shoulders": {
+                            "day1": {
+                                "legs": [
+                                    {
+                                        "name": "Primer. Reverse hypers",
+                                        "image": "https://raw.githubusercontent.com/Jonatan0234/workoutplanner/main/Pictures/Legs/Day1/Primer.gif",
+                                        "muscle_image": "https://raw.githubusercontent.com/Jonatan0234/workoutplanner/main/Muscles/Legs.png",
+                                        "description": "Feet shoulder-width, drive hips back and down. Keep chest up and knees tracking toes. Drive through heels.",
+                                        "sets": "2 sets",
+                                        "reps": "12-15 reps",
+                                        "rest": "60s rest"
+                                    },
+                                    {
+                                        "name": "Barbell deadlift",
+                                        "image": "https://raw.githubusercontent.com/Jonatan0234/workoutplanner/main/Pictures/Legs/Day1/1.gif",
+                                        "muscle_image": "https://raw.githubusercontent.com/Jonatan0234/workoutplanner/main/Muscles/Legs.png",
+                                        "description": "Cues: Start with the bar over your mid-foot. Maintain a flat back (chest up, core braced). Drive through your heels/mid-foot by extending your hips and knees simultaneously. Finish by squeezing the glutes at the top.",
+                                        "sets": "3 sets - 60/70Kg in total",
+                                        "reps": "8-10 reps",
+                                        "rest": "90s rest"
+                                    },
+                                    {
+                                        "name": "Barbell front squats",
+                                        "image": "https://raw.githubusercontent.com/Jonatan0234/workoutplanner/main/Pictures/Legs/Day1/2.gif",
+                                        "muscle_image": "https://raw.githubusercontent.com/Jonatan0234/workoutplanner/main/Muscles/Legs.png",
+                                        "description": "Cues: Start with the bar over your mid-foot. Maintain a flat back (chest up, core braced). Drive through your heels/mid-foot by extending your hips and knees simultaneously. Finish by squeezing the glutes at the top.",
+                                        "sets": "3 sets - 25/30Kg in total",
+                                        "reps": "6-8 reps",
+                                        "rest": "90s rest"
+                                    },
+                                    {
+                                        "name": "Alternating DB reverse lunges",
+                                        "image": "https://raw.githubusercontent.com/Jonatan0234/workoutplanner/main/Pictures/Legs/Day1/3.gif",
+                                        "muscle_image": "https://raw.githubusercontent.com/Jonatan0234/workoutplanner/main/Muscles/Legs.png",
+                                        "description": "Cues: Stand tall, holding dumbbells. Step backward and drop straight down until both knees are bent at 90degrees. Ensure the front knee tracks over the ankle. Drive through the front heel to return. Maintain an upright torso.",
+                                        "sets": "3 sets - 12Kg in each arm",
+                                        "reps": "10 reps each leg",
+                                        "rest": "90s rest"
+                                    },
+                                    {
+                                        "name": "Floor hamstring curl +eccentric",
+                                        "image": "https://raw.githubusercontent.com/Jonatan0234/workoutplanner/main/Pictures/Legs/Day1/4.gif",
+                                        "muscle_image": "https://raw.githubusercontent.com/Jonatan0234/workoutplanner/main/Muscles/Legs.png",
+                                        "description": "Cues: Lie on your back. Bridge your hips up and keep them elevated. Slide heels out slowly to extend legs. Pull heels back to the start, focusing solely on hamstring contraction.",
+                                        "sets": "3 sets",
+                                        "reps": "10 reps FF",
+                                        "rest": "90s rest"
+                                    },
+                                    {
+                                        "name": "Eccentric",
+                                        "image": "https://raw.githubusercontent.com/Jonatan0234/workoutplanner/main/Pictures/Legs/Day1/4-1.gif",
+                                        "muscle_image": "https://raw.githubusercontent.com/Jonatan0234/workoutplanner/main/Muscles/Legs.png",
+                                        "description": "Cues: Lie on your back. Bridge your hips up and keep them elevated. Slide heels out slowly to extend legs. Pull heels back to the start, focusing solely on hamstring contraction.",
+                                        "sets": "3 sets",
+                                        "reps": "8-10 reps FF",
+                                        "rest": "90s rest"
+                                    },
+                                    {
+                                        "name": "Seated hamstring curls +eccentric",
+                                        "image": "https://raw.githubusercontent.com/Jonatan0234/workoutplanner/main/Pictures/Legs/Day1/4-2.gif",
+                                        "muscle_image": "https://raw.githubusercontent.com/Jonatan0234/workoutplanner/main/Muscles/Legs.png",
+                                        "description": "Cues: Align your knees with the pivot point and secure the thigh pad to lock your hips down. Curl the lever in with a powerful squeeze, then slowly extend your legs back out, feeling a deep stretch in the hamstrings throughout the return.",
+                                        "sets": "3 sets - 20Kg",
+                                        "reps": "10-12 reps",
+                                        "rest": "90s rest"
+                                    },
+                                    {
+                                        "name": "Eccentric",
+                                        "image": "https://raw.githubusercontent.com/Jonatan0234/workoutplanner/main/Pictures/Legs/Day1/4-3.gif",
+                                        "muscle_image": "https://raw.githubusercontent.com/Jonatan0234/workoutplanner/main/Muscles/Legs.png",
+                                        "description": "Cues: Align your knees with the pivot point and secure the thigh pad to lock your hips down. Curl the lever in with a powerful squeeze, then slowly extend your legs back out, feeling a deep stretch in the hamstrings throughout the return.",
+                                        "sets": "3 sets - 10Kg",
+                                        "reps": "10 reps xleg",
+                                        "rest": "90s rest"
+                                    },
+                                    {
+                                        "name": "Standing calf raises +partials",
+                                        "image": "https://raw.githubusercontent.com/Jonatan0234/workoutplanner/main/Pictures/Legs/Day1/5.gif",
+                                        "muscle_image": "https://raw.githubusercontent.com/Jonatan0234/workoutplanner/main/Muscles/Legs.png",
+                                        "description": "Cues: Position the barbell high on your back as if squatting and stand with the balls of your feet on a block or step. Lower your heels fully to feel a deep stretch, then drive up onto your toes as high as possible and hold the top squeeze for four seconds. Control the descent down for four seconds before repeating.",
+                                        "sets": "3 sets 30Kg in total",
+                                        "reps": "10-12 reps",
+                                        "rest": "90s rest"
+                                    },
+                                    {
+                                        "name": "Partials",
+                                        "image": "https://raw.githubusercontent.com/Jonatan0234/workoutplanner/main/Pictures/Legs/Day1/5-1.gif",
+                                        "muscle_image": "https://raw.githubusercontent.com/Jonatan0234/workoutplanner/main/Muscles/Legs.png",
+                                        "description": "Cues: Position the barbell high on your back as if squatting and stand with the balls of your feet on a block or step. Lower your heels fully to feel a deep stretch, then drive up onto your toes as high as possible and hold the top squeeze for four seconds. Control the descent down for four seconds before repeating.",
+                                        "sets": "3 sets",
+                                        "reps": "14-18 reps",
+                                        "rest": "90s rest"
+                                    }
+                                ],
+                                "shoulders": [
+                                    {
+                                        "name": "DB single arm OHP (OverHead Press)",
+                                        "image": "https://raw.githubusercontent.com/Jonatan0234/workoutplanner/main/Pictures/Shoulders/Day1/1.gif",
+                                        "muscle_image": "https://raw.githubusercontent.com/Jonatan0234/workoutplanner/main/Muscles/Shoulders.png",
+                                        "description": "Cues: Stand tall, brace your core, and keep your free hand steady. Press the dumbbell straight overhead to fully lock out your arm. Actively pull the weight down with control, keeping your elbow under your wrist, and immediately begin the next press.",
+                                        "sets": "3 sets 22/25Kg",
+                                        "reps": "8-10 reps",
+                                        "rest": "90s rest"
+                                    },
+                                    {
+                                        "name": "DB lateral raise +partials",
+                                        "image": "https://raw.githubusercontent.com/Jonatan0234/workoutplanner/main/Pictures/Shoulders/Day1/2.gif",
+                                        "muscle_image": "https://raw.githubusercontent.com/Jonatan0234/workoutplanner/main/Muscles/Shoulders.png",
+                                        "description": "Cues: Stand with slightly bent elbows, leading the movement with them. Raise the dumbbells out to the sides until your arms are near parallel with the floor. Control the descent slowly and avoid resting the weights on your hips to maintain continuous tension.",
+                                        "sets": "3 sets - 12,5Kg",
+                                        "reps": "10-12 reps",
+                                        "rest": "90s rest"
+                                    },
+                                    {
+                                        "name": "Partials",
+                                        "image": "https://raw.githubusercontent.com/Jonatan0234/workoutplanner/main/Pictures/Shoulders/Day1/2-1.gif",
+                                        "muscle_image": "https://raw.githubusercontent.com/Jonatan0234/workoutplanner/main/Muscles/Shoulders.png",
+                                        "description": "Cues: Stand with slightly bent elbows, leading the movement with them. Raise the dumbbells out to the sides until your arms are near parallel with the floor. Control the descent slowly and avoid resting the weights on your hips to maintain continuous tension.",
+                                        "sets": "3 sets",
+                                        "reps": "5-7 reps",
+                                        "rest": "90s rest"
+                                    },
+                                    {
+                                        "name": "DB rear delt rows",
+                                        "image": "https://raw.githubusercontent.com/Jonatan0234/workoutplanner/main/Pictures/Shoulders/Day1/3.gif",
+                                        "muscle_image": "https://raw.githubusercontent.com/Jonatan0234/workoutplanner/main/Muscles/Shoulders.png",
+                                        "description": "Sit on a bench and lean your torso forward over your thighs with the dumbbells hanging straight down. Pull your elbows wide and high toward the ceiling, actively squeezing the rear portion of your shoulders together. Control the dumbbells slowly back down to the starting position without swinging or using momentum.",
+                                        "sets": "3 sets - 12,5Kg",
+                                        "reps": "10-12 reps",
+                                        "rest": "60s rest"
+                                    }
+                                ]
+                            },
+                            "day2": {
+                                "legs": [
+                                    {
+                                        "name": "Primer. Banded overhead squats",
+                                        "image": "https://raw.githubusercontent.com/Jonatan0234/workoutplanner/main/Pictures/Legs/Day2/Primer.gif",
+                                        "muscle_image": "https://raw.githubusercontent.com/Jonatan0234/workoutplanner/main/Muscles/Legs.png",
+                                        "description": "Cues: Hold the band pulled tight overhead and lock your arms behind your ears. Squat down by pushing your hips back, keeping your chest up and the band from drifting forward. Drive up powerfully through your feet.",
+                                        "sets": "2 sets",
+                                        "reps": "12-15 reps",
+                                        "rest": "90s rest"
+                                    },
+                                    {
+                                        "name": "Barrel back squat (70% max)",
+                                        "image": "https://raw.githubusercontent.com/Jonatan0234/workoutplanner/main/Pictures/Legs/Day2/1.gif",
+                                        "muscle_image": "https://raw.githubusercontent.com/Jonatan0234/workoutplanner/main/Muscles/Legs.png",
+                                        "description": "Cues: Set the bar high on your back and brace your core. Push your hips back and down while driving your knees out. Keep your chest up, squat to depth, and drive forcefully through your feet to stand up.",
+                                        "sets": "3 sets - 50Kg in total",
+                                        "reps": "6-8 reps",
+                                        "rest": "90s rest"
+                                    },
+                                    {
+                                        "name": "Optional squats to a box(70% max)",
+                                        "image": "https://raw.githubusercontent.com/Jonatan0234/workoutplanner/main/Pictures/Legs/Day2/1-1.gif",
+                                        "muscle_image": "https://raw.githubusercontent.com/Jonatan0234/workoutplanner/main/Muscles/Legs.png",
+                                        "description": "Cues: Set the bar high on your back and brace your core. Push your hips back and down while driving your knees out. Keep your chest up, squat to depth, and drive forcefully through your feet to stand up.",
+                                        "sets": "3 sets - 50Kg in total",
+                                        "reps": "6-8 reps",
+                                        "rest": "90s rest"
+                                    },
+                                    {
+                                        "name": "Barrel hip thrusts",
+                                        "image": "https://raw.githubusercontent.com/Jonatan0234/workoutplanner/main/Pictures/Legs/Day2/2.gif",
+                                        "muscle_image": "https://raw.githubusercontent.com/Jonatan0234/workoutplanner/main/Muscles/Legs.png",
+                                        "description": "Cues: Set the bar on your hips with your upper back on a bench. Brace your core and drive through your heels to lift the bar until your body is a straight line. Squeeze your glutes hard at the top, then lower with control.",
+                                        "sets": "3 sets - 80Kg in total",
+                                        "reps": "6-8 reps",
+                                        "rest": "90s rest"
+                                    },
+                                    {
+                                        "name": "DB Spanish squats",
+                                        "image": "https://raw.githubusercontent.com/Jonatan0234/workoutplanner/main/Pictures/Legs/Day2/3.gif",
+                                        "muscle_image": "https://raw.githubusercontent.com/Jonatan0234/workoutplanner/main/Muscles/Legs.png",
+                                        "description": "Cues: Anchor a band tightly behind your knees. Hold a dumbbell at your chest and lean back into the band's tension. Squat straight down while keeping your shins vertical. Drive up to stand, pushing your knees into the band the entire time.",
+                                        "sets": "3 sets - 12Kg in each arm",
+                                        "reps": "10-12 FF reps",
+                                        "rest": "90s rest"
+                                    },
+                                    {
+                                        "name": "Glute ham raise (GHR)",
+                                        "image": "https://raw.githubusercontent.com/Jonatan0234/workoutplanner/main/Pictures/Legs/Day2/4.gif",
+                                        "muscle_image": "https://raw.githubusercontent.com/Jonatan0234/workoutplanner/main/Muscles/Legs.png",
+                                        "description": "Cues: Lock your ankles firmly and place your knees behind the pad. Start tall, keeping your body rigid from head to knee. Slowly lower your torso until parallel with the floor, then powerfully pull yourself back up using your hamstrings and glutes.",
+                                        "sets": "3 sets",
+                                        "reps": "6-8 FF reps",
+                                        "rest": "90s rest"
+                                    },
+                                    {
+                                        "name": "Optional GHR's assited",
+                                        "image": "https://raw.githubusercontent.com/Jonatan0234/workoutplanner/main/Pictures/Legs/Day2/4-1.gif",
+                                        "muscle_image": "https://raw.githubusercontent.com/Jonatan0234/workoutplanner/main/Muscles/Legs.png",
+                                        "description": "Cues: Lock your ankles firmly and place your knees behind the pad. Start tall, keeping your body rigid from head to knee. Slowly lower your torso until parallel with the floor, then powerfully pull yourself back up using your hamstrings and glutes.",
+                                        "sets": "3 sets",
+                                        "reps": "6-8 FF reps",
+                                        "rest": "90s rest"
+                                    },
+                                    {
+                                        "name": "Seated calf raises +partials",
+                                        "image": "https://raw.githubusercontent.com/Jonatan0234/workoutplanner/main/Pictures/Legs/Day2/5.gif",
+                                        "muscle_image": "https://raw.githubusercontent.com/Jonatan0234/workoutplanner/main/Muscles/Legs.png",
+                                        "description": "Cues: Secure the pads firmly across your thighs just above the knees. Lower your heels fully to feel a deep stretch in your calves. Drive up onto the balls of your feet as high as possible, holding the peak squeeze before lowering slowly.",
+                                        "sets": "3 sets - 30Kg in total",
+                                        "reps": "10-12 FF reps",
+                                        "rest": "90s rest"
+                                    },
+                                    {
+                                        "name": "Partials",
+                                        "image": "https://raw.githubusercontent.com/Jonatan0234/workoutplanner/main/Pictures/Legs/Day2/5-1.gif",
+                                        "muscle_image": "https://raw.githubusercontent.com/Jonatan0234/workoutplanner/main/Muscles/Legs.png",
+                                        "description": "Cues: Secure the pads firmly across your thighs just above the knees. Lower your heels fully to feel a deep stretch in your calves. Drive up onto the balls of your feet as high as possible, holding the peak squeeze before lowering slowly.",
+                                        "sets": "3 sets",
+                                        "reps": "5-7 FF reps",
+                                        "rest": "90s rest"
+                                    }
+                                ],
+                                "shoulders": [
+                                    {
+                                        "name": "DB cheat laterals",
+                                        "image": "https://raw.githubusercontent.com/Jonatan0234/workoutplanner/main/Pictures/Shoulders/Day2/1.gif",
+                                        "muscle_image": "https://raw.githubusercontent.com/Jonatan0234/workoutplanner/main/Muscles/Shoulders.png",
+                                        "description": "Raise weight in front of the body to shoulder height with straight arms (slight bend) to target anterior delts.",
+                                        "sets": "3 sets - 16Kg",
+                                        "reps": "10-12 reps",
+                                        "rest": "60s rest"
+                                    },
+                                    {
+                                        "name": "Incline DB front raises +partials",
+                                        "image": "https://raw.githubusercontent.com/Jonatan0234/workoutplanner/main/Pictures/Shoulders/Day2/2.gif",
+                                        "muscle_image": "https://raw.githubusercontent.com/Jonatan0234/workoutplanner/main/Muscles/Shoulders.png",
+                                        "description": "Cues: Lie face up on an incline bench and let the dumbbells hang straight down. Keep your arms straight and raise the dumbbells forward and up until they are level with your shoulders. Control the descent slowly and maintain tension in the front of your shoulders.",
+                                        "sets": "3 sets - 8Kg in each arm",
+                                        "reps": "8-10 reps",
+                                        "rest": "75s rest"
+                                    },
+                                    {
+                                        "name": "Partials",
+                                        "image": "https://raw.githubusercontent.com/Jonatan0234/workoutplanner/main/Pictures/Shoulders/Day2/2-1.gif",
+                                        "muscle_image": "https://raw.githubusercontent.com/Jonatan0234/workoutplanner/main/Muscles/Shoulders.png",
+                                        "description": "Cues: Lie face up on an incline bench and let the dumbbells hang straight down. Keep your arms straight and raise the dumbbells forward and up until they are level with your shoulders. Control the descent slowly and maintain tension in the front of your shoulders.",
+                                        "sets": "3 sets",
+                                        "reps": "5-7 reps",
+                                        "rest": "75s rest"
+                                    },
+                                    {
+                                        "name": "Face pulls",
+                                        "image": "https://raw.githubusercontent.com/Jonatan0234/workoutplanner/main/Pictures/Shoulders/Day2/3.gif",
+                                        "muscle_image": "https://raw.githubusercontent.com/Jonatan0234/workoutplanner/main/Muscles/Shoulders.png",
+                                        "description": "Cues: Grab the rope high with an overhand grip and step back to tension. Pull the rope toward your face, aiming your hands outside your ears. Forcefully pull your elbows back and rotate your wrists outward, squeezing your rear shoulders hard.",
+                                        "sets": "3 sets - 10Kg in each arm",
+                                        "reps": "10-12 reps",
+                                        "rest": "75s rest"
+                                    }
                     ]
                 }
             }
         };
-
 
         // Iconos para cada grupo muscular
         const muscleIcons = {
@@ -1137,10 +1257,14 @@
             'shoulders': 'fas fa-arrows-alt-h'
         };
 
+        // Configuración del calendario Apple iCloud
+        const APPLE_CALENDAR_URL = "webcal://p162-caldav.icloud.com/published/2/NDM1NjgzNzQwNDM1NjgzN9K8AFwQL0suOvwYnQC10mKli_j_u4hAzrX6GT07Fb15_-VeOkUxk1uiakayFx7wCv6PONa07SfUVQLFlrJ4EHo";
+
         document.addEventListener('DOMContentLoaded', function () {
             console.log('DOM cargado - Inicializando workout planner');
             initWorkoutLinks();
             initSidebarToggle();
+            initTodayEventsModal();
 
             // Cargar workout desde URL si existe
             const urlParams = new URLSearchParams(window.location.search);
@@ -1221,6 +1345,439 @@
                 sidebar.classList.toggle('active');
                 sidebarOverlay.classList.toggle('active');
                 document.body.classList.toggle('sidebar-open');
+            }
+        }
+
+        function initTodayEventsModal() {
+            const todayEventsModal = document.getElementById('todayEventsModal');
+
+            if (todayEventsModal) {
+                todayEventsModal.addEventListener('show.bs.modal', function () {
+                    loadTodayEvents();
+                });
+            }
+        }
+
+        function loadTodayEvents() {
+            const todayEventsContent = document.getElementById('todayEventsContent');
+
+            // Mostrar estado de carga
+            todayEventsContent.innerHTML = `
+                <div class="text-center py-4">
+                    <div class="spinner-border text-primary" role="status">
+                        <span class="visually-hidden">Loading events...</span>
+                    </div>
+                    <p class="mt-2 text-muted">Loading today's events...</p>
+                </div>
+            `;
+
+            // Cargar eventos del calendario
+            loadAppleCalendar()
+                .then(events => {
+                    console.log('Eventos cargados:', events);
+                    displayTodayEvents(events);
+                })
+                .catch(error => {
+                    console.error('Error loading events:', error);
+                    todayEventsContent.innerHTML = `
+                        <div class="no-events-today">
+                            <i class="fas fa-exclamation-triangle"></i>
+                            <h4>Unable to Load Events</h4>
+                            <p>Could not load calendar events. Please try again later.</p>
+                            <button class="btn btn-primary mt-2" onclick="loadTodayEvents()">
+                                <i class="fas fa-redo me-1"></i>Try Again
+                            </button>
+                        </div>
+                    `;
+                });
+        }
+
+        function displayTodayEvents(events) {
+            const todayEventsContent = document.getElementById('todayEventsContent');
+            const today = new Date();
+
+            // Filtrar eventos de hoy
+            const todayEvents = events.filter(event => {
+                const eventDate = new Date(event.start);
+                return isSameDay(eventDate, today);
+            });
+
+            if (todayEvents.length === 0) {
+                todayEventsContent.innerHTML = `
+                    <div class="no-events-today">
+                        <i class="fas fa-calendar-plus"></i>
+                        <h4>No Events Today</h4>
+                        <p>You don't have any workout events scheduled for today.</p>
+                    </div>
+                `;
+                return;
+            }
+
+            // Ordenar eventos por hora
+            todayEvents.sort((a, b) => new Date(a.start) - new Date(b.start));
+
+            let eventsHTML = '';
+
+            todayEvents.forEach(event => {
+                const eventTime = event.allDay ? 
+                    'All Day' : 
+                    new Date(event.start).toLocaleTimeString([], {hour: '2-digit', minute: '2-digit'});
+
+                eventsHTML += `
+                    <div class="today-event-item" style="border-left-color: ${event.color}">
+                        <div class="today-event-time">
+                            <i class="fas fa-clock"></i>
+                            ${eventTime}
+                            ${event.isReal ? '<span class="badge bg-success ms-2">REAL</span>' : '<span class="badge bg-warning ms-2">EXAMPLE</span>'}
+                        </div>
+                        <div class="today-event-title">${event.title}</div>
+                        ${event.description ? `<div class="today-event-description">${event.description}</div>` : ''}
+                        ${event.location ? `<div class="today-event-description"><i class="fas fa-map-marker-alt me-1"></i>${event.location}</div>` : ''}
+                    </div>
+                `;
+            });
+
+            todayEventsContent.innerHTML = eventsHTML;
+        }
+
+        function isSameDay(date1, date2) {
+            return date1.getDate() === date2.getDate() &&
+                date1.getMonth() === date2.getMonth() &&
+                date1.getFullYear() === date2.getFullYear();
+        }
+
+        async function loadAppleCalendar() {
+            try {
+                // Convertir webcal:// a https:// para fetch
+                const icalUrl = APPLE_CALENDAR_URL.replace('webcal://', 'https://');
+                console.log('🔗 Conectando a:', icalUrl);
+
+                // Proxy CORS (principal y fallback)
+                const proxies = [
+                    'https://api.allorigins.win/raw?url=',
+                    'https://corsproxy.io/?',
+                    'https://api.codetabs.com/v1/proxy?quest='
+                ];
+
+                let icalData = null;
+                let lastError = null;
+
+                // Probar proxies en orden hasta que uno funcione
+                for (const proxy of proxies) {
+                    try {
+                        const target = encodeURIComponent(icalUrl);
+                        const fetchUrl = proxy + target;
+
+                        const response = await fetch(fetchUrl, {
+                            method: 'GET',
+                            headers: {
+                                'Accept': 'text/calendar'
+                            }
+                        });
+
+                        if (!response.ok) {
+                            throw new Error(`Proxy HTTP error: ${response.status} (${proxy})`);
+                        }
+
+                        icalData = await response.text();
+                        console.log('📥 Calendario descargado (proxy):', proxy, 'tamaño:', icalData.length);
+                        break; // si recibimos contenido, salimos del loop
+                    } catch (err) {
+                        console.warn('Proxy failed:', proxy, err);
+                        lastError = err;
+                    }
+                }
+
+                // Si no obtuvimos datos desde proxies, intentar fetch directo (puede fallar por CORS)
+                if (!icalData) {
+                    try {
+                        const directResponse = await fetch(icalUrl, {method: 'GET', headers: {'Accept': 'text/calendar'}});
+                        if (directResponse.ok) {
+                            icalData = await directResponse.text();
+                            console.log('📥 Calendario descargado (direct):', icalData.length);
+                        } else {
+                            throw new Error(`Direct fetch failed: ${directResponse.status}`);
+                        }
+                    } catch (err) {
+                        console.error('No se pudo descargar el iCal (proxies y directos fallaron):', err);
+                        throw err;
+                    }
+                }
+
+                if (!icalData || icalData.length < 50) {
+                    throw new Error('Calendar data empty or too short');
+                }
+
+                // Mejor split para soportar CRLF (\r\n) y LF (\n)
+                const events = parseICalData(icalData);
+                console.log('📅 Eventos parseados:', events.length);
+
+                return events;
+            } catch (error) {
+                console.error('❌ Error cargando calendario Apple:', error);
+                throw new Error(`Failed to load Apple Calendar: ${error.message}`);
+            }
+        }
+
+        function parseICalData(icalData) {
+            const events = [];
+            const lines = icalData.split(/\r?\n/);
+            let currentEvent = null;
+            let inEvent = false;
+
+            for (let i = 0; i < lines.length; i++) {
+                const line = lines[i].trim();
+
+                if (line === 'BEGIN:VEVENT') {
+                    currentEvent = {};
+                    inEvent = true;
+                    continue;
+                }
+
+                if (line === 'END:VEVENT') {
+                    if (currentEvent && isValidEvent(currentEvent)) {
+                        const parsedEvents = parseEvent(currentEvent);
+                        if (parsedEvents && parsedEvents.length > 0) {
+                            events.push(...parsedEvents);
+                        }
+                    }
+                    currentEvent = null;
+                    inEvent = false;
+                    continue;
+                }
+
+                if (inEvent && currentEvent) {
+                    // Manejar líneas multilínea
+                    if (line.startsWith(' ') && Object.keys(currentEvent).length > 0) {
+                        // Continuación de línea anterior
+                        const lastKey = Object.keys(currentEvent)[Object.keys(currentEvent).length - 1];
+                        currentEvent[lastKey] += line.substring(1);
+                    } else {
+                        const colonIndex = line.indexOf(':');
+                        if (colonIndex > 0) {
+                            const key = line.substring(0, colonIndex);
+                            let value = line.substring(colonIndex + 1);
+
+                            // Manejar propiedades con parámetros (ej: DTSTART;TZID=...)
+                            if (key.includes(';')) {
+                                const baseKey = key.split(';')[0];
+                                currentEvent[baseKey] = value;
+                            } else {
+                                currentEvent[key] = value;
+                            }
+                        }
+                    }
+                }
+            }
+
+            // Filtrar eventos recientes y futuros
+            const now = new Date();
+            const startRange = new Date(now.getTime() - 30 * 24 * 60 * 60 * 1000); // 30 días atrás
+            const endRange = new Date(now.getTime() + 90 * 24 * 60 * 60 * 1000); // 90 días adelante
+
+            return events.filter(event => {
+                const eventDate = new Date(event.start);
+                return eventDate >= startRange && eventDate <= endRange;
+            });
+        }
+
+        function isValidEvent(event) {
+            return event.SUMMARY && event.DTSTART;
+        }
+
+        function parseEvent(event) {
+            try {
+                const title = event.SUMMARY || 'Untitled Event';
+                const description = event.DESCRIPTION || '';
+                const location = event.LOCATION || '';
+                const rrule = event.RRULE || null;
+
+                // Parsear fecha de inicio
+                let startDate = parseICalDate(event.DTSTART);
+                if (!startDate) return null;
+
+                // Parsear fecha de fin
+                let endDate = event.DTEND ? parseICalDate(event.DTEND) : null;
+                if (!endDate) {
+                    // Si no hay fecha de fin, asumir 1 hora de duración
+                    endDate = new Date(startDate.getTime() + 60 * 60 * 1000);
+                }
+
+                // Determinar si es evento de todo el día
+                const allDay = event.DTSTART.length === 8 || event.DTSTART.includes('VALUE=DATE');
+
+                const baseEvent = {
+                    title: title,
+                    start: startDate,
+                    end: endDate,
+                    allDay: allDay,
+                    color: getEventColor(title),
+                    description: description,
+                    location: location,
+                    date: startDate.toISOString().split('T')[0],
+                    day_name: startDate.toLocaleDateString('en', {weekday: 'long'}),
+                    day_number: startDate.getDate(),
+                    month_name: startDate.toLocaleDateString('en', {month: 'long'}),
+                    isReal: true
+                };
+
+                // Si hay regla de recurrencia, generar eventos recurrentes
+                if (rrule) {
+                    return expandRecurringEvents(baseEvent, rrule);
+                } else {
+                    return [baseEvent];
+                }
+            } catch (error) {
+                console.error('Error parsing event:', error, event);
+                return null;
+            }
+        }
+
+        function expandRecurringEvents(baseEvent, rrule) {
+            const events = [baseEvent];
+            const now = new Date();
+            const endRange = new Date(now.getTime() + 90 * 24 * 60 * 60 * 1000); // 90 días adelante
+
+            // Parsear la regla de recurrencia
+            const ruleParts = rrule.split(';');
+            let freq = null;
+            let interval = 1;
+            let count = null;
+            let until = null;
+
+            for (const part of ruleParts) {
+                const [key, value] = part.split('=');
+                switch (key) {
+                    case 'FREQ':
+                        freq = value;
+                        break;
+                    case 'INTERVAL':
+                        interval = parseInt(value);
+                        break;
+                    case 'COUNT':
+                        count = parseInt(value);
+                        break;
+                    case 'UNTIL':
+                        until = parseICalDate(value);
+                        break;
+                }
+            }
+
+            // Si no hay frecuencia definida, retornar solo el evento base
+            if (!freq) return events;
+
+            let currentDate = new Date(baseEvent.start);
+            let occurrences = 1;
+
+            // Generar eventos recurrentes
+            while (currentDate < endRange && (count === null || occurrences < count)) {
+                // Calcular siguiente fecha según frecuencia
+                switch (freq) {
+                    case 'DAILY':
+                        currentDate.setDate(currentDate.getDate() + interval);
+                        break;
+                    case 'WEEKLY':
+                        currentDate.setDate(currentDate.getDate() + 7 * interval);
+                        break;
+                    case 'MONTHLY':
+                        currentDate.setMonth(currentDate.getMonth() + interval);
+                        break;
+                    default:
+                        console.warn('Frecuencia no soportada:', freq);
+                        return events;
+                }
+
+                // Verificar si hemos superado la fecha límite
+                if (until && currentDate > until) {
+                    break;
+                }
+
+                // Verificar límite de ocurrencias
+                if (count && occurrences >= count) {
+                    break;
+                }
+
+                // Crear nuevo evento para esta ocurrencia
+                const newEndDate = new Date(currentDate.getTime() + (baseEvent.end - baseEvent.start));
+
+                events.push({
+                    ...baseEvent,
+                    start: new Date(currentDate),
+                    end: newEndDate,
+                    date: currentDate.toISOString().split('T')[0],
+                    day_name: currentDate.toLocaleDateString('en', {weekday: 'long'}),
+                    day_number: currentDate.getDate(),
+                    month_name: currentDate.toLocaleDateString('en', {month: 'long'})
+                });
+
+                occurrences++;
+            }
+
+            return events;
+        }
+
+        function parseICalDate(dateString) {
+            try {
+                // Eliminar parámetros como TZID, VALUE, etc.
+                const cleanDateString = dateString.split(';')[0];
+
+                // Formato básico: YYYYMMDD o YYYYMMDDTHHMMSSZ
+                if (cleanDateString.length === 8) {
+                    // Formato YYYYMMDD (todo el día)
+                    const year = cleanDateString.substring(0, 4);
+                    const month = cleanDateString.substring(4, 6);
+                    const day = cleanDateString.substring(6, 8);
+                    return new Date(year, month - 1, day);
+                } else if (cleanDateString.includes('T')) {
+                    // Formato con hora YYYYMMDDTHHMMSS o YYYYMMDDTHHMMSSZ
+                    const datePart = cleanDateString.substring(0, 8);
+                    const timePart = cleanDateString.substring(9);
+
+                    const year = datePart.substring(0, 4);
+                    const month = datePart.substring(4, 6);
+                    const day = datePart.substring(6, 8);
+
+                    let hour = '00', minute = '00', second = '00';
+
+                    if (timePart.length >= 6) {
+                        hour = timePart.substring(0, 2);
+                        minute = timePart.substring(2, 4);
+                        second = timePart.substring(4, 6);
+                    }
+
+                    // Si termina con Z, es UTC, sino es hora local
+                    if (cleanDateString.endsWith('Z')) {
+                        return new Date(Date.UTC(year, month - 1, day, hour, minute, second));
+                    } else {
+                        return new Date(year, month - 1, day, hour, minute, second);
+                    }
+                }
+
+                return null;
+            } catch (error) {
+                console.error('Error parsing date:', dateString, error);
+                return null;
+            }
+        }
+
+        function getEventColor(eventTitle) {
+            if (!eventTitle) return "#8b5cf6";
+
+            const titleLower = eventTitle.toLowerCase();
+            if (titleLower.includes('chest') || titleLower.includes('triceps') || titleLower.includes('bench') || titleLower.includes('press')) {
+                return "#6366f1";
+            } else if (titleLower.includes('back') || titleLower.includes('biceps') || titleLower.includes('pull') || titleLower.includes('row')) {
+                return "#f59e0b";
+            } else if (titleLower.includes('legs') || titleLower.includes('shoulders') || titleLower.includes('squat') || titleLower.includes('deadlift')) {
+                return "#10b981";
+            } else if (titleLower.includes('cardio') || titleLower.includes('run') || titleLower.includes('bike') || titleLower.includes('swim')) {
+                return "#ef4444";
+            } else if (titleLower.includes('rest') || titleLower.includes('recovery') || titleLower.includes('off')) {
+                return "#64748b";
+            } else if (titleLower.includes('yoga') || titleLower.includes('stretch') || titleLower.includes('flexibility')) {
+                return "#06b6d4";
+            } else {
+                return "#8b5cf6";
             }
         }
 
